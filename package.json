@@ -9,9 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mesonfi/to": "^0.1.5-rc.2",
+    "autoprefixer": "^10.4.12",
+    "classnames": "^2.3.2",
+    "ethers": "^5.7.1",
+    "mongoose": "^6.6.5",
     "next": "12.3.1",
+    "next-seo": "^5.5.0",
+    "postcss": "^8.4.17",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "tailwindcss": "^3.1.8",
+    "tronweb": "^4.4.0"
   },
   "devDependencies": {
     "eslint": "8.25.0",
