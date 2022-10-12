@@ -1,12 +1,13 @@
 import React from 'react'
+import dynamic from 'next/dynamic'
 import { NextSeo } from 'next-seo'
 
 import { utils } from 'ethers'
 import TronWeb from 'tronweb'
 
-import MesonToButton from '@mesonfi/to'
-
 import { Recipients } from '../lib/db'
+
+const MesonToButton = dynamic(import('@mesonfi/to'), { ssr: false })
 
 export default function AllsTo ({ metadata, to = null }) {
   const [isBrowser, setIsBrowser] = React.useState(false)
@@ -31,15 +32,12 @@ export default function AllsTo ({ metadata, to = null }) {
         }}
       />
       <div className='flex flex-col items-start p-12'>
-      {
-        isBrowser && to &&
-        <MesonToButton
-          appId='alls-to'
-          type='iframe'
-          to={to}
-          onCompleted={() => {}}
-        />
-      }
+      <MesonToButton
+        appId='alls-to'
+        type='iframe'
+        to={to}
+        onCompleted={() => {}}
+      />
       <pre className='mt-6 text-xs'>{JSON.stringify(to, null, 2)}</pre>
       </div>
     </>
