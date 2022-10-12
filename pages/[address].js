@@ -63,7 +63,7 @@ export async function getServerSideProps ({ query, res }) {
   const metadata = {
     title: 'Alls To',
     description: 'Transfer stablecoins from anywhere',
-    previewImg: `https://meson.to/img/to/${address}`
+    previewImg: `https://img.meson.fi/to/${address}`
   }
 
   if (stored) {
