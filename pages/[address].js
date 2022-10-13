@@ -53,9 +53,9 @@ export async function getServerSideProps ({ query, res }) {
   } else if (TronWeb.isAddress(address)) {
     chain = 'tron'
   } else {
-    res.writeHead(302, { Location: 'https://alls.to' })
-    res.end()
-    return { props: {} }
+    // res.writeHead(302, { Location: 'https://alls.to' })
+    // res.end()
+    // return { props: {} }
   }
 
   const stored = await Recipients.findOne({ _id: address })
@@ -63,7 +63,7 @@ export async function getServerSideProps ({ query, res }) {
   const metadata = {
     title: process.env.METADATA_TITLE,
     description: process.env.METADATA_DESC,
-    previewImg: `https://img.meson.fi/to/${address}`
+    previewImg: `https://img.meson.fi/preview/${address}`
   }
 
   if (stored) {
