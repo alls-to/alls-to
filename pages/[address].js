@@ -61,8 +61,8 @@ export async function getServerSideProps ({ query, res }) {
   const stored = await Recipients.findOne({ _id: address })
 
   const metadata = {
-    title: 'Alls To',
-    description: 'Transfer stablecoins from anywhere',
+    title: process.env.METADATA_TITLE,
+    description: process.env.METADATA_DESC,
     previewImg: `https://img.meson.fi/to/${address}`
   }
 
