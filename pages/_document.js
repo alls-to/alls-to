@@ -25,6 +25,10 @@ export default function Document () {
         <meta property='og:type' content='website' />
         <meta property='og:url' content='https://alls.to/' />
 
+        <meta property='twitter:card' content='summary_large_image' />
+        <meta property='twitter:site' content='@MesonFi' />
+        <meta property='twitter:url' content='https://alls.to/' />
+
         <link rel='icon' href='/favicon.ico' />
         <link rel='shortcut icon' href='/favicon.ico' />
         <link rel='apple-touch-icon' sizes='192x192' href='/static/logo192.png' />
