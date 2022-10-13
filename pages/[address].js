@@ -45,25 +45,28 @@ export default function AllsTo ({ metadata, to = null }) {
 }
 
 export async function getServerSideProps ({ query, res }) {
-  let address = query.address
   let chain
+  let address = query.address
+  let abbr
   if (utils.isAddress(address)) {
     address = address.toLowerCase()
+    abbr = `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
     chain = 'polygon'
   } else if (TronWeb.isAddress(address)) {
     chain = 'tron'
+    abbr = `${address.substring(0, 4)}...${address.substring(address.length - 4)}`
   } else {
-    // res.writeHead(302, { Location: 'https://alls.to' })
-    // res.end()
-    // return { props: {} }
+    res.writeHead(302, { Location: 'https://alls.to' })
+    res.end()
+    return { props: {} }
   }
 
   const stored = await Recipients.findOne({ _id: address })
 
   const metadata = {
-    title: process.env.METADATA_TITLE,
+    title: `Transfer Stablecoins to ${abbr}`,
     description: process.env.METADATA_DESC,
-    previewImg: `https://img.meson.fi/preview/${address}`
+    previewImg: `https://img.meson.fi/to/${address}`
   }
 
   if (stored) {
