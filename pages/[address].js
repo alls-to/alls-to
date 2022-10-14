@@ -1,23 +1,13 @@
 import React from 'react'
-import dynamic from 'next/dynamic'
 import { NextSeo } from 'next-seo'
 
 import { utils } from 'ethers'
 import TronWeb from 'tronweb'
 
-import { Recipients } from '../lib/db'
+import { Recipients } from 'lib/db'
+import PageTo from 'components/PageTo'
 
-const MesonToButton = dynamic(import('@mesonfi/to'), { ssr: false })
-
-export default function AllsTo ({ metadata, to = null }) {
-  const [isBrowser, setIsBrowser] = React.useState(false)
-
-  React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setIsBrowser(true)
-    }
-  }, [])
-
+export default function Subpage ({ metadata, to = null }) {
   return (
     <>
       <NextSeo
@@ -31,15 +21,7 @@ export default function AllsTo ({ metadata, to = null }) {
           ]
         }}
       />
-      <div className='flex flex-col items-start p-12'>
-      <MesonToButton
-        appId='alls-to'
-        type='iframe'
-        to={to}
-        onCompleted={() => {}}
-      />
-      <pre className='mt-6 text-xs'>{JSON.stringify(to, null, 2)}</pre>
-      </div>
+      <PageTo to={to} />
     </>
   )
 }
@@ -65,7 +47,7 @@ export async function getServerSideProps ({ query, res }) {
 
   const metadata = {
     title: `Transfer Stablecoins to ${abbr}`,
-    description: process.env.METADATA_DESC,
+    description: process.env.METADATA_DESC || '',
     previewImg: `https://img.meson.fi/to/${address}`
   }
 

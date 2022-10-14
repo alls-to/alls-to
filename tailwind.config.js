@@ -1,7 +1,7 @@
 module.exports = {
   mode: 'jit',
   content: [
-    './pages/**/*.{js,jsx,ts,tsx}'
+    './{pages,components}/**/*.{js,jsx,ts,tsx}'
   ],
   theme: {
     extend: {
@@ -14,5 +14,7 @@ module.exports = {
     }
   },
   // safelist: [...tailwindcssOriginSafelist],
-  plugins: []
+  plugins: [
+    require('@tailwindcss/forms')
+  ]
 }
