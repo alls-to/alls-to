@@ -5,9 +5,9 @@ import { utils } from 'ethers'
 import TronWeb from 'tronweb'
 
 import { Recipients } from 'lib/db'
-import PageTo from 'components/PageTo'
+import PageEdit from 'components/PageEdit'
 
-export default function Subpage ({ metadata, to = null }) {
+export default function EditPage ({ metadata, to = null }) {
   return (
     <>
       <NextSeo
@@ -21,7 +21,7 @@ export default function Subpage ({ metadata, to = null }) {
           ]
         }}
       />
-      <PageTo to={to} />
+      <PageEdit to={to} />
     </>
   )
 }
@@ -29,19 +29,19 @@ export default function Subpage ({ metadata, to = null }) {
 export async function getServerSideProps ({ query, res }) {
   let chain
   let address = query.address
-  let abbr
-  if (utils.isAddress(address)) {
-    address = address.toLowerCase()
-    abbr = `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
-    chain = 'polygon'
-  } else if (TronWeb.isAddress(address)) {
-    chain = 'tron'
-    abbr = `${address.substring(0, 4)}...${address.substring(address.length - 4)}`
-  } else {
-    res.writeHead(302, { Location: 'https://alls.to' })
-    res.end()
-    return { props: {} }
-  }
+  let abbr = `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
+  // if (utils.isAddress(address)) {
+  //   address = address.toLowerCase()
+  //   abbr = `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
+  //   chain = 'polygon'
+  // } else if (TronWeb.isAddress(address)) {
+  //   chain = 'tron'
+  //   abbr = `${address.substring(0, 4)}...${address.substring(address.length - 4)}`
+  // } else {
+  //   res.writeHead(302, { Location: 'https://alls.to' })
+  //   res.end()
+  //   return { props: {} }
+  // }
 
   const stored = await Recipients.findOne({ _id: address })
 
@@ -58,6 +58,6 @@ export async function getServerSideProps ({ query, res }) {
   }
 
   return {
-    props: { metadata, to: { address, chain } }
+    props: { metadata, to: { address } }
   }
 }

@@ -7,9 +7,9 @@ export default function ConnectWallet ({ onChange }) {
   const [addr, setAddr] = React.useState()
 
   React.useEffect(() => {
-    const exts = extensions.detect(window)
-    if (exts.length) {
-      extensions.connect(exts[0].type, (chainId, account) => {
+    const extDataList = extensions.detectAllExtensions()
+    if (extDataList.length) {
+      extensions.connect(extDataList[0], (chainId, account) => {
         setChainId(chainId)
         setAddr(account?.address)
         onChange(chainId, account)
