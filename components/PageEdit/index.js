@@ -36,7 +36,9 @@ export default function PageTo ({ to }) {
         if (to.address !== decoded.sub) {
           router.push(`/edit/${decoded.sub}`)
         }
-        extensions.connect(undefined, decoded.ext)
+        if (!extensions.currentExt) {
+          extensions.connect(undefined, decoded.ext)
+        }
         return
       } catch (e) {
         console.warn(e)
