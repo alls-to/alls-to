@@ -37,7 +37,8 @@ export default function PageTo ({ to }) {
           router.push(`/edit/${decoded.sub}`)
         }
         if (!extensions.currentExt) {
-          extensions.connect(undefined, decoded.ext)
+          const [extType, extId] = decoded.iss.split(':')
+          extensions.connect(undefined, extType, extId).catch(e => {})
         }
         return
       } catch (e) {

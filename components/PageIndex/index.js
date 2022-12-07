@@ -30,10 +30,9 @@ export default function PageIndex() {
 
   const onClickExt = React.useCallback(async (evt, ext) => {
     await extensions.connect(undefined, ext.type, ext.id)
-    jwt.encode(extensions.currentExt, signingMessage).then(async token => {
-      window.localStorage.setItem('token', token)
-      router.push(`/edit/${extensions.currentExt.currentAccount.address}`)
-    })
+    const token = await jwt.encode(extensions.currentExt, signingMessage)
+    window.localStorage.setItem('token', token)
+    router.push(`/edit/${extensions.currentExt.currentAccount.address}`)
   }, [router, extensions])
 
   return (
