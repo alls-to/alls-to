@@ -13,8 +13,10 @@ export default function PageIndex() {
   const [extList, setExtList] = React.useState([])
 
   React.useEffect(() => {
-    const exts = extensions.detectAllExtensions().filter(ext => !ext.notInstalled && ext.type !== 'walletconnect')
-    setExtList(exts)
+    setTimeout(() => {
+      const exts = extensions.detectAllExtensions().filter(ext => !ext.notInstalled && ext.type !== 'walletconnect')
+      setExtList(exts)
+    }, 100)
   }, [extensions])
 
   React.useEffect(() => {
