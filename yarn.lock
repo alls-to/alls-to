@@ -505,6 +505,13 @@
   resolved "https://registry.yarnpkg.com/@mesonfi/to/-/to-0.1.5-rc.2.tgz#bdaac30883b1009861e62badde137b96bcea5116"
   integrity sha512-qcYzmX4sQFIHbu2jnYQ7fI+iayw/l3cMKKK6MAev3YISp8pKSomgBEvTHd12awgvHzdERnNrwmhIIDGhZpDJ2Q==
 
+"@mesonfi/web3-jwt@^0.1.0-rc.2":
+  version "0.1.0-rc.2"
+  resolved "https://npm.pkg.github.com/download/@mesonfi/web3-jwt/0.1.0-rc.2/0330a23dee2b9d260a9424beff7d0a110b98ce21#0330a23dee2b9d260a9424beff7d0a110b98ce21"
+  integrity sha512-LD4BF4cJ8x8OQ/rY7V8UksR1Vrp1fMYvEPQjZ233ebaCYVatD/nRWvoU603CH8hqpSNTrxtHkvCHrM61iW+kXA==
+  dependencies:
+    jws "^4.0.0"
+
 "@next/env@12.3.1":
   version "12.3.1"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-12.3.1.tgz#18266bd92de3b4aa4037b1927aa59e6f11879260"

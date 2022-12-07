@@ -2,36 +2,38 @@ import React from 'react'
 
 import presets from '@mesonfi/presets'
 
-export default function ForOwner ({ to, extensions, browserExt }) {
+export default function ForOwner ({ to, extensions, account }) {
   const [id, setId] = React.useState('phil')
 
   const [name, setName] = React.useState('')
   const [desc, setDesc] = React.useState('')
-
+  const [networkId, setNetworkId] = React.useState('')
   const [tokens, setTokens] = React.useState(to.tokens || [])
   const [btn, setBtn] = React.useState('Save')
 
+  const extType = account?.iss?.split(':')[0]
+
   const networks = React.useMemo(() => {
-    if (!browserExt?.ext.type) {
+    if (!extType) {
       return []
     }
-    return presets.getAllNetworks().filter(n => n.extensions.includes(browserExt.ext.type))
-  }, [browserExt?.ext.type])
+    return presets.getAllNetworks().filter(n => n.extensions.includes(extType))
+  }, [extType])
 
   const tokenList = React.useMemo(() => {
-    if (!browserExt?.networkId) {
+    if (!networkId) {
       return []
     }
-    return presets.getTokensForNetwork(browserExt.networkId)
+    return presets.getTokensForNetwork(networkId)
       .filter(t => t.tokenIndex < 255)
       .map(t => ({ symbol: t.symbol.split('.')[0].toLowerCase(), addr: t.addr }))
-  }, [browserExt?.networkId])
+  }, [networkId])
 
   React.useEffect(() => {
     setTokens(ts => ts.filter(t => tokenList.find(({ symbol }) => symbol === t)))
   }, [tokenList])
 
-  if (!browserExt) {
+  if (!account?.sub) {
     return
   }
 
@@ -52,7 +54,7 @@ export default function ForOwner ({ to, extensions, browserExt }) {
     try {
       const message = [
         `Sign this message to update my receiving config`,
-        `Chain: ${presets.getNetwork(browserExt.networkId).name}`,
+        `Chain: ${presets.getNetwork(networkId).name}`,
         `Tokens: ${tokens.join(',').toUpperCase()}`,
         '',
         `My address: ${to.address}`
@@ -141,7 +143,7 @@ export default function ForOwner ({ to, extensions, browserExt }) {
           id='chain'
           name='chain'
           className='mt-1 w-64 block w-full rounded-md border-gray-300 py-1 pl-3 pr-1 text-base focus:outline-none sm:text-sm'
-          value={browserExt.networkId}
+          value={networkId}
           onChange={async evt => {
             await extensions.switch(evt.target.value)
           }}

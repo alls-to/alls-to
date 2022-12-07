@@ -1,4 +1,4 @@
-import { verify as verifyJwt } from '@mesonfi/extensions/jwt'
+import { verify } from '@mesonfi/web3-jwt'
 
 const { NEXT_PUBLIC_SIGNING_MESSAGE } = process.env
 
@@ -14,7 +14,7 @@ export default async function handler (req, res) {
 
       let payload
       try {
-        payload = verifyJwt(token, NEXT_PUBLIC_SIGNING_MESSAGE)
+        payload = verify(token, NEXT_PUBLIC_SIGNING_MESSAGE)
       } catch (e) {
         res.status(401).end()
         return
