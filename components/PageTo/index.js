@@ -29,7 +29,7 @@ export default function PageTo ({ to }) {
 
   return (
     <Container bg={bg}>
-      <Header>
+      <Header logoSrc='https://alls.to'>
         {
           browserExt
             ? <img alt={browserExt.name} crossOrigin='anonymous' className='w-6 h-6' src={browserExt.ext.icon} />
