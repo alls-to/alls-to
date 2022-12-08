@@ -38,7 +38,7 @@ export default function PageEdit ({ to }) {
     <div
       className={classnames(
         'flex flex-col items-center h-full overflow-auto',
-        'bg-cover bg-top	bg-no-repeat'
+        'bg-cover bg-top bg-no-repeat'
       )}
       style={{ backgroundImage: `url(${bg.src})` }}
     >

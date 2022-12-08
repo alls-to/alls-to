@@ -93,59 +93,58 @@ export default function EditTo ({ to, account }) {
         <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
       </div>
 
-      <div className='mt-2 self-center text-xs font-light text-[#0B2750]'>{to.address}</div>
-
-      <div className='mt-5'>
+      <div className='mt-4 relative'>
         <label htmlFor='uid' className='text-xs font-light text-[#0B2750]'>
           Link
         </label>
         <input
           id='uid'
           name='uid'
-          className='mt-1 w-full rounded-2xl bg-gray-100 p-4 text-base focus:outline-none text-base leading-none font-medium'
+          className='mt-1 w-full rounded-2xl bg-gray-100 p-4 focus:outline-none text-base leading-none font-medium pl-[118px]'
           value={uidInput}
           disabled={uidDisabled}
           onChange={evt => setUidInput(evt.target.value)}
           placeholder='You can setup an ID. Cannot change'
         />
+        <div className='absolute top-[45.5px] left-4 text-base leading-none font-medium text-gray-400'>https://alls.to/</div>
       </div>
 
-      <div className='mt-6'>
+      <div className='mt-4'>
         <label htmlFor='name' className='text-xs font-light text-[#0B2750]'>
           Name
         </label>
         <input
           id='name'
           name='name'
-          className='mt-1 w-full rounded-2xl bg-gray-100 p-4 text-base focus:outline-none text-base leading-none font-medium'
+          className='mt-1 w-full rounded-2xl bg-gray-100 p-4 focus:outline-none text-base leading-none font-medium'
           value={name}
           onChange={evt => setName(evt.target.value)}
           placeholder='Enter your name'
         />
       </div>
 
-      <div className='mt-6'>
+      <div className='mt-4'>
         <label htmlFor='description' className='text-xs font-light text-[#0B2750]'>
           Description
         </label>
         <textarea
           id='description'
           name='description'
-          className='block mt-1 w-full h-20 resize-none rounded-2xl bg-gray-100 p-4 text-base border-none focus:outline-none text-base leading-none font-medium'
+          className='block mt-1 w-full h-20 resize-none rounded-2xl bg-gray-100 p-4 border-none focus:outline-none text-base leading-none font-medium'
           onChange={evt => setDesc(evt.target.value)}
           value={desc}
           placeholder='Describe who you are'
         />
       </div>
 
-      <div className='mt-6'>
+      <div className='mt-4'>
         <label htmlFor='chain' className='text-xs font-light text-[#0B2750]'>
           Chain
         </label>
         <select
           id='chain'
           name='chain'
-          className='mt-1 w-full rounded-2xl bg-gray-100 p-4 text-base border-none focus:outline-none text-base leading-none font-medium'
+          className='mt-1 w-full rounded-2xl bg-gray-100 p-4 border-none focus:outline-none text-base leading-none font-medium'
           value={networkId}
           onChange={evt => setNetworkId(evt.target.value)}
         >
@@ -153,7 +152,7 @@ export default function EditTo ({ to, account }) {
         </select>
       </div>
 
-      <div className='mt-6'>
+      <div className='mt-4'>
         <label htmlFor='chain' className='text-xs font-light text-[#0B2750]'>
           Accept
         </label>
@@ -171,7 +170,7 @@ export default function EditTo ({ to, account }) {
         </div>
       </div>
 
-      <div className='mt-6 flex flex-row gap-4'>
+      <div className='mt-4 flex flex-row gap-4'>
         <div className='flex-1'>
           <button
             className='w-full items-center rounded-xl h-12 text-base font-bold text-[#0B2750] border border-[#0B2750] bg-white focus:outline-none'
