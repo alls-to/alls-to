@@ -28,7 +28,7 @@ export default function PageIndex() {
   const loading = !account || account.sub
 
   return (
-    <Container bg={bg} style={{ backgroundPosition: '25vw 50%' }}>
+    <Container bg={bg} style={{ backgroundPosition: '25vw 0%' }}>
       <Header />
       <div className={classnames(
         'w-full flex flex-col md:flex-row items-start justify-between',
