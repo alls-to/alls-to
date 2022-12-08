@@ -6,6 +6,8 @@ import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import presets from '@mesonfi/presets'
 import * as api from 'lib/api'
 
+import Card from 'components/common/Card'
+
 export default function EditTo ({ to, account }) {
   const router = useRouter()
   const [uid, setUid] = React.useState(to.uid || to.address)
@@ -89,7 +91,7 @@ export default function EditTo ({ to, account }) {
   }
 
   return (
-    <div className='flex flex-col mt-4 mb-12 w-[428px] border border-white rounded-2xl bg-white/75 backdrop-blur-md p-8 shadow-2xl'>
+    <Card className='mt-4 mb-12 w-[428px]'>
       <div className='self-center w-16 h-16 rounded-full'>
         <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
       </div>
@@ -190,6 +192,6 @@ export default function EditTo ({ to, account }) {
           </a>
         </div>
       </div>
-    </div>
+    </Card>
   )
 }
