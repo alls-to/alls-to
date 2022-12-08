@@ -1,5 +1,4 @@
 import React from 'react'
-import classnames from 'classnames'
 import { useRouter } from 'next/router'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 
@@ -7,6 +6,7 @@ import presets from '@mesonfi/presets'
 import * as api from 'lib/api'
 
 import Card from 'components/common/Card'
+import TokenSelector from 'components/common/TokenSelector'
 
 export default function EditTo ({ to, account }) {
   const router = useRouter()
@@ -155,17 +155,12 @@ export default function EditTo ({ to, account }) {
 
       <div className='mt-3 flex flex-row gap-3'>
         {tokenList.map(({ symbol, addr }) => (
-          <div
+          <TokenSelector
             key={`token-${symbol}`}
-            onClick={() => toggleToken(symbol)}
-            className={classnames(
-              'flex items-center p-1.5 pr-3 rounded-full cursor-pointer border border-[#0B2750]',
-              tokens.includes(symbol) ? 'bg-[#0B2750] text-white' : 'text-[#0B2750]'
-            )}
-          >
-            <div className='w-5 h-5 mr-2 rounded-full bg-white'/>
-            <div className='text-base font-medium leading-none'>{symbol.toUpperCase()}</div>
-          </div>
+            symbol={symbol}
+            selected={tokens.includes(symbol)}
+            onToggle={toggleToken}
+          />
         ))}
       </div>
 
