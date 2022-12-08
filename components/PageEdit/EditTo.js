@@ -1,4 +1,5 @@
 import React from 'react'
+import classnames from 'classnames'
 import { useRouter } from 'next/router'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 
@@ -95,7 +96,7 @@ export default function EditTo ({ to, account }) {
 
       <div className='mt-4 relative'>
         <label htmlFor='uid' className='text-xs font-light text-[#0B2750]'>
-          Link
+          My Link
         </label>
         <input
           id='uid'
@@ -107,7 +108,7 @@ export default function EditTo ({ to, account }) {
           placeholder='my_id'
         />
         <div className='absolute top-[45.5px] left-4 text-base leading-none font-medium text-gray-400'>https://alls.to/</div>
-        {!uidDisabled && <div className='ml-4 mt-1 text-xs font-light text-[#0B2750]'>You can setup an ID. Cannot change</div>}
+        {!uidDisabled && <div className='ml-4 mt-1 text-xs font-light text-[#0B2750]'>You can setup an ID. Cannot change.</div>}
       </div>
 
       <div className='mt-4'>
@@ -140,7 +141,7 @@ export default function EditTo ({ to, account }) {
 
       <div className='mt-4'>
         <label htmlFor='chain' className='text-xs font-light text-[#0B2750]'>
-          Chain
+          Receive Stablecoins as
         </label>
         <select
           id='chain'
@@ -153,25 +154,23 @@ export default function EditTo ({ to, account }) {
         </select>
       </div>
 
-      <div className='mt-4'>
-        <label htmlFor='chain' className='text-xs font-light text-[#0B2750]'>
-          Accept
-        </label>
-        <div className='ml-2 flex flex-col gap-1'>
-          {tokenList.map(({ symbol, addr }) => (
-            <label key={`token-${symbol}`}>
-              <input
-                type='checkbox'
-                className='accent-indigo-500'
-                checked={tokens.includes(symbol)}
-                onChange={() => toggleToken(symbol)}
-              /> {symbol} ({addr.substring(0, 6)}...)
-            </label>
-          ))}
-        </div>
+      <div className='mt-3 flex flex-row gap-3'>
+        {tokenList.map(({ symbol, addr }) => (
+          <div
+            key={`token-${symbol}`}
+            onClick={() => toggleToken(symbol)}
+            className={classnames(
+              'flex items-center p-1.5 pr-3 rounded-full cursor-pointer border border-[#0B2750]',
+              tokens.includes(symbol) ? 'bg-[#0B2750] text-white' : 'text-[#0B2750]'
+            )}
+          >
+            <div className='w-5 h-5 mr-2 rounded-full bg-white'/>
+            <div className='text-base font-medium leading-none'>{symbol.toUpperCase()}</div>
+          </div>
+        ))}
       </div>
 
-      <div className='mt-4 flex flex-row gap-4'>
+      <div className='mt-5 flex flex-row gap-4'>
         <div className='flex-1'>
           <button
             className='w-full items-center rounded-xl h-12 text-base font-bold text-[#0B2750] border border-[#0B2750] bg-white focus:outline-none'
