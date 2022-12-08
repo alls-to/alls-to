@@ -88,8 +88,7 @@ export default function ForOwner ({ to, account }) {
 
   return (
     <div className='w-80 flex flex-col mt-6'>
-
-      <a href={`https://alls.to/${uid}`} target='_blank' rel="noreferrer" className='text-indigo-600 hover:text-indigo-800 hover:underline'>
+      <a href={`/${uid}`} target='_blank' rel='noreferrer' className='text-indigo-600 hover:underline'>
         https://alls.to/{uid}
       </a>
 

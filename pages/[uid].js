@@ -3,9 +3,9 @@ import { NextSeo } from 'next-seo'
 
 import { abbreviate } from 'lib'
 import { Recipients } from 'lib/db'
-import PageEdit from 'components/PageEdit'
+import PageTo from 'components/PageTo'
 
-export default function EditPage ({ metadata, to = null }) {
+export default function Subpage ({ metadata, to = null }) {
   const seo = metadata && <NextSeo
     title={metadata.title}
     description={metadata.description}
@@ -20,7 +20,7 @@ export default function EditPage ({ metadata, to = null }) {
   return (
     <>
       {seo}
-      <PageEdit to={to} />
+      <PageTo to={to} />
     </>
   )
 }
@@ -32,14 +32,14 @@ export async function getServerSideProps ({ query, res }) {
   if (found) {
     const address = found._id
     const metadata = {
-      title: `Edit → ${found.name || abbreviate(address)}`
+      title: `→ ${found.name || abbreviate(address)}`,
+      description: process.env.METADATA_DESC || '',
+      previewImg: `https://img.meson.fi/to/${address}`
     }
     return {
       props: { metadata, to: { address, ...found.toJSON() } }
     }
   }
 
-  return {
-    props: { to: { address: uid } }
-  }
+  return { props: {} }
 }

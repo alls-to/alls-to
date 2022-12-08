@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useExtensions } from '@mesonfi/extensions/react'
 import { useWeb3Login } from '@mesonfi/web3-jwt/react'
 
-import ForOwner from './ForOwner'
+import EditTo from './EditTo'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 
@@ -42,7 +42,7 @@ export default function PageTo ({ to }) {
       >
         Log out
       </button>
-      <ForOwner to={to} extensions={extensions} account={account} />
+      <EditTo to={to} extensions={extensions} account={account} />
     </div>
   )
 }
