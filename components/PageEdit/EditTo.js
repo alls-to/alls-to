@@ -16,7 +16,7 @@ export default function EditTo ({ to, account }) {
   const [name, setName] = React.useState(to.name || '')
   const [desc, setDesc] = React.useState(to.desc || '')
   const [networkId, setNetworkId] = React.useState(to.networkId || '')
-  const [tokens, setTokens] = React.useState(to.tokens || [])
+  const [tokens, setTokens] = React.useState(to.tokens || ['usdc', 'usdt', 'busd'])
 
   const [btn, setBtn] = React.useState('SAVE')
 
@@ -45,10 +45,6 @@ export default function EditTo ({ to, account }) {
       .map(t => ({ symbol: t.symbol.split('.')[0].toLowerCase(), addr: t.addr }))
   }, [networkId])
 
-  React.useEffect(() => {
-    setTokens(ts => ts.filter(t => tokenList.find(({ symbol }) => symbol === t)))
-  }, [tokenList])
-
   if (!account?.sub) {
     return
   }
@@ -69,7 +65,8 @@ export default function EditTo ({ to, account }) {
 
     try {
       setBtn('SAVING...')
-      const data = { name, desc, networkId, tokens }
+      const data = { name, desc, networkId }
+      data.tokens = tokens.filter(t => tokenList.find(({ symbol }) => symbol === t))
       if (uidInput && !uidDisabled) {
         data.uid = uidInput
       }
