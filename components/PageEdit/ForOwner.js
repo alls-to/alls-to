@@ -1,9 +1,14 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 
 import presets from '@mesonfi/presets'
+import * as api from 'lib/api'
 
 export default function ForOwner ({ to, account }) {
-  const [uid, setUid] = React.useState(to.uid || '')
+  const router = useRouter()
+  const [uid, setUid] = React.useState(to.uid || to.address)
+  const [uidInput, setUidInput] = React.useState(to.uid || '')
+  const [uidDisabled, setUidDisabled] = React.useState(!!to.uid)
   const [name, setName] = React.useState(to.name || '')
   const [desc, setDesc] = React.useState(to.desc || '')
   const [networkId, setNetworkId] = React.useState(to.networkId || '')
@@ -20,11 +25,12 @@ export default function ForOwner ({ to, account }) {
     return presets.getAllNetworks().filter(n => n.extensions.includes(extType))
   }, [extType])
 
-  // React.useEffect(() => {
-  //   if (!networks.some(n => n.id === networkId)) {
-  //     setNetworkId(networks?.[0]?.id)
-  //   }
-  // }, [networks])
+  const defaultNetworkId = !networkId && networks[0]?.id
+  React.useEffect(() => {
+    if (defaultNetworkId) {
+      setNetworkId(defaultNetworkId)
+    }
+  }, [defaultNetworkId])
 
   const tokenList = React.useMemo(() => {
     if (!networkId) {
@@ -59,29 +65,29 @@ export default function ForOwner ({ to, account }) {
 
     try {
       setBtn('Saving...')
-      const res = await fetch(`/api/v1/recipient`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${account.token}`
-        },
-        body: JSON.stringify({ uid, name, desc, networkId, tokens })
-      })
-      const result = await res.json()
+      const data = { name, desc, networkId, tokens }
+      if (uidInput && !uidDisabled) {
+        data.uid = uidInput
+      }
+      await api.updateRecipient(data, account.token)
+      if (uidInput) {
+        setUid(uidInput)
+        setUidDisabled(uidInput)
+        router.replace(`/edit/${uidInput}`)
+      }
       setBtn('Saved!')
       setTimeout(() => setBtn('Save'), 2000)
-
-      if (!result.error) {
-        // onUpdated(result.result)
-      }
     } catch (e) {
+      if (e.code === 409) {
+        // setUid(to.uid)
+      }
       console.warn(e)
       setBtn('Save')
     }
   }
 
   return (
-    <div className='w-64 flex flex-col mt-6'>
+    <div className='w-80 flex flex-col mt-6'>
 
       <a href={`https://alls.to/${uid}`} target='_blank' rel="noreferrer" className='text-indigo-600 hover:text-indigo-800 hover:underline'>
         https://alls.to/{uid}
@@ -89,17 +95,20 @@ export default function ForOwner ({ to, account }) {
 
       <div>Avatar</div>
 
-      <div>
+      <span className='text-xs'>{to.address}</span>
+
+      <div className='mt-6'>
         <label htmlFor='uid' className='block text-sm font-medium text-gray-700'>
           Alls.to ID
         </label>
         <input
           id='uid'
           name='uid'
-          className='mt-1 w-64 block w-full rounded-md border border-gray-300 py-1 pl-3 pr-1 text-base focus:outline-none sm:text-sm'
-          value={uid}
-          onChange={evt => setUid(evt.target.value)}
-          placeholder='Enter your ID'
+          className='mt-1 block w-full rounded-md border border-gray-300 py-1 pl-3 pr-1 text-base focus:outline-none sm:text-sm'
+          value={uidInput}
+          disabled={uidDisabled}
+          onChange={evt => setUidInput(evt.target.value)}
+          placeholder='You can setup an ID. Cannot change'
         />
       </div>
 
@@ -110,7 +119,7 @@ export default function ForOwner ({ to, account }) {
         <input
           id='name'
           name='name'
-          className='mt-1 w-64 block w-full rounded-md border border-gray-300 py-1 pl-3 pr-1 text-base focus:outline-none sm:text-sm'
+          className='mt-1 block w-full rounded-md border border-gray-300 py-1 pl-3 pr-1 text-base focus:outline-none sm:text-sm'
           value={name}
           onChange={evt => setName(evt.target.value)}
           placeholder='Enter your name'
@@ -124,7 +133,7 @@ export default function ForOwner ({ to, account }) {
         <textarea
           id='description'
           name='description'
-          className='mt-1 w-64 block w-full rounded-md border border-gray-300 py-1 pl-3 pr-1 text-base focus:outline-none sm:text-sm'
+          className='mt-1 block w-full rounded-md border border-gray-300 py-1 pl-3 pr-1 text-base focus:outline-none sm:text-sm'
           onChange={evt => setDesc(evt.target.value)}
           value={desc}
           placeholder='Describe who you are'
@@ -138,7 +147,7 @@ export default function ForOwner ({ to, account }) {
         <select
           id='chain'
           name='chain'
-          className='mt-1 w-64 block w-full rounded-md border-gray-300 py-1 pl-3 pr-1 text-base focus:outline-none sm:text-sm'
+          className='mt-1 block w-full rounded-md border-gray-300 py-1 pl-3 pr-1 text-base focus:outline-none sm:text-sm'
           value={networkId}
           onChange={evt => setNetworkId(evt.target.value)}
         >

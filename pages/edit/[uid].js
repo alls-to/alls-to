@@ -20,41 +20,42 @@ function abbreviate (address, start = 4, end = start) {
 }
 
 export default function EditPage ({ metadata, to = null }) {
+  const seo = metadata && <NextSeo
+    title={metadata.title}
+    description={metadata.description}
+    openGraph={{
+      title: metadata.title,
+      description: metadata.description,
+      images: [
+        { url: metadata.previewImg }
+      ]
+    }}
+  />
   return (
     <>
-      <NextSeo
-        title={metadata.title}
-        description={metadata.description}
-        openGraph={{
-          title: metadata.title,
-          description: metadata.description,
-          images: [
-            { url: metadata.previewImg }
-          ]
-        }}
-      />
+      {seo}
       <PageEdit to={to} />
     </>
   )
 }
 
 export async function getServerSideProps ({ query, res }) {
-  let address = query.address
-  const stored = await Recipients.findOne({ _id: address })
-
-  const metadata = {
-    title: `→ ${abbreviate(address)}`,
-    description: process.env.METADATA_DESC || '',
-    previewImg: `https://img.meson.fi/to/${address}`
-  }
+  const uid = query.uid
+  const stored = await Recipients.findOne({ $or: [{ _id: uid }, { uid }] })
 
   if (stored) {
+    const address = stored._id
+    const metadata = {
+      title: `→ ${abbreviate(address)}`,
+      description: process.env.METADATA_DESC || '',
+      previewImg: `https://img.meson.fi/to/${address}`
+    }
     return {
       props: { metadata, to: { address, ...stored.toJSON() } }
     }
   }
 
   return {
-    props: { metadata, to: { address } }
+    props: { to: { address: uid } }
   }
 }

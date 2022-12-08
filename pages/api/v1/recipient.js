@@ -26,8 +26,15 @@ export default async function handler (req, res) {
     }
 
     const { uid, name, desc, networkId, tokens } = req.body
-    const result = await Recipients.findByIdAndUpdate(decoded.sub, { uid, name, desc, networkId, tokens }, { upsert: true, new: true })
-    res.json({ result })
+    try {
+      const result = await Recipients.findByIdAndUpdate(decoded.sub, { uid, name, desc, networkId, tokens }, { upsert: true, new: true })
+      res.json({ result })
+    } catch (e) {
+      const code = e.codeName === 'DuplicateKey' ? 409 : 400
+      res.status(code).json({
+        error: { code, message: e.message }
+      })
+    }
   } else {
     res.end()
   }

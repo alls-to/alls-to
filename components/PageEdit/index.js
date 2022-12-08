@@ -18,17 +18,21 @@ export default function PageTo ({ to }) {
       return
     }
     if (!account.sub) {
-      router.push('/')
+      router.replace('/')
     } else if (account.sub !== to.address) {
-      router.push(`/edit/${account.sub}`)
+      router.replace(`/edit/${account.sub}`)
+    } else if (to.uid && !location.pathname.endsWith(`/${to.uid}`)) {
+      router.replace(`/edit/${to.uid}`)
     }
-  }, [router, account, to.address])
+  }, [router, account, to])
+
+  if (!account || account.sub !== to.address) {
+    return null
+  }
 
   return (
     <div className='flex flex-col items-center'>
       <div className='mt-12'>
-        Address: {to.address}
-        <br />
         Connected: {browserExt?.currentAccount.address}
       </div>
       <button
