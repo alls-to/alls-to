@@ -2,13 +2,13 @@ import React from 'react'
 
 import presets from '@mesonfi/presets'
 
-export default function ForOwner ({ to, extensions, account }) {
-  const [id, setId] = React.useState('phil')
-
-  const [name, setName] = React.useState('')
-  const [desc, setDesc] = React.useState('')
-  const [networkId, setNetworkId] = React.useState('')
+export default function ForOwner ({ to, account }) {
+  const [uid, setUid] = React.useState(to.uid || '')
+  const [name, setName] = React.useState(to.name || '')
+  const [desc, setDesc] = React.useState(to.desc || '')
+  const [networkId, setNetworkId] = React.useState(to.networkId || '')
   const [tokens, setTokens] = React.useState(to.tokens || [])
+
   const [btn, setBtn] = React.useState('Save')
 
   const extType = account?.iss?.split(':')[0]
@@ -19,6 +19,12 @@ export default function ForOwner ({ to, extensions, account }) {
     }
     return presets.getAllNetworks().filter(n => n.extensions.includes(extType))
   }, [extType])
+
+  // React.useEffect(() => {
+  //   if (!networks.some(n => n.id === networkId)) {
+  //     setNetworkId(networks?.[0]?.id)
+  //   }
+  // }, [networks])
 
   const tokenList = React.useMemo(() => {
     if (!networkId) {
@@ -52,22 +58,14 @@ export default function ForOwner ({ to, extensions, account }) {
     }
 
     try {
-      const message = [
-        `Sign this message to update my receiving config`,
-        `Chain: ${presets.getNetwork(networkId).name}`,
-        `Tokens: ${tokens.join(',').toUpperCase()}`,
-        '',
-        `My address: ${to.address}`
-      ].join('\n')
-      const signature = await extensions.signMessage(message)
-
       setBtn('Saving...')
-      const res = await fetch(`/api/v1/recipient/${to.address}`, {
+      const res = await fetch(`/api/v1/recipient`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${account.token}`
         },
-        body: JSON.stringify({ message, signature })
+        body: JSON.stringify({ uid, name, desc, networkId, tokens })
       })
       const result = await res.json()
       setBtn('Saved!')
@@ -83,26 +81,24 @@ export default function ForOwner ({ to, extensions, account }) {
   }
 
   return (
-    <div className='flex flex-col mt-6'>
+    <div className='w-64 flex flex-col mt-6'>
 
-      <a href={`https://alls.to/${id}`} target='_blank' rel="noreferrer" className='text-indigo-600 hover:text-indigo-800 hover:underline'>
-        https://alls.to/{id}
+      <a href={`https://alls.to/${uid}`} target='_blank' rel="noreferrer" className='text-indigo-600 hover:text-indigo-800 hover:underline'>
+        https://alls.to/{uid}
       </a>
-
-      <b>Edit</b>
 
       <div>Avatar</div>
 
       <div>
-        <label htmlFor='id' className='block text-sm font-medium text-gray-700'>
+        <label htmlFor='uid' className='block text-sm font-medium text-gray-700'>
           Alls.to ID
         </label>
         <input
-          id='id'
-          name='id'
+          id='uid'
+          name='uid'
           className='mt-1 w-64 block w-full rounded-md border border-gray-300 py-1 pl-3 pr-1 text-base focus:outline-none sm:text-sm'
-          value={id}
-          onChange={evt => setId(evt.target.value)}
+          value={uid}
+          onChange={evt => setUid(evt.target.value)}
           placeholder='Enter your ID'
         />
       </div>
@@ -144,9 +140,7 @@ export default function ForOwner ({ to, extensions, account }) {
           name='chain'
           className='mt-1 w-64 block w-full rounded-md border-gray-300 py-1 pl-3 pr-1 text-base focus:outline-none sm:text-sm'
           value={networkId}
-          onChange={async evt => {
-            await extensions.switch(evt.target.value)
-          }}
+          onChange={evt => setNetworkId(evt.target.value)}
         >
           {networks.map(n => <option key={n.id} value={n.id}>{n.name}</option>)}
         </select>

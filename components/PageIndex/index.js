@@ -25,6 +25,10 @@ export default function PageIndex() {
     }
   }, [router, account])
 
+  if (!account || account.sub) {
+    return 'loading...'
+  }
+
   return (
     <div className='flex flex-col items-center pt-24 '>
       {extList.map(ext => (
