@@ -8,6 +8,7 @@ module.exports = {
       screens: {
       },
       fontFamily: {
+        sans: ['Roboto', '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif']
       },
       colors: {
       }

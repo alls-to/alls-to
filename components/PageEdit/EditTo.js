@@ -1,10 +1,11 @@
 import React from 'react'
 import { useRouter } from 'next/router'
+import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 
 import presets from '@mesonfi/presets'
 import * as api from 'lib/api'
 
-export default function ForOwner ({ to, account }) {
+export default function EditTo ({ to, account }) {
   const router = useRouter()
   const [uid, setUid] = React.useState(to.uid || to.address)
   const [uidInput, setUidInput] = React.useState(to.uid || '')
@@ -14,7 +15,7 @@ export default function ForOwner ({ to, account }) {
   const [networkId, setNetworkId] = React.useState(to.networkId || '')
   const [tokens, setTokens] = React.useState(to.tokens || [])
 
-  const [btn, setBtn] = React.useState('Save')
+  const [btn, setBtn] = React.useState('SAVE')
 
   const extType = account?.iss?.split(':')[0]
 
@@ -64,7 +65,7 @@ export default function ForOwner ({ to, account }) {
     }
 
     try {
-      setBtn('Saving...')
+      setBtn('SAVING...')
       const data = { name, desc, networkId, tokens }
       if (uidInput && !uidDisabled) {
         data.uid = uidInput
@@ -75,35 +76,33 @@ export default function ForOwner ({ to, account }) {
         setUidDisabled(uidInput)
         router.replace(`/edit/${uidInput}`)
       }
-      setBtn('Saved!')
-      setTimeout(() => setBtn('Save'), 2000)
+      setBtn('SAVED!')
+      setTimeout(() => setBtn('SAVE'), 1000)
     } catch (e) {
       if (e.code === 409) {
         // setUid(to.uid)
       }
       console.warn(e)
-      setBtn('Save')
+      setBtn('SAVE')
     }
   }
 
   return (
-    <div className='w-80 flex flex-col mt-6'>
-      <a href={`/${uid}`} target='_blank' rel='noreferrer' className='text-indigo-600 hover:underline'>
-        https://alls.to/{uid}
-      </a>
+    <div className='flex flex-col mt-4 mb-12 w-[428px] border border-white rounded-2xl bg-white/75 backdrop-blur-md p-8 shadow-2xl'>
+      <div className='self-center w-16 h-16 rounded-full'>
+        <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
+      </div>
 
-      <div>Avatar</div>
+      <div className='mt-2 self-center text-xs font-light text-[#0B2750]'>{to.address}</div>
 
-      <span className='text-xs'>{to.address}</span>
-
-      <div className='mt-6'>
-        <label htmlFor='uid' className='block text-sm font-medium text-gray-700'>
-          Alls.to ID
+      <div className='mt-5'>
+        <label htmlFor='uid' className='text-xs font-light text-[#0B2750]'>
+          Link
         </label>
         <input
           id='uid'
           name='uid'
-          className='mt-1 block w-full rounded-md border border-gray-300 py-1 pl-3 pr-1 text-base focus:outline-none sm:text-sm'
+          className='mt-1 w-full rounded-2xl bg-gray-100 p-4 text-base focus:outline-none text-base leading-none font-medium'
           value={uidInput}
           disabled={uidDisabled}
           onChange={evt => setUidInput(evt.target.value)}
@@ -111,42 +110,42 @@ export default function ForOwner ({ to, account }) {
         />
       </div>
 
-      <div>
-        <label htmlFor='name' className='block text-sm font-medium text-gray-700'>
+      <div className='mt-6'>
+        <label htmlFor='name' className='text-xs font-light text-[#0B2750]'>
           Name
         </label>
         <input
           id='name'
           name='name'
-          className='mt-1 block w-full rounded-md border border-gray-300 py-1 pl-3 pr-1 text-base focus:outline-none sm:text-sm'
+          className='mt-1 w-full rounded-2xl bg-gray-100 p-4 text-base focus:outline-none text-base leading-none font-medium'
           value={name}
           onChange={evt => setName(evt.target.value)}
           placeholder='Enter your name'
         />
       </div>
 
-      <div>
-        <label htmlFor='description' className='block text-sm font-medium text-gray-700'>
+      <div className='mt-6'>
+        <label htmlFor='description' className='text-xs font-light text-[#0B2750]'>
           Description
         </label>
         <textarea
           id='description'
           name='description'
-          className='mt-1 block w-full rounded-md border border-gray-300 py-1 pl-3 pr-1 text-base focus:outline-none sm:text-sm'
+          className='block mt-1 w-full h-20 resize-none rounded-2xl bg-gray-100 p-4 text-base border-none focus:outline-none text-base leading-none font-medium'
           onChange={evt => setDesc(evt.target.value)}
           value={desc}
           placeholder='Describe who you are'
         />
       </div>
 
-      <div>
-        <label htmlFor='chain' className='block text-sm font-medium text-gray-700'>
+      <div className='mt-6'>
+        <label htmlFor='chain' className='text-xs font-light text-[#0B2750]'>
           Chain
         </label>
         <select
           id='chain'
           name='chain'
-          className='mt-1 block w-full rounded-md border-gray-300 py-1 pl-3 pr-1 text-base focus:outline-none sm:text-sm'
+          className='mt-1 w-full rounded-2xl bg-gray-100 p-4 text-base border-none focus:outline-none text-base leading-none font-medium'
           value={networkId}
           onChange={evt => setNetworkId(evt.target.value)}
         >
@@ -154,8 +153,10 @@ export default function ForOwner ({ to, account }) {
         </select>
       </div>
 
-      <div className='flex flex-col'>
-        Accept:
+      <div className='mt-6'>
+        <label htmlFor='chain' className='text-xs font-light text-[#0B2750]'>
+          Accept
+        </label>
         <div className='ml-2 flex flex-col gap-1'>
           {tokenList.map(({ symbol, addr }) => (
             <label key={`token-${symbol}`}>
@@ -170,12 +171,26 @@ export default function ForOwner ({ to, account }) {
         </div>
       </div>
 
-      <button
-        className='items-center rounded-md px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none'
-        onClick={saveChange}
-      >
-        {btn}
-      </button>
+      <div className='mt-6 flex flex-row gap-4'>
+        <div className='flex-1'>
+          <button
+            className='w-full items-center rounded-xl h-12 text-base font-bold text-[#0B2750] border border-[#0B2750] bg-white focus:outline-none'
+            onClick={saveChange}
+          >
+            {btn}
+          </button>
+        </div>
+        <div className='flex-1'>
+          <a
+            href={`/${uid}`}
+            target='_blank'
+            rel='noreferrer'
+            className='flex w-full items-center justify-center rounded-xl h-12 text-base font-bold text-white bg-[#0B2750] focus:outline-none'
+          >
+            OPEN MY LINK
+          </a>
+        </div>
+      </div>
     </div>
   )
 }
