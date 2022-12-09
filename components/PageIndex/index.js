@@ -10,7 +10,7 @@ import Header from 'components/common/Header'
 import Card from 'components/common/Card'
 import Button from 'components/common/Button'
 
-import bg from 'components/common/bg.jpg'
+import bg from 'components/common/bg1.jpg'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 
@@ -28,11 +28,11 @@ export default function PageIndex() {
   const loading = !account || account.sub
 
   return (
-    <Container bg={bg} style={{ backgroundPosition: '25vw 0%' }}>
+    <Container bg={bg} bgClassName='scale-125'>
       <Header />
       <div className={classnames(
         'w-full flex flex-col md:flex-row items-start justify-between',
-        'xl:px-32 lg:px-24 md:px-16 px-8 md:mt-20 mt-6 md:gap-10 gap-6',
+        'xl:px-32 lg:px-24 md:px-16 px-8 md:mt-20 mt-6 md:gap-10 gap-6'
       )}>
         <div className='flex-1 max-w-[480px]'>
           <div className='xl:text-[64px] lg:text-[56px] md:text-[38px] text-[44px] font-light mb-2'>

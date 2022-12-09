@@ -1,17 +1,16 @@
 import React from 'react'
 import classnames from 'classnames'
 
-export default function Container ({ bg, className, style, children }) {
+export default function Container ({ bg, bgClassName, children }) {
   return (
-    <div
-      className={classnames(
-        'flex flex-col items-center h-full overflow-auto',
-        'bg-cover bg-top bg-no-repeat',
-        className
-      )}
-      style={{ backgroundImage: `url(${bg.src})`, ...style }}
-    >
-      {children}
+    <div className='relative h-full'>
+      <div
+        className={classnames('absolute inset-0 bg-cover bg-top bg-no-repeat', bgClassName)}
+        style={{ backgroundImage: `url(${bg.src})` }}
+      />
+      <div className='relative flex flex-col items-center h-full overflow-auto'>
+        {children}
+      </div>
     </div>
   )
 }

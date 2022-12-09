@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import Container from 'components/common/Container'
 import Header from 'components/common/Header'
 
-import bg from 'components/common/bg.jpg'
+import bg from 'components/common/bg2.jpg'
 
 import ToInfo from './ToInfo'
 
