@@ -42,10 +42,10 @@ export default function PageEdit ({ to }) {
             ? <img alt={browserExt.name} crossOrigin='anonymous' className='w-6 h-6' src={browserExt.ext.icon} />
             : <div className='w-6 h-6' />
         }
-        <div className='font-bold'>{abbreviate(browserExt?.currentAccount.address)}</div>
+        <div className='font-semibold'>{abbreviate(browserExt?.currentAccount.address)}</div>
         <button
           type='button'
-          className='items-center rounded-xl w-10 h-10 text-sm font-medium text-black bg-white hover:bg-gray-100 focus:outline-none shadow-md font-light text-lg'
+          className='items-center rounded-xl w-10 h-10 text-sm font-semibold text-black bg-white hover:bg-gray-100 focus:outline-none shadow font-light text-lg'
           onClick={logout}
         >
           x

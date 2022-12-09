@@ -16,6 +16,7 @@ module.exports = {
         sans: ['Poppins', '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif']
       },
       fontSize: {
+        sm: ['14px', '18px'],
         lg: ['20px', '32px'],
         xl: ['28px', '42px']
       },
@@ -26,6 +27,7 @@ module.exports = {
         }
       },
       boxShadow: {
+        DEFAULT: '0px 2px 6px rgba(0, 0, 0, 0.1)',
         lg: '0px 4px 40px rgba(0, 0, 0, 0.1)'
       }
     }

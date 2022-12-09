@@ -21,7 +21,7 @@ export default function TokenSelector ({ symbol, selected, onToggle }) {
       <div className='relative w-6 h-6 mr-2 rounded-full bg-white'>
         <Image alt={symbol} className='w-6 h-6' layout='fill' src={ICONS[symbol]} />
       </div>
-      <div className='text-base font-medium leading-none mt-0.5'>{symbol.toUpperCase()}</div>
+      <div className='text-sm font-semibold leading-none'>{symbol.toUpperCase()}</div>
     </div>
   )
 }

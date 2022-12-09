@@ -89,63 +89,63 @@ export default function EditTo ({ to, account }) {
 
   return (
     <Card bg='pos2' className='mt-4 mb-12 w-[428px]'>
-      <div className='self-center w-16 h-16 rounded-full'>
+      <div className='self-center w-16 h-16 rounded-full border-2 border-white box-content'>
         <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
       </div>
 
-      <div className='mt-4 relative'>
-        <label htmlFor='uid' className='text-xs font-light text-[#0B2750]'>
+      <div className='mt-4 relative text-sm'>
+        <label htmlFor='uid' className='text-[#0B2750]'>
           My Link
         </label>
         <input
           id='uid'
           name='uid'
-          className='mt-1 w-full rounded-2xl bg-gray-100 placeholder-gray-300 p-4 focus:outline-none text-base leading-none font-medium pl-[134px]'
+          className='mt-1 w-full rounded-2xl bg-glass-200 placeholder-gray-300 p-4 font-semibold pl-[120px] border-none focus:outline-none'
           value={uidInput}
           disabled={uidDisabled}
           onChange={evt => setUidInput(evt.target.value)}
           placeholder='my_id'
         />
-        <div className='absolute top-[50px] left-4 text-base leading-none font-medium text-gray-400'>https://alls.to/</div>
-        {!uidDisabled && <div className='ml-4 mt-1 text-xs font-light text-[#0B2750]'>You can setup an ID. Cannot change.</div>}
+        <div className='absolute top-[38px] left-4 font-semibold text-gray-400'>https://alls.to/</div>
+        {!uidDisabled && <div className='ml-4 mt-1 text-xs text-[#0B2750]'>You can setup an ID. Cannot change.</div>}
       </div>
 
-      <div className='mt-4'>
-        <label htmlFor='name' className='text-xs font-light text-[#0B2750]'>
+      <div className='mt-5 text-sm'>
+        <label htmlFor='name' className='text-[#0B2750]'>
           Name
         </label>
         <input
           id='name'
           name='name'
-          className='mt-1 w-full rounded-2xl bg-gray-100 p-4 focus:outline-none text-base leading-none font-medium'
+          className='mt-1 w-full rounded-2xl bg-glass-200 p-4 font-semibold border-none focus:outline-none'
           value={name}
           onChange={evt => setName(evt.target.value)}
           placeholder='Enter your name'
         />
       </div>
 
-      <div className='mt-4'>
-        <label htmlFor='description' className='text-xs font-light text-[#0B2750]'>
+      <div className='mt-5 text-sm'>
+        <label htmlFor='description' className='text-[#0B2750]'>
           Description
         </label>
         <textarea
           id='description'
           name='description'
-          className='block mt-1 w-full h-20 resize-none rounded-2xl bg-gray-100 p-4 border-none focus:outline-none text-base leading-none font-medium'
+          className='block mt-1 w-full h-20 resize-none rounded-2xl bg-glass-200 p-4 font-semibold border-none focus:outline-none '
           onChange={evt => setDesc(evt.target.value)}
           value={desc}
           placeholder='Describe who you are'
         />
       </div>
 
-      <div className='mt-4'>
-        <label htmlFor='chain' className='text-xs font-light text-[#0B2750]'>
+      <div className='mt-5 text-sm'>
+        <label htmlFor='chain' className='text-[#0B2750]'>
           Receive Stablecoins as
         </label>
         <select
           id='chain'
           name='chain'
-          className='mt-1 w-full rounded-2xl bg-gray-100 p-4 border-none focus:outline-none text-base leading-none font-medium'
+          className='mt-1 w-full rounded-2xl bg-glass-200 p-4 text-sm font-semibold border-none focus:outline-none'
           value={networkId}
           onChange={evt => setNetworkId(evt.target.value)}
         >
@@ -164,10 +164,10 @@ export default function EditTo ({ to, account }) {
         ))}
       </div>
 
-      <div className='mt-5 flex flex-row gap-4'>
+      <div className='mt-6 flex flex-row gap-4'>
         <div className='flex-1'>
           <button
-            className='w-full items-center rounded-xl h-12 text-base font-bold text-[#0B2750] border border-[#0B2750] bg-white focus:outline-none'
+            className='w-full items-center rounded-xl h-12 font-semibold text-[#0B2750] border border-[#0B2750] bg-white focus:outline-none'
             onClick={saveChange}
           >
             {btn}
@@ -178,7 +178,7 @@ export default function EditTo ({ to, account }) {
             href={`/${uid}`}
             target='_blank'
             rel='noreferrer'
-            className='flex w-full items-center justify-center rounded-xl h-12 text-base font-bold text-white bg-[#0B2750] focus:outline-none'
+            className='flex w-full items-center justify-center rounded-xl h-12 font-semibold text-white bg-[#0B2750] focus:outline-none'
           >
             OPEN MY LINK
           </a>

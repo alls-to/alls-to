@@ -41,3 +41,27 @@
   transform: rotate(72.36deg);
   border-radius: 50%;
 }
+
+.bubble_3 {
+  position: absolute;
+  width: 546.29px;
+  height: 702.51px;
+  
+  background: linear-gradient(180deg, #4218B7 0%, #0082DC 36.98%, #30D8DC 74.48%, #17FFD2 100%);
+  opacity: 0.15;
+  filter: blur(100px);
+  transform: rotate(38.43deg);
+  border-radius: 50%;
+}
+
+.bubble_4 {
+  position: absolute;
+  width: 349.79px;
+  height: 768.38px;
+  
+  background: linear-gradient(180deg, #4218B7 0%, #0082DC 36.98%, #30D8DC 74.48%, #17FFD2 100%);
+  opacity: 0.15;
+  filter: blur(100px);
+  transform: rotate(-132.93deg);
+  border-radius: 50%;
+}

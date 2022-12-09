@@ -15,12 +15,12 @@ export default function ToInfo ({ to }) {
 
   return (
     <Card bg='pos2' className='mt-4 mb-12 px-2 md:px-4 w-[428px]'>
-      <div className='self-center w-16 h-16 rounded-full'>
+      <div className='self-center w-16 h-16 rounded-full border-2 border-white box-content'>
         <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
       </div>
       
       <div className='my-4 flex flex-col items-center'>
-        <div className='font-bold text-xl'>{to.name}</div>
+        <div className='font-semibold text-xl mb-1'>{to.name}</div>
         <div className='font-light text-sm text-gray-800'>{to.desc}</div>
       </div>
 
