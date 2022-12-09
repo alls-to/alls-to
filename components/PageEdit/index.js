@@ -16,7 +16,7 @@ const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 export default function PageEdit ({ to }) {
   const router = useRouter()
   const { extensions, browserExt } = useExtensions()
-  const { account, logout } = useWeb3Login(extensions, signingMessage, to.address)
+  const { account, logout } = useWeb3Login(extensions, signingMessage, { duration: 86400 * 7, loginAddress: to.address })
 
   React.useEffect(() => {
     if (!account) {

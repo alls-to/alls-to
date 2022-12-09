@@ -17,7 +17,7 @@ const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 export default function PageIndex() {
   const router = useRouter()
   const { extensions } = useExtensions()
-  const { account, login } = useWeb3Login(extensions, signingMessage)
+  const { account, login } = useWeb3Login(extensions, signingMessage, { duration: 86400 * 7 })
 
   React.useEffect(() => {
     if (account?.sub) {
