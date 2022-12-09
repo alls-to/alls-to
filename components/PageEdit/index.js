@@ -8,7 +8,6 @@ import { abbreviate } from 'lib'
 import Container from 'components/common/Container'
 import Header from 'components/common/Header'
 
-import bg from 'components/common/bg2.jpg'
 import EditTo from './EditTo'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
@@ -36,7 +35,7 @@ export default function PageEdit ({ to }) {
   }
 
   return (
-    <Container bg={bg}>
+    <Container>
       <Header>
         {
           browserExt

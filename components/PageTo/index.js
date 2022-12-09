@@ -4,8 +4,6 @@ import { useRouter } from 'next/router'
 import Container from 'components/common/Container'
 import Header from 'components/common/Header'
 
-import bg from 'components/common/bg2.jpg'
-
 import ToInfo from './ToInfo'
 
 export default function PageTo ({ to }) {
@@ -20,7 +18,7 @@ export default function PageTo ({ to }) {
   }, [router, to])
 
   return (
-    <Container bg={bg}>
+    <Container>
       <Header logoSrc='https://alls.to' />
       <ToInfo to={to} />
     </Container>
