@@ -88,7 +88,7 @@ export default function EditTo ({ to, account }) {
   }
 
   return (
-    <Card className='mt-4 mb-12 w-[428px]'>
+    <Card bg='pos2' className='mt-4 mb-12 w-[428px]'>
       <div className='self-center w-16 h-16 rounded-full'>
         <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
       </div>
@@ -100,13 +100,13 @@ export default function EditTo ({ to, account }) {
         <input
           id='uid'
           name='uid'
-          className='mt-1 w-full rounded-2xl bg-gray-100 placeholder-gray-300 p-4 focus:outline-none text-base leading-none font-medium pl-[118px]'
+          className='mt-1 w-full rounded-2xl bg-gray-100 placeholder-gray-300 p-4 focus:outline-none text-base leading-none font-medium pl-[134px]'
           value={uidInput}
           disabled={uidDisabled}
           onChange={evt => setUidInput(evt.target.value)}
           placeholder='my_id'
         />
-        <div className='absolute top-[45.5px] left-4 text-base leading-none font-medium text-gray-400'>https://alls.to/</div>
+        <div className='absolute top-[50px] left-4 text-base leading-none font-medium text-gray-400'>https://alls.to/</div>
         {!uidDisabled && <div className='ml-4 mt-1 text-xs font-light text-[#0B2750]'>You can setup an ID. Cannot change.</div>}
       </div>
 

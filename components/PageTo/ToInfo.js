@@ -14,7 +14,7 @@ export default function ToInfo ({ to }) {
   const uid = to.uid || to.address
 
   return (
-    <Card className='mt-4 mb-12 w-[428px] px-4 items-center'>
+    <Card bg='pos2' className='mt-4 mb-12 p-2 md:p-4 w-[428px]'>
       <div className='self-center w-16 h-16 rounded-full'>
         <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
       </div>
@@ -29,9 +29,9 @@ export default function ToInfo ({ to }) {
         to={to}
         onCompleted={() => {}}
       />
-      <div className='mt-4 p-2 bg-white rounded-lg'>
+      {/* <div className='mt-4 p-2 bg-white rounded-lg'>
         <QRCodeSVG size={108} value={`https://alls.to/${to.uid}`} />
-      </div>
+      </div> */}
     </Card>
   )
 }

@@ -51,7 +51,9 @@ export default function PageEdit ({ to }) {
           x
         </button>
       </Header>
-      <EditTo to={to} extensions={extensions} account={account} />
+      <div className='max-w-full px-4'>
+        <EditTo to={to} extensions={extensions} account={account} />
+      </div>
     </Container>
   )
 }

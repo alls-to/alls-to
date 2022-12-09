@@ -20,7 +20,9 @@ export default function PageTo ({ to }) {
   return (
     <Container>
       <Header logoSrc='https://alls.to' />
-      <ToInfo to={to} />
+      <div className='max-w-full px-4'>
+        <ToInfo to={to} />
+      </div>
     </Container>
   )
 }

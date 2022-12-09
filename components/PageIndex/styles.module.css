@@ -1,4 +1,4 @@
-.bubble_1 {
+.bubble {
   position: absolute;
   width: 715.8px;
   height: 715.8px;
@@ -7,49 +7,5 @@
   opacity: 0.2;
   filter: blur(100px);
   transform: rotate(143.98deg);
-  border-radius: 50%;
-}
-
-.bubble_2 {
-  position: absolute;
-  width: 419.46px;
-  height: 419.46px;
-
-  background: linear-gradient(180deg, #4218B7 0%, #0082DC 36.98%, #30D8DC 74.48%, #17FFD2 100%);
-  filter: blur(15px);
-  transform: rotate(-60deg);
-  border-radius: 50%;
-}
-
-.bubble_shadow_2 {
-  position: absolute;
-  width: 419.46px;
-  height: 419.46px;
-
-  background: linear-gradient(180deg, #4218B7 0%, #0082DC 36.98%, #30D8DC 71.35%, #17FFD2 100%);
-  filter: blur(40px);
-  transform: rotate(-60deg);
-  border-radius: 50%;
-}
-
-.bubble_3 {
-  position: absolute;
-  width: 159.94px;
-  height: 159.94px;
-
-  background: linear-gradient(180deg, #4218B7 0%, #0082DC 36.98%, #30D8DC 74.48%, #17FFD2 100%);
-  filter: blur(10px);
-  transform: rotate(72.36deg);
-  border-radius: 50%;
-}
-
-.bubble_shadow_3 {
-  position: absolute;
-  width: 159.94px;
-  height: 159.94px;
-
-  background: linear-gradient(180deg, #4218B7 0%, #0082DC 36.98%, #30D8DC 71.35%, #17FFD2 100%);
-  filter: blur(20px);
-  transform: rotate(72.36deg);
   border-radius: 50%;
 }

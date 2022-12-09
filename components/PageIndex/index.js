@@ -37,7 +37,7 @@ export default function PageIndex() {
         'main-padding mt-8 xs:mt-[50px] gap-12'
       )}>
         <div className='relative flex-1 max-w-[540px] xs:mb-6 sm:mb-0'>
-          <div className={classnames('left-[-272px] top-[-110px]', styles.bubble_1)} />
+          <div className={classnames('left-[-272px] top-[-110px]', styles.bubble)} />
           <div className='relative z-10'>
             <div className='text-title font-extralight mb-2'>
               <div>Simplify Your</div>
@@ -57,13 +57,7 @@ export default function PageIndex() {
           </div>
         </div>
         <div className='relative self-center sm:self-start max-w-full w-[360px] sm:w-[300px] md:w-[360px] mb-12'>
-          <div className='absolute inset-0 z-0'>
-            <div className={classnames('left-[96px] top-[-135px]', styles.bubble_shadow_2)} />
-            <div className={classnames('left-[96px] top-[-135px]', styles.bubble_2)} />
-            <div className={classnames('left-[-76px] top-[346px]', styles.bubble_shadow_3)} />
-            <div className={classnames('left-[-76px] top-[346px]', styles.bubble_3)} />
-          </div>
-          <Card className='z-10'>
+          <Card>
             <div className='text-xl font-bold mb-2'>Create My Link</div>
             <div className='mb-5 font-light'>Choose the wallet you want to connect and customize your link.</div>
             <LoginWallets loading={loading} extensions={extensions} login={login} />
