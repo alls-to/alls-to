@@ -37,7 +37,7 @@ export default function PageIndex() {
         'main-padding mt-8 xs:mt-[50px] gap-12'
       )}>
         <div className='relative flex-1 max-w-[540px] xs:mb-6 sm:mb-0'>
-          <div className={classnames('left-[-272px] top-[-110px]', styles.bubble)} />
+          <div className={classnames('left-[-272px] top-[-180px]', styles.bubble)} />
           <div className='relative z-10'>
             <div className='text-title font-extralight mb-2'>
               <div>Simplify Your</div>
@@ -49,7 +49,7 @@ export default function PageIndex() {
             <div className='text-base xs:text-lg sm:text-base md:text-lg font-light mb-6 md:mb-12'>
               Receive fund with certern network & stablecoins. Pay with any network & stablecoin you like, and let alls.to take care of cross-chain.
             </div>
-            <div className='w-fit grid grid-cols-7 md:gap-x-6 gap-x-4 gap-y-4'>
+            <div className='w-fit grid grid-cols-7 md:gap-x-6 gap-x-4 gap-y-4 opacity-75'>
             {icons.map((icon, index) => (
               <Image key={`icon-${index}`} alt='' width={24} height={24} src={icon.src} />
             ))}

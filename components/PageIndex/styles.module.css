@@ -1,11 +1,11 @@
 .bubble {
   position: absolute;
-  width: 715.8px;
-  height: 715.8px;
+  width: 740px;
+  height: 740px;
 
   background: linear-gradient(180deg, #4218B7 0%, #0082DC 36.98%, #30D8DC 74.48%, #17FFD2 100%);
-  opacity: 0.2;
-  filter: blur(100px);
+  opacity: 0.18;
+  filter: blur(50px);
   transform: rotate(143.98deg);
   border-radius: 50%;
 }

@@ -36,12 +36,12 @@ export default function Card ({ className, children, bg = 'pos1' }) {
   return (
     <div className='relative'>
       {backgrounds[bg]()}
-      <div className={classnames(
-        'flex flex-col max-w-full border-[1.5px] border-white/60 bg-white/60 rounded-2xl backdrop-blur-3xl p-6 md:p-8 shadow-lg',
+      <dialog className={classnames(
+        'relative flex flex-col max-w-full border-[1.5px] border-white/60 bg-white/60 rounded-2xl backdrop-blur-3xl p-6 md:p-8 shadow-lg',
         className
       )}>
         {children}
-      </div>
+      </dialog>
     </div>
   )
 }
