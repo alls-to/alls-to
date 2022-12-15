@@ -100,14 +100,14 @@ export default function EditTo ({ to, account }) {
         <input
           id='uid'
           name='uid'
-          className='mt-1 w-full rounded-2xl bg-glass-200 placeholder-gray-300 p-4 font-semibold pl-[120px] border-none focus:outline-none'
+          className='mt-1 w-full rounded-2xl bg-glass-200 placeholder-gray-400/60 p-4 font-semibold pl-[121px] border-none focus:outline-none'
           value={uidInput}
           disabled={uidDisabled}
           onChange={evt => setUidInput(evt.target.value)}
-          placeholder='my_id'
+          placeholder='my_customized_id'
         />
         <div className='absolute top-[38px] left-4 font-semibold text-gray-400'>https://alls.to/</div>
-        {!uidDisabled && <div className='ml-4 mt-1 text-xs text-[#0B2750]'>You can setup an ID. Cannot change.</div>}
+        {!uidDisabled && <div className='ml-4 mt-1 text-xs text-[#0B2750]'>You can setup a customized ID once. Cannot change.</div>}
       </div>
 
       <div className='mt-5 text-sm'>
@@ -117,7 +117,7 @@ export default function EditTo ({ to, account }) {
         <input
           id='name'
           name='name'
-          className='mt-1 w-full rounded-2xl bg-glass-200 p-4 font-semibold border-none focus:outline-none'
+          className='mt-1 w-full rounded-2xl bg-glass-200 p-4 font-semibold placeholder-gray-400 border-none focus:outline-none'
           value={name}
           onChange={evt => setName(evt.target.value)}
           placeholder='Enter your name'
@@ -131,7 +131,7 @@ export default function EditTo ({ to, account }) {
         <textarea
           id='description'
           name='description'
-          className='block mt-1 w-full h-20 resize-none rounded-2xl bg-glass-200 p-4 font-semibold border-none focus:outline-none '
+          className='block mt-1 w-full h-20 resize-none rounded-2xl bg-glass-200 p-4 font-semibold placeholder-gray-400 text-sm border-none focus:outline-none '
           onChange={evt => setDesc(evt.target.value)}
           value={desc}
           placeholder='Describe who you are'
