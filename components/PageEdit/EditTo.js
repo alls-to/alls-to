@@ -6,6 +6,7 @@ import presets from '@mesonfi/presets'
 import * as api from 'lib/api'
 
 import Card from 'components/common/Card'
+import Input from 'components/common/Input'
 import TokenSelector from 'components/common/TokenSelector'
 
 export default function EditTo ({ to, account }) {
@@ -93,65 +94,48 @@ export default function EditTo ({ to, account }) {
         <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
       </div>
 
-      <div className='mt-4 relative text-sm'>
-        <label htmlFor='uid' className='text-[#0B2750]'>
-          My Link
-        </label>
-        <input
-          id='uid'
-          name='uid'
-          className='mt-1 w-full rounded-2xl bg-glass-200 placeholder-gray-400/60 p-4 font-semibold pl-[121px] border-none focus:outline-none'
-          value={uidInput}
-          disabled={uidDisabled}
-          onChange={evt => setUidInput(evt.target.value)}
-          placeholder='my_customized_id'
-        />
+      <Input
+        id='uid'
+        className='mt-4'
+        inputClassName='pl-[121px]'
+        label='My Link'
+        value={uidInput}
+        onChange={setUidInput}
+        disabled={uidDisabled}
+        placeholder='my_customized_id'
+        underline={!uidDisabled && 'You can setup a customized ID once. Cannot change.'}
+      >
         <div className='absolute top-[38px] left-4 font-semibold text-gray-400'>https://alls.to/</div>
-        {!uidDisabled && <div className='ml-4 mt-1 text-xs text-[#0B2750]'>You can setup a customized ID once. Cannot change.</div>}
-      </div>
+      </Input>
 
-      <div className='mt-5 text-sm'>
-        <label htmlFor='name' className='text-[#0B2750]'>
-          Name
-        </label>
-        <input
-          id='name'
-          name='name'
-          className='mt-1 w-full rounded-2xl bg-glass-200 p-4 font-semibold placeholder-gray-400 border-none focus:outline-none'
-          value={name}
-          onChange={evt => setName(evt.target.value)}
-          placeholder='Enter your name'
-        />
-      </div>
+      <Input
+        id='name'
+        className='mt-5'
+        label='Name'
+        value={name}
+        onChange={setName}
+        placeholder='Enter your name'
+      />
 
-      <div className='mt-5 text-sm'>
-        <label htmlFor='description' className='text-[#0B2750]'>
-          Description
-        </label>
-        <textarea
-          id='description'
-          name='description'
-          className='block mt-1 w-full h-20 resize-none rounded-2xl bg-glass-200 p-4 font-semibold placeholder-gray-400 text-sm border-none focus:outline-none '
-          onChange={evt => setDesc(evt.target.value)}
-          value={desc}
-          placeholder='Describe who you are'
-        />
-      </div>
+      <Input
+        id='description'
+        className='mt-5'
+        type='textarea'
+        label='Description'
+        value={desc}
+        onChange={setDesc}
+        placeholder='Describe who you are'
+      />
 
-      <div className='mt-5 text-sm'>
-        <label htmlFor='chain' className='text-[#0B2750]'>
-          Receive Stablecoins as
-        </label>
-        <select
-          id='chain'
-          name='chain'
-          className='mt-1 w-full rounded-2xl bg-glass-200 p-4 text-sm font-semibold border-none focus:outline-none'
-          value={networkId}
-          onChange={evt => setNetworkId(evt.target.value)}
-        >
-          {networks.map(n => <option key={n.id} value={n.id}>{n.name}</option>)}
-        </select>
-      </div>
+      <Input
+        id='chain'
+        className='mt-5'
+        type='select'
+        label='Receive Stablecoins as'
+        value={networkId}
+        onChange={setNetworkId}
+        options={networks}
+      />
 
       <div className='mt-3 flex flex-row gap-3'>
         {tokenList.map(({ symbol, addr }) => (
@@ -167,7 +151,7 @@ export default function EditTo ({ to, account }) {
       <div className='mt-6 flex flex-row gap-4'>
         <div className='flex-1'>
           <button
-            className='w-full items-center rounded-xl h-12 font-semibold text-[#0B2750] border border-[#0B2750] bg-white focus:outline-none'
+            className='w-full items-center rounded-xl h-12 font-semibold text-primary border border-primary bg-white focus:outline-none'
             onClick={saveChange}
           >
             {btn}
@@ -178,7 +162,7 @@ export default function EditTo ({ to, account }) {
             href={`/${uid}`}
             target='_blank'
             rel='noreferrer'
-            className='flex w-full items-center justify-center rounded-xl h-12 font-semibold text-white bg-[#0B2750] focus:outline-none'
+            className='flex w-full items-center justify-center rounded-xl h-12 font-semibold text-white bg-primary focus:outline-none'
           >
             OPEN MY LINK
           </a>

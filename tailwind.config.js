@@ -21,6 +21,7 @@ module.exports = {
         xl: ['28px', '42px']
       },
       colors: {
+        primary: '#0B2750',
         glass: {
           200: 'rgba(11, 39, 80, 0.04)',
           300: 'rgba(11, 39, 80, 0.08)'
