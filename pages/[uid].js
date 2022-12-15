@@ -41,5 +41,5 @@ export async function getServerSideProps ({ query, res }) {
     }
   }
 
-  return { props: {} }
+  return { redirect: { destination: '/' } }
 }

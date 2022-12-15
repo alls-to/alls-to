@@ -14,7 +14,7 @@
   "dependencies": {
     "@mesonfi/extensions": "^0.1.0-rc.1",
     "@mesonfi/presets": "^1.3.0-rc.1",
-    "@mesonfi/to": "^0.1.5-rc.3",
+    "@mesonfi/to": "^0.1.5-rc.4",
     "@mesonfi/web3-jwt": "^0.1.0-rc.1",
     "@tailwindcss/forms": "^0.5.3",
     "autoprefixer": "^10.4.12",
