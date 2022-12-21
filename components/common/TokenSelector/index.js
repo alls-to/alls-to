@@ -1,6 +1,7 @@
 import React from 'react'
-import classnames from 'classnames'
 import Image from 'next/image'
+
+import Button from '../Button'
 
 import usdc from './usdc.png'
 import usdt from './usdt.png'
@@ -10,18 +11,11 @@ const ICONS = { usdc, usdt, busd }
 
 export default function TokenSelector ({ symbol, selected, onToggle }) {
   return (
-    <div
-      onClick={() => onToggle?.(symbol)}
-      className={classnames(
-        'flex items-center p-1 pr-3 rounded-full border border-primary',
-        selected ? 'bg-primary text-white' : 'text-primary',
-        onToggle && 'cursor-pointer'
-      )}
-    >
-      <div className='relative w-6 h-6 mr-2 rounded-full bg-white'>
+    <Button size='round' type={selected ? 'primary' : 'default'} onClick={() => onToggle(symbol)}>
+      <div className='-ml-1 relative w-6 h-6 rounded-full bg-white'>
         <Image alt={symbol} className='w-6 h-6' layout='fill' src={ICONS[symbol]} />
       </div>
-      <div className='text-sm font-semibold leading-none'>{symbol.toUpperCase()}</div>
-    </div>
+      <div className='ml-2'>{symbol.toUpperCase()}</div>
+    </Button>
   )
 }

@@ -7,10 +7,30 @@ import { useWeb3Login } from '@mesonfi/web3-jwt/react'
 import { abbreviate } from 'lib'
 import Container from 'components/common/Container'
 import Header from 'components/common/Header'
+import CentralCardWithSideInfo from 'components/common/Card/CentralCardWithSideInfo'
 
 import EditTo from './EditTo'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
+
+const steps = [
+  {
+    title: 'Choose Link Id',
+    desc: 'Link suffix can only be changed once. Choose it wisely.'
+  },
+  {
+    title: 'Update Name & Description',
+    desc: 'These two will show up when opening your link.'
+  },
+  {
+    title: 'Choose Network & Token',
+    desc: 'You will receive with the network & token you chose no matter which the sender is using.'
+  },
+  {
+    title: 'Save, Preview & Share',
+    desc: `When your updates are saved, you're now ready to open your link to preview and send.`
+  }
+]
 
 export default function PageEdit ({ to }) {
   const router = useRouter()
@@ -51,9 +71,9 @@ export default function PageEdit ({ to }) {
           x
         </button>
       </Header>
-      <div className='max-w-full px-4'>
+      <CentralCardWithSideInfo side='How to customize my link?' steps={steps} >
         <EditTo to={to} extensions={extensions} account={account} />
-      </div>
+      </CentralCardWithSideInfo>
     </Container>
   )
 }

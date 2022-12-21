@@ -4,14 +4,14 @@ module.exports = {
     './{pages,components}/**/*.{js,jsx,ts,tsx}'
   ],
   theme: {
+    screens: {
+      xs: '440px',
+      sm: '720px',
+      md: '860px',
+      lg: '1000px',
+      xl: '1200px',
+    },
     extend: {
-      screens: {
-        xl: '1200px',
-        lg: '1000px',
-        md: '860px',
-        sm: '720px',
-        xs: '440px',
-      },
       fontFamily: {
         sans: ['Poppins', '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif']
       },

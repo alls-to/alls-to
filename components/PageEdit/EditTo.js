@@ -8,6 +8,7 @@ import * as api from 'lib/api'
 import Card from 'components/common/Card'
 import Input from 'components/common/Input'
 import TokenSelector from 'components/common/TokenSelector'
+import Button from 'components/common/Button'
 
 export default function EditTo ({ to, account }) {
   const router = useRouter()
@@ -89,7 +90,7 @@ export default function EditTo ({ to, account }) {
   }
 
   return (
-    <Card bg='pos2' className='mt-4 mb-12 w-[428px]'>
+    <Card bg='pos2'>
       <div className='self-center w-16 h-16 rounded-full border-2 border-white box-content'>
         <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
       </div>
@@ -150,22 +151,16 @@ export default function EditTo ({ to, account }) {
 
       <div className='mt-6 flex flex-row gap-4'>
         <div className='flex-1'>
-          <button
-            className='w-full items-center rounded-xl h-12 font-semibold text-primary border border-primary bg-white focus:outline-none'
-            onClick={saveChange}
-          >
-            {btn}
-          </button>
+          <Button onClick={saveChange}>{btn}</Button>
         </div>
         <div className='flex-1'>
-          <a
+          <Button
+            as='a'
+            type='primary'
             href={`/${uid}`}
             target='_blank'
             rel='noreferrer'
-            className='flex w-full items-center justify-center rounded-xl h-12 font-semibold text-white bg-primary focus:outline-none'
-          >
-            OPEN MY LINK
-          </a>
+          >OPEN MY LINK</Button>
         </div>
       </div>
     </Card>

@@ -12,7 +12,7 @@ const getEl = type => {
 
 const getDefaultClassNames = type => {
   if (type === 'textarea') {
-    return `${defaultInputClassName} h-20 resize-none`
+    return `${defaultInputClassName} h-20 resize-none pr-2 pb-2`
   }
   return defaultInputClassName
 }

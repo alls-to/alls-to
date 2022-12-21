@@ -91,10 +91,12 @@ function LoginWallets ({ loading, extensions, login }) {
   }
 
   return (
-    <div className='flex flex-col gap-4 -mx-8 px-8 max-h-[320px] overflow-y-auto'>
+    <div className='flex flex-col gap-4 -mx-6 px-6 md:-mx-8 md:px-8 max-h-[320px] overflow-y-auto'>
       {extList.map(ext => (
         <Button
           key={ext.id}
+          size='lg'
+          type='glass'
           className='justify-between'
           onClick={() => ext.notInstalled ? window.open(ext.installLink, '_blank') : login(ext)}
         >

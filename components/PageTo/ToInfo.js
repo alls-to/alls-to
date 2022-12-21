@@ -14,7 +14,7 @@ export default function ToInfo ({ to }) {
   const uid = to.uid || to.address
 
   return (
-    <Card bg='pos2' className='mt-4 mb-12 px-2 md:px-4 w-[428px]'>
+    <Card bg='pos2' className='px-2 md:px-4'>
       <div className='self-center w-16 h-16 rounded-full border-2 border-white box-content'>
         <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
       </div>
