@@ -37,7 +37,7 @@ export default function Card ({ className, children, bg = 'pos1' }) {
     <div className='relative w-full'>
       {backgrounds[bg]()}
       <dialog className={classnames(
-        'relative flex flex-col w-full border-[1.5px] border-white/60 bg-white/60 rounded-2xl backdrop-blur-3xl p-6 md:p-8 shadow-lg',
+        'relative flex flex-col w-full border-[1.5px] border-white/60 bg-white/60 rounded-2xl backdrop-blur-3xl p-6 shadow-lg',
         className
       )}>
         {children}

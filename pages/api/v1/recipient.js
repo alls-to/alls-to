@@ -1,5 +1,3 @@
-import { utils } from 'ethers'
-import presets from '@mesonfi/presets'
 import { verify } from '@mesonfi/web3-jwt'
 
 import { Recipients } from 'lib/db'

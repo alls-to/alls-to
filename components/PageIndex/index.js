@@ -12,11 +12,13 @@ import Container from 'components/common/Container'
 import Header from 'components/common/Header'
 import Card from 'components/common/Card'
 import Button from 'components/common/Button'
+import NetworkIcon from 'components/common/Icon/NetworkIcon'
 
-import icons from './icons'
 import styles from './styles.module.css'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
+
+const icons = 'eth|polygon|bnb|arb|opt|avax|zksync|aurora|tron|aptos|ftm|cronos|movr|beam|cfx'.split('|')
 
 export default function PageIndex() {
   const router = useRouter()
@@ -51,15 +53,17 @@ export default function PageIndex() {
             <div className='text-base xs:text-lg sm:text-base md:text-lg font-light mb-6 md:mb-12'>
               Receive fund with certern network & stablecoins. Pay with any network & stablecoin you like, and let alls.to take care of cross-chain.
             </div>
-            <div className='w-fit grid grid-cols-7 md:gap-x-6 gap-x-4 gap-y-4 opacity-75'>
-            {icons.map((icon, index) => (
-              <Image key={`icon-${index}`} alt='' width={24} height={24} src={icon.src} />
+            <div className='w-fit grid grid-cols-8 md:gap-x-6 gap-x-4 gap-y-4'>
+            {icons.map(id => (
+              <div key={`icon-${id}`} className='w-7 h-7 border-[2px] border-white rounded-full'>
+                <NetworkIcon id={id} />
+              </div>
             ))}
             </div>
           </div>
         </div>
         <div className='relative self-center sm:self-start max-w-full w-[360px] sm:w-[300px] md:w-[360px] mb-12'>
-          <Card>
+          <Card className='p-6 md:p-8'>
             <div className='text-xl font-bold mb-2'>Create My Link</div>
             <div className='mb-5 font-light'>Choose the wallet you want to connect and customize your link.</div>
             <LoginWallets loading={loading} extensions={extensions} login={login} />
