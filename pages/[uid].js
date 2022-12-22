@@ -34,7 +34,7 @@ export async function getServerSideProps ({ query, res }) {
     const metadata = {
       title: `→ ${found.name || abbreviate(address)}`,
       description: process.env.METADATA_DESC || '',
-      previewImg: `https://img.meson.fi/to/${address}`
+      previewImg: `https://img.meson.fi/to/${found.uid || uid}`
     }
     return {
       props: { metadata, to: { address, ...found.toJSON() } }
