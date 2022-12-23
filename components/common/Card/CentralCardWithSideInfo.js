@@ -12,7 +12,7 @@ export default function CentralCardWithSideInfo ({ children, side, steps, button
       <div className='max-w-full w-[460px] px-4'>
         {children}
       </div>
-      <div className='mt-12 mb-6 mx-4 flex-1 flex flex-col items-end'>
+      <div className='mt-12 sm:mt-0 mb-6 mx-4 flex-1 flex flex-col items-end'>
         <IntroRegion side={side} steps={steps} button={button} />
       </div>
     </div>
