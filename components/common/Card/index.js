@@ -16,13 +16,15 @@ function CardBackground1 () {
 
 function CardBackground2 () {
   return (
-    <div className='absolute inset-0 z-0'>
-      <div className={classnames('left-[240px] top-[-135px]', styles.bubble_1)} />
-      <div className={classnames('left-[240px] top-[-135px]', styles.bubble_shadow_1)} />
-      <div className={classnames('left-[-120px] top-[400px]', styles.bubble_2)} />
-      <div className={classnames('left-[-120px] top-[400px]', styles.bubble_shadow_2)} />
-      <div className={classnames('left-[-350px] top-[-30px]', styles.bubble_3)} />
-      <div className={classnames('left-[340px] top-[175px]', styles.bubble_4)} />
+    <div className='absolute w-[2400px] h-[max(100vh,calc(100%+124px))] -left-[1000px] -top-[76px] overflow-visible sm:overflow-hidden z-0'>
+      <div className='relative left-[1000px] top-[76px]'>
+        <div className={classnames('left-[240px] top-[-135px]', styles.bubble_1)} />
+        <div className={classnames('left-[240px] top-[-135px]', styles.bubble_shadow_1)} />
+        <div className={classnames('left-[-120px] top-[400px]', styles.bubble_2)} />
+        <div className={classnames('left-[-120px] top-[400px]', styles.bubble_shadow_2)} />
+        <div className={classnames('left-[-350px] top-[-30px]', styles.bubble_3)} />
+        <div className={classnames('left-[340px] top-[175px]', styles.bubble_4)} />
+      </div>
     </div>
   )
 }

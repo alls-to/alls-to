@@ -120,7 +120,7 @@ export default function EditTo ({ to, account }) {
         underline={!uidDisabled && 'You can setup a customized ID once. Cannot change.'}
       >
         <div className='absolute top-[38px] left-4 font-semibold text-gray-400'>https://alls.to/</div>
-        <div className='absolute top-[30px] right-2'>
+        <div className='absolute top-[33px] right-2'>
           <Button
             as='a'
             size='sm'
@@ -150,7 +150,7 @@ export default function EditTo ({ to, account }) {
       <Input
         id='description'
         className='mt-5'
-        inputClassName='pb-8'
+        inputClassName='pb-[28px]'
         type='textarea'
         label='Description'
         value={desc}
