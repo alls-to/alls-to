@@ -58,7 +58,7 @@ export default function ToInfo ({ to }) {
         </div>
       </div>
 
-      <div className='mt-4 -mx-2'>
+      <div className='mt-4 -mx-2 -mb-4'>
         <MesonToEmbedded
           appId='alls-to'
           to={{ addr: to.address, chain: to.networkId, tokens: to.tokens }}
