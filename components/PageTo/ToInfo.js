@@ -1,4 +1,5 @@
 import React from 'react'
+import classnames from 'classnames'
 import dynamic from 'next/dynamic'
 import { saveAs } from 'file-saver'
 
@@ -16,10 +17,11 @@ const MesonToEmbedded = dynamic(
 
 export default function ToInfo ({ to }) {
   const uid = to.uid || to.address
+  const name = to.name || uid
 
   const saveImage = React.useCallback(async () => {
-    await saveAs(`https://img.meson.fi/to/${uid}/share`, `Alls_to_${to.name}.png`)
-  }, [uid, to.name])
+    await saveAs(`https://img.meson.fi/to/${uid}/share`, `Alls_to_${name}.png`)
+  }, [uid, name])
 
   const network = mesonPresets.getNetwork(to.networkId)
   const token = network.tokens.find(t => t.symbol.toLowerCase().includes(to.tokens[0]))
@@ -38,16 +40,22 @@ export default function ToInfo ({ to }) {
       </div>
       
       <div className='mt-5 flex flex-col items-center'>
-        <div className='font-bold'>{to.name}</div>
+        <div className={classnames('break-all text-center', (to.name || to.uid) ? 'font-bold text-lg' : 'font-medium text-sm')}>
+          {name}
+        </div>
         <div className='mt-1 text-sm'>{to.desc}</div>
       </div>
 
-      <div className='mt-5 flex flex-row items-center justify-center bg-primary bg-opacity-5 rounded-xl p-4 text-sm'>
-        <div>{to.name} will receive</div>
-        <div className='flex items-center mx-1 mb-0.5'><TokenIcon size='sm' symbol={to.tokens[0]} /></div>
-        <div className='font-bold mr-1'>{token?.symbol}</div>on
-        <div className='flex items-center mx-1 mb-0.5'><NetworkIcon size='sm' id={to.networkId} /></div>
-        <div className='font-bold'>{network.name}</div>
+      <div className='mt-5 flex flex-row flex-wrap items-center justify-center bg-primary bg-opacity-5 rounded-xl p-4 text-sm'>
+        <div className='break-all text-center'>{name}</div>
+        <div className='ml-1'>will receive</div>
+        <div className='flex flex-row'>
+          <div className='ml-1 h-4'><TokenIcon size='sm' symbol={to.tokens[0]} /></div>
+          <div className='ml-1 font-bold'>{token?.symbol}</div>
+          <div className='ml-1'>on</div>
+          <div className='ml-1 h-4'><NetworkIcon size='sm' id={to.networkId} /></div>
+          <div className='ml-1 font-bold'>{network.name}</div>
+        </div>
       </div>
 
       <div className='mt-4 -mx-2'>

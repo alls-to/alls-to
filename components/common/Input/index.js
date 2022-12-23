@@ -20,13 +20,13 @@ const getDefaultClassNames = type => {
 export default function Input ({
   id, label, type = 'text',
   className, inputClassName,
-  value, onChange, disabled = false, placeholder = '', underline,
+  value, onChange, disabled = false, placeholder = '', maxLength, underline,
   options = [],
   children
 }) {
   return (
     <div className={classnames('relative text-sm', className)}>
-      <label htmlFor={id} className='text-primary'>
+      <label htmlFor={id} className='block text-primary h-4.5'>
         {label}
       </label>
       {React.createElement(
@@ -34,7 +34,7 @@ export default function Input ({
         {
           id, name: id, type,
           className: classnames(getDefaultClassNames(type), inputClassName),
-          value, disabled, placeholder,
+          value, disabled, placeholder, maxLength,
           onChange: evt => onChange(evt.target.value),
         },
         type === 'select'

@@ -6,7 +6,7 @@ import usdt from './tokens/usdt.png'
 import busd from './tokens/busd.png'
 
 const ICONS = { usdc, usdt, busd }
-const SIZES = { sm: 16, md: 24 }
+const SIZES = { sm: 16, md: 22 }
 
 export default function TokenIcon ({ symbol, size = 'md' }) {
   return (

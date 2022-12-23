@@ -1,7 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
 import groupBy from 'lodash/groupBy'
 import mapValues from 'lodash/mapValues'
 
@@ -56,7 +55,7 @@ export default function PageIndex() {
             <div className='w-fit grid grid-cols-8 md:gap-x-6 gap-x-4 gap-y-4'>
             {icons.map(id => (
               <div key={`icon-${id}`} className='w-7 h-7 border-[2px] border-white rounded-full'>
-                <NetworkIcon id={id} />
+                <NetworkIcon size='lg' id={id} />
               </div>
             ))}
             </div>
