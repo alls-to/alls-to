@@ -1,7 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 
-const defaultInputClassName = 'mt-1 w-full rounded-2xl bg-glass-200 placeholder-gray-400/60 p-4 font-semibold text-sm border-none focus:ring-primary'
+const defaultInputClassName = 'mt-1 w-full rounded-2xl bg-glass-200 placeholder-gray-400/60 p-4 font-semibold text-sm border border-transparent focus:border-primary focus:ring-0'
 
 const getEl = type => {
   if (['textarea', 'select'].includes(type)) {

@@ -1,3 +1,4 @@
+import { Recipients } from 'lib/db'
 import verifyJwt from 'lib/verifyJwt'
 
 export default async function handler (req, res) {
@@ -8,7 +9,9 @@ export default async function handler (req, res) {
       return
     }
 
-    res.json({ result: encoded })
+    const { uid } = req.query
+    const exist = await Recipients.findOne({ uid })
+    res.json({ result: !!exist })
   } else {
     res.end()
   }

@@ -1,7 +1,9 @@
 import React from 'react'
+import classnames from 'classnames'
 import { useRouter } from 'next/router'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import difference from 'lodash/difference'
+import debounce from 'lodash/debounce'
 
 import presets from '@mesonfi/presets'
 import * as api from 'lib/api'
@@ -17,6 +19,7 @@ export default function EditTo ({ to, account }) {
   const [uid, setUid] = React.useState(to.uid || to.address)
   const [uidInput, setUidInput] = React.useState(to.uid || '')
   const [uidDisabled, setUidDisabled] = React.useState(!!to.uid)
+  const [uidConflict, setUidConflict] = React.useState(false)
   const [name, setName] = React.useState(to.name || '')
   const [desc, setDesc] = React.useState(to.desc || '')
   const [networkId, setNetworkId] = React.useState(to.networkId || '')
@@ -26,6 +29,21 @@ export default function EditTo ({ to, account }) {
 
   const extType = account?.iss?.split(':')[0]
 
+  const checkUid = React.useMemo(() => debounce(uid => {
+    if (uid) {
+      api.checkRecipient(uid)
+        .then(setUidConflict)
+        .catch(e => {})
+    } else {
+      setUidConflict(false)
+    }
+  }, 300), [])
+
+  const onChangeUid = React.useCallback(uid => {
+    setUidInput(uid)
+    checkUid(uid)
+  }, [checkUid])
+  
   const networks = React.useMemo(() => {
     if (!extType) {
       return []
@@ -110,17 +128,23 @@ export default function EditTo ({ to, account }) {
 
       <Input
         id='uid'
-        inputClassName='pl-[121px]'
+        inputClassName={classnames('pl-[121px]', uidConflict && 'border-red focus:border-red')}
         label='My Link'
         value={uidInput}
-        onChange={setUidInput}
+        onChange={onChangeUid}
         disabled={uidDisabled}
         placeholder='my_customize_id'
         maxLength={12}
-        underline={!uidDisabled && 'You can setup a customized ID once. Cannot change.'}
+        underline={
+          uidDisabled
+            ? ''
+            : uidConflict
+              ? <span className='text-red'>Link already exists.</span>
+              : 'You can setup a customized ID once. Cannot change.'
+        }
       >
-        <div className='absolute top-[38px] left-4 font-semibold text-gray-400'>https://alls.to/</div>
-        <div className='absolute top-[33px] right-2'>
+        <div className='absolute top-[39px] left-4 font-semibold text-gray-400'>https://alls.to/</div>
+        <div className='absolute top-[34px] right-2'>
           <Button
             as='a'
             size='sm'
@@ -142,7 +166,7 @@ export default function EditTo ({ to, account }) {
         placeholder='Enter your name'
         maxLength={24}
       >
-        <div className='absolute bottom-[15px] right-4 text-primary/30 font-semibold'>
+        <div className='absolute bottom-[16px] right-4 text-primary/30 font-semibold'>
           {name.length} / 24
         </div>
       </Input>
@@ -158,7 +182,7 @@ export default function EditTo ({ to, account }) {
         placeholder='Describe who you are'
         maxLength={100}
       >
-        <div className='absolute bottom-[15px] right-4 text-primary/30 font-semibold'>
+        <div className='absolute bottom-[16px] right-4 text-primary/30 font-semibold'>
           {desc.length} / 100
         </div>
       </Input>
