@@ -3,7 +3,6 @@ import classnames from 'classnames'
 import { useRouter } from 'next/router'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import difference from 'lodash/difference'
-import debounce from 'lodash/debounce'
 
 import presets from '@mesonfi/presets'
 import * as api from 'lib/api'
@@ -17,9 +16,8 @@ import NetworkIcon from 'components/common/Icon/NetworkIcon'
 export default function EditTo ({ to, account }) {
   const router = useRouter()
   const [uid, setUid] = React.useState(to.uid || to.address)
-  const [uidInput, setUidInput] = React.useState(to.uid || '')
+  const [inputUidValue, setInputUidValue] = React.useState(to.uid || '')
   const [uidDisabled, setUidDisabled] = React.useState(!!to.uid)
-  const [uidConflict, setUidConflict] = React.useState(false)
   const [name, setName] = React.useState(to.name || '')
   const [desc, setDesc] = React.useState(to.desc || '')
   const [networkId, setNetworkId] = React.useState(to.networkId || '')
@@ -29,21 +27,6 @@ export default function EditTo ({ to, account }) {
 
   const extType = account?.iss?.split(':')[0]
 
-  const checkUid = React.useMemo(() => debounce(uid => {
-    if (uid) {
-      api.checkRecipient(uid)
-        .then(setUidConflict)
-        .catch(e => {})
-    } else {
-      setUidConflict(false)
-    }
-  }, 300), [])
-
-  const onChangeUid = React.useCallback(uid => {
-    setUidInput(uid)
-    checkUid(uid)
-  }, [checkUid])
-  
   const networks = React.useMemo(() => {
     if (!extType) {
       return []
@@ -77,6 +60,25 @@ export default function EditTo ({ to, account }) {
     }
   }, [unsupportedTokens])
 
+  const uidValidator = React.useCallback(async uid => {
+    if (!uid) {
+      return
+    }
+    const result = await api.checkRecipient(uid, account.token)
+    if (result) {
+      throw new Error('Link already exists.')
+    }
+    return 'Good.'
+  }, [account.token])
+
+  const uidUnderline = React.useMemo(() => {
+    if (uidDisabled) {
+      return ''
+    } else if (!inputUidValue) {
+      return 'You can setup a customized ID once. Cannot change.'
+    }
+  }, [uidDisabled, inputUidValue])
+
   if (!account?.sub) {
     return
   }
@@ -100,14 +102,14 @@ export default function EditTo ({ to, account }) {
       setBtn('SAVING...')
       const data = { name, desc, networkId }
       data.tokens = tokens.filter(t => tokenList.find(({ symbol }) => symbol === t))
-      if (uidInput && !uidDisabled) {
-        data.uid = uidInput
+      if (inputUidValue && !uidDisabled) {
+        data.uid = inputUidValue
       }
       await api.updateRecipient(data, account.token)
-      if (uidInput) {
-        setUid(uidInput)
-        setUidDisabled(uidInput)
-        router.replace(`/edit/${uidInput}`)
+      if (inputUidValue) {
+        setUid(inputUidValue)
+        setUidDisabled(inputUidValue)
+        router.replace(`/edit/${inputUidValue}`)
       }
       setBtn('SAVED!')
       setTimeout(() => setBtn('SAVE'), 1000)
@@ -128,20 +130,15 @@ export default function EditTo ({ to, account }) {
 
       <Input
         id='uid'
-        inputClassName={classnames('pl-[121px]', uidConflict && 'border-red focus:border-red')}
+        inputClassName='pl-[121px]'
         label='My Link'
-        value={uidInput}
-        onChange={onChangeUid}
+        value={inputUidValue}
+        onChange={setInputUidValue}
+        validator={uidValidator}
         disabled={uidDisabled}
         placeholder='my_customize_id'
         maxLength={12}
-        underline={
-          uidDisabled
-            ? ''
-            : uidConflict
-              ? <span className='text-red'>Link already exists.</span>
-              : 'You can setup a customized ID once. Cannot change.'
-        }
+        underline={uidUnderline}
       >
         <div className='absolute top-[39px] left-4 font-semibold text-gray-400'>https://alls.to/</div>
         <div className='absolute top-[34px] right-2'>
