@@ -15,7 +15,7 @@ import NetworkIcon from 'components/common/Icon/NetworkIcon'
 
 export default function EditTo ({ to, account }) {
   const router = useRouter()
-  const [uid, setUid] = React.useState(to.uid || to.address)
+  const [uid, setUid] = React.useState(to.uid || to.address.substring(0, 12))
   const [inputUidValue, setInputUidValue] = React.useState(to.uid || '')
   const [uidDisabled, setUidDisabled] = React.useState(!!to.uid)
   const [name, setName] = React.useState(to.name || '')
@@ -24,6 +24,7 @@ export default function EditTo ({ to, account }) {
   const [tokens, setTokens] = React.useState(to.tokens || [to.networkId === 'tron' ? 'usdt' : 'usdc'])
 
   const [btn, setBtn] = React.useState('SAVE')
+  const [btnDisabled, setBtnDisabled] = React.useState(false)
 
   const extType = account?.iss?.split(':')[0]
 
@@ -62,13 +63,22 @@ export default function EditTo ({ to, account }) {
 
   const uidValidator = React.useCallback(async uid => {
     if (!uid) {
+      setBtnDisabled(false)
       return
+    }
+    setBtnDisabled(true)
+    if (uid.length < 4) {
+      throw new Error('Length needs to be at least 4')
+    }
+    if (!/^[a-zA-Z0-9._-]{4,12}$/.exec(uid)) {
+      throw new Error('Only letters, numbers, and "." "-" "_" are accepted')
     }
     const result = await api.checkRecipient(uid, account.token)
     if (result) {
-      throw new Error('Link already exists.')
+      throw new Error('Already exists')
     }
-    return 'Good.'
+    setBtnDisabled(false)
+    return 'Good!'
   }, [account.token])
 
   const uidUnderline = React.useMemo(() => {
@@ -136,22 +146,25 @@ export default function EditTo ({ to, account }) {
         onChange={setInputUidValue}
         validator={uidValidator}
         disabled={uidDisabled}
-        placeholder='my_customize_id'
+        placeholder={to.address.substring(0, 12)}
         maxLength={12}
         underline={uidUnderline}
       >
         <div className='absolute top-[39px] left-4 font-semibold text-gray-400'>https://alls.to/</div>
-        <div className='absolute top-[34px] right-2'>
-          <Button
-            as='a'
-            size='sm'
-            type='pure'
-            className='text-base font-semibold px-2'
-            href={`/${uid}`}
-            target='_blank'
-            rel='noreferrer'
-          >OPEN</Button>
-        </div>
+        {
+          (!inputUidValue || uidDisabled) &&
+          <div className='absolute top-[34px] right-2'>
+            <Button
+              as='a'
+              size='sm'
+              type='pure'
+              className='text-base font-semibold px-2'
+              href={`/${uid}`}
+              target='_blank'
+              rel='noreferrer'
+            >OPEN</Button>
+          </div>
+        }
       </Input>
 
       <Input
@@ -217,7 +230,7 @@ export default function EditTo ({ to, account }) {
 
       <div className='mt-5 flex flex-row gap-4'>
         <div className='flex-1'>
-          <Button onClick={saveChange}>{btn}</Button>
+          <Button onClick={saveChange} disabled={btnDisabled}>{btn}</Button>
         </div>
       </div>
     </Card>

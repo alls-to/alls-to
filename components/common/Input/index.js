@@ -60,7 +60,7 @@ export default function Input ({
   const validInfo = React.useMemo(() => {
     if (checking) {
       return {
-        message: <span className='text-gray-400'>Checking...</span>
+        message: <span className='text-primary'>Checking...</span>
       }
     } else if (error) {
       return {
@@ -93,8 +93,8 @@ export default function Input ({
           : undefined
       )}
       {children}
-      {validInfo && <div className='ml-4 mt-1 text-xs'>{validInfo.message}</div>}
-      {underline && <div className='ml-4 mt-1 text-xs text-primary'>{underline}</div>}
+      {validInfo && <div className='mt-1 text-xs'>{validInfo.message}</div>}
+      {!validInfo && underline && <div className='mt-1 text-xs text-primary'>{underline}</div>}
     </div>
   )
 }

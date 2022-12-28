@@ -23,7 +23,7 @@ module.exports = {
       colors: {
         primary: '#0B2750',
         red: '#FF3838',
-        green: '#00FF00',
+        green: '#08B72F',
         glass: {
           200: 'rgba(11, 39, 80, 0.04)',
           300: 'rgba(11, 39, 80, 0.08)'
