@@ -39,16 +39,26 @@ export default function Input ({
       return
     }
     setChecking(true)
+    let currentRequest = true
     validator(checkingValue)
       .then(validated => {
+        if (!currentRequest) {
+          return
+        }
         setChecking(false)
         setError()
         setValidated(validated)
       })
       .catch(err => {
+        if (!currentRequest) {
+          return
+        }
         setChecking(false)
         setError(err)
       })
+    return () => {
+      currentRequest = false
+    }
   }, [validator, checkingValue])
 
   const onInputChange = React.useCallback(evt => {
