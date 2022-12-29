@@ -68,6 +68,9 @@ export default function Input ({
   }, [onChange, checkValue])
 
   const validInfo = React.useMemo(() => {
+    if (disabled) {
+      return
+    }
     if (checking) {
       return {
         message: <span className='text-primary'>Checking...</span>
@@ -83,7 +86,7 @@ export default function Input ({
         className: '!border-green !focus:border-green'
       }
     }
-  }, [checking, error, validated])
+  }, [disabled, checking, error, validated])
 
   return (
     <div className={classnames('relative text-sm', className)}>

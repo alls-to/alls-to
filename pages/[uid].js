@@ -27,14 +27,18 @@ export default function Subpage ({ metadata, to = null }) {
 
 export async function getServerSideProps ({ query, res }) {
   const uid = query.uid
-  const found = await Recipients.findOne({ $or: [{ _id: uid }, { uid }] })
+  const conditions = [{ _id: uid }, { uid }]
+  if (uid.length === 12) {
+    conditions.push({ _id: { $gt: uid, $lt: `${uid}~` } })
+  }
+  const found = await Recipients.findOne({ $or: conditions })
 
   if (found) {
     const address = found._id
     const metadata = {
       title: `→ ${found.name || abbreviate(address)}`,
       description: process.env.METADATA_DESC || '',
-      previewImg: `https://img.meson.fi/to/${found.uid || uid}`
+      previewImg: `https://img.meson.fi/to/${found.uid || found._id}`
     }
     return {
       props: { metadata, to: { address, ...found.toJSON() } }

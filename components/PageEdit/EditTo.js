@@ -13,6 +13,8 @@ import Button from 'components/common/Button'
 import TokenSelector from 'components/common/TokenSelector'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
 
+export const disabledChains = (process.env.NEXT_PUBLIC_DISABLED_CHAINS || '').split(',')
+
 export default function EditTo ({ to, account }) {
   const router = useRouter()
   const [uid, setUid] = React.useState(to.uid || to.address.substring(0, 12))
@@ -32,7 +34,9 @@ export default function EditTo ({ to, account }) {
     if (!extType) {
       return []
     }
-    return presets.getAllNetworks().filter(n => n.extensions.includes(extType))
+    return presets.getAllNetworks()
+      .filter(n => !disabledChains.includes(n.id))
+      .filter(n => n.extensions.includes(extType))
   }, [extType])
 
   const defaultNetworkId = !networkId && networks[0]?.id
