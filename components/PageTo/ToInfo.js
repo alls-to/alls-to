@@ -50,7 +50,7 @@ export default function ToInfo ({ to }) {
         <div className='break-all text-center'>{name}</div>
         <div className='ml-1'>will receive</div>
         <div className='flex flex-row'>
-          <div className='ml-1 h-4'><TokenIcon size='sm' symbol={to.tokens[0]} /></div>
+          <div className='ml-1 h-4'><TokenIcon size='sm' id={to.tokens[0]} /></div>
           <div className='ml-1 font-bold'>{token?.symbol}</div>
           <div className='ml-1'>on</div>
           <div className='ml-1 h-4'><NetworkIcon size='sm' id={to.networkId} /></div>

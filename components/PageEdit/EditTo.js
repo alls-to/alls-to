@@ -1,8 +1,6 @@
 import React from 'react'
-import classnames from 'classnames'
 import { useRouter } from 'next/router'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
-import difference from 'lodash/difference'
 
 import presets from '@mesonfi/presets'
 import * as api from 'lib/api'
@@ -10,10 +8,11 @@ import * as api from 'lib/api'
 import Card from 'components/common/Card'
 import Input from 'components/common/Input'
 import Button from 'components/common/Button'
-import TokenSelector from 'components/common/TokenSelector'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
 
-export const disabledChains = (process.env.NEXT_PUBLIC_DISABLED_CHAINS || '').split(',')
+import TokenSelector from './TokenSelector'
+
+const disabledChains = (process.env.NEXT_PUBLIC_DISABLED_CHAINS || '').split(',')
 
 export default function EditTo ({ to, account }) {
   const router = useRouter()
@@ -23,13 +22,12 @@ export default function EditTo ({ to, account }) {
   const [name, setName] = React.useState(to.name || '')
   const [desc, setDesc] = React.useState(to.desc || '')
   const [networkId, setNetworkId] = React.useState(to.networkId || '')
-  const [tokens, setTokens] = React.useState(to.tokens || [to.networkId === 'tron' ? 'usdt' : 'usdc'])
+  const [tokens, setTokens] = React.useState(to.tokens)
 
   const [btn, setBtn] = React.useState('SAVE')
   const [btnDisabled, setBtnDisabled] = React.useState(false)
 
   const extType = account?.iss?.split(':')[0]
-
   const networks = React.useMemo(() => {
     if (!extType) {
       return []
@@ -45,25 +43,6 @@ export default function EditTo ({ to, account }) {
       setNetworkId(defaultNetworkId)
     }
   }, [defaultNetworkId])
-
-  const tokenList = React.useMemo(() => {
-    if (!networkId) {
-      return []
-    }
-    return presets.getTokensForNetwork(networkId)
-      .filter(t => t.tokenIndex < 255)
-      .map(t => ({ symbol: t.symbol.split('.')[0].toLowerCase(), addr: t.addr }))
-  }, [networkId])
-
-  const unsupportedTokens = React.useMemo(() => {
-    return difference(['usdc', 'usdt', 'busd'], tokenList.map(({ symbol }) => symbol))
-  }, [tokenList])
-
-  React.useEffect(() => {
-    if (unsupportedTokens.includes(tokens[0])) {
-      setTokens(['usdc'])
-    }
-  }, [unsupportedTokens])
 
   const uidValidator = React.useCallback(async uid => {
     if (!uid) {
@@ -97,15 +76,6 @@ export default function EditTo ({ to, account }) {
     return
   }
 
-  const toggleToken = token => {
-    if (tokens.includes(token)) {
-      // setTokens(tokens.filter(t => t !== token))
-    } else {
-      setTokens([token])
-      // setTokens([...tokens, token])
-    }
-  }
-
   const saveChange = async () => {
     if (!tokens.length) {
       window.alert('Please select at least one token')
@@ -114,8 +84,7 @@ export default function EditTo ({ to, account }) {
 
     try {
       setBtn('SAVING...')
-      const data = { name, desc, networkId }
-      data.tokens = tokens.filter(t => tokenList.find(({ symbol }) => symbol === t))
+      const data = { name, desc, networkId, tokens }
       if (inputUidValue && !uidDisabled) {
         data.uid = inputUidValue
       }
@@ -203,7 +172,7 @@ export default function EditTo ({ to, account }) {
 
       <Input
         id='chain'
-        className='mt-5'
+        className='mt-5 mb-3'
         inputClassName='pl-11'
         type='select'
         label='Receive Stablecoins as'
@@ -216,26 +185,14 @@ export default function EditTo ({ to, account }) {
         </div>
       </Input>
 
-      <div className='mt-3 flex flex-row gap-3'>
-        {['usdc', 'usdt', 'busd'].map(t => (
-          <TokenSelector
-            key={`token-${t}`}
-            symbol={t}
-            selected={tokens.includes(t)}
-            onToggle={toggleToken}
-            disabled={!tokenList.find(({ symbol }) => symbol === t)}
-          />
-        ))}
-      </div>
+      <TokenSelector
+        networkId={networkId}
+        tokens={tokens}
+        onChange={setTokens}
+      />
 
-      <div className='mt-1 text-xs text-primary/50'>
-        {unsupportedTokens.length ? 'Some stablecoins are not supported on this network.' : ''}
-      </div>
-
-      <div className='mt-5 flex flex-row gap-4'>
-        <div className='flex-1'>
-          <Button onClick={saveChange} disabled={btnDisabled}>{btn}</Button>
-        </div>
+      <div className='mt-5'>
+        <Button onClick={saveChange} disabled={btnDisabled}>{btn}</Button>
       </div>
     </Card>
   )
