@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import { useExtensions } from '@mesonfi/extensions/react'
@@ -10,6 +11,7 @@ import Header from 'components/common/Header'
 import CentralCardWithSideInfo from 'components/common/Card/CentralCardWithSideInfo'
 
 import EditTo from './EditTo'
+import disconnect from './disconnect.png'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 
@@ -65,10 +67,10 @@ export default function PageEdit ({ to }) {
         <div className='font-semibold'>{abbreviate(browserExt?.currentAccount.address)}</div>
         <button
           type='button'
-          className='items-center rounded-xl w-10 h-10 text-sm font-semibold text-black bg-white hover:bg-gray-100 focus:outline-none shadow font-light text-lg'
+          className='flex items-center justify-center rounded-xl w-10 h-10 text-sm text-black bg-white hover:bg-gray-100 focus:outline-none shadow'
           onClick={logout}
         >
-          x
+          <Image alt='' width={18} height={18} src={disconnect} />
         </button>
       </Header>
       <CentralCardWithSideInfo steps={[]} >
