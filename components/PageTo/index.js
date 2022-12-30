@@ -8,20 +8,7 @@ import Button from 'components/common/Button'
 
 import ToInfo from './ToInfo'
 
-const steps = [
-  {
-    title: 'Connect Wallet',
-    desc: 'Link suffix can only be changed once. Choose it wisely.'
-  },
-  {
-    title: 'Fill in Amount',
-    desc: 'Fill in the amount and choose the token you prefer.'
-  },
-  {
-    title: 'Pay',
-    desc: 'Click Pay, and your tokens will cross-chain automatically.'
-  }
-]
+const steps = []
 
 export default function PageTo ({ to }) {
   const router = useRouter()
@@ -38,8 +25,8 @@ export default function PageTo ({ to }) {
     <Container>
       <Header logoSrc='https://alls.to' />
       <CentralCardWithSideInfo
-        side='How to pay with Alls.To?'
-        steps={steps}
+        // side='How to pay with Alls.To?'
+        // steps={steps}
         button={
           <Button
             as='a'

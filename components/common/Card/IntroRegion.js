@@ -1,13 +1,19 @@
 import React from 'react'
+import Card from 'components/common/Card'
 
 export default function IntroRegion ({ side, steps = [], button }) {
   return (
-    <div className='relative sm:w-[252px] text-sm'>
+    <div className='relative sm:w-[280px] text-sm'>
       <div className='font-medium'>What is Alls.To?</div>
 
-      <div className='font-light mt-3'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+      <div className='font-light mt-3'>
+        Alls.to is a xxx.
+        <Card bg='' className='mt-3 p-3'>
+          A diagram introducing the process
+        </Card>
+      </div>
 
-      <div className='font-medium mt-6'>{side}</div>
+      {side && <div className='font-medium mt-6'>{side}</div>}
       <div className='ml-7 font-light'>
       {
         steps.map((step, i) => (

@@ -71,7 +71,7 @@ export default function PageEdit ({ to }) {
           x
         </button>
       </Header>
-      <CentralCardWithSideInfo side='How to customize my link?' steps={steps} >
+      <CentralCardWithSideInfo steps={[]} >
         <EditTo to={to} extensions={extensions} account={account} />
       </CentralCardWithSideInfo>
     </Container>

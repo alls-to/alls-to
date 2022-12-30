@@ -62,7 +62,6 @@ export default function ToInfo ({ to }) {
         <MesonToEmbedded
           appId='alls-to'
           to={{ addr: to.address, chain: to.networkId, tokens: to.tokens }}
-          onCompleted={() => {}}
         />
       </div>
     </Card>
