@@ -25,6 +25,8 @@ export default function PageTo ({ to }) {
     <Container>
       <Header logoSrc='https://alls.to' />
       <CentralCardWithSideInfo
+        networkId={to.networkId}
+        token={to.tokens[0]}
         // side='How to pay with Alls.To?'
         // steps={steps}
         button={

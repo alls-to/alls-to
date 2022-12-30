@@ -8,7 +8,6 @@ import { useWeb3Login } from '@mesonfi/web3-jwt/react'
 import { abbreviate } from 'lib'
 import Container from 'components/common/Container'
 import Header from 'components/common/Header'
-import CentralCardWithSideInfo from 'components/common/Card/CentralCardWithSideInfo'
 
 import EditTo from './EditTo'
 import disconnect from './disconnect.png'
@@ -73,9 +72,7 @@ export default function PageEdit ({ to }) {
           <Image alt='' width={18} height={18} src={disconnect} />
         </button>
       </Header>
-      <CentralCardWithSideInfo steps={[]} >
-        <EditTo to={to} extensions={extensions} account={account} />
-      </CentralCardWithSideInfo>
+      <EditTo to={to} extensions={extensions} account={account} />
     </Container>
   )
 }

@@ -5,6 +5,7 @@ import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import presets from '@mesonfi/presets'
 import * as api from 'lib/api'
 
+import CentralCardWithSideInfo from 'components/common/Card/CentralCardWithSideInfo'
 import Card from 'components/common/Card'
 import Input from 'components/common/Input'
 import Button from 'components/common/Button'
@@ -106,94 +107,97 @@ export default function EditTo ({ to, account }) {
   }
 
   return (
-    <Card bg='pos2'>
-      <div className='self-center w-16 h-16 rounded-full border-2 border-white box-content'>
-        <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
-      </div>
+    <CentralCardWithSideInfo networkId={networkId} token={tokens[0]}>
+      <Card bg='pos2'>
+        <div className='self-center w-16 h-16 rounded-full border-2 border-white box-content'>
+          <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
+        </div>
 
-      <Input
-        id='uid'
-        inputClassName='pl-[121px]'
-        label='My Link'
-        value={inputUidValue}
-        onChange={setInputUidValue}
-        validator={uidValidator}
-        disabled={uidDisabled}
-        placeholder={to.address.substring(0, 12)}
-        maxLength={12}
-        underline={uidUnderline}
-      >
-        <div className='absolute top-[39px] left-4 font-semibold text-gray-400'>https://alls.to/</div>
-        {
-          (!inputUidValue || uidDisabled) &&
-          <div className='absolute top-[34px] right-2'>
-            <Button
-              as='a'
-              size='sm'
-              type='pure'
-              className='text-base font-semibold px-2'
-              href={`/${uid}`}
-              target='_blank'
-              rel='noreferrer'
-            >OPEN</Button>
+        <Input
+          id='uid'
+          inputClassName='pl-[121px]'
+          label='My Link'
+          value={inputUidValue}
+          onChange={setInputUidValue}
+          validator={uidValidator}
+          disabled={uidDisabled}
+          placeholder={to.address.substring(0, 12)}
+          maxLength={12}
+          underline={uidUnderline}
+        >
+          <div className='absolute top-[39px] left-4 font-semibold text-gray-400'>https://alls.to/</div>
+          {
+            (!inputUidValue || uidDisabled) &&
+            <div className='absolute top-[34px] right-2'>
+              <Button
+                as='a'
+                size='sm'
+                type='pure'
+                className='text-base font-semibold px-2'
+                href={`/${uid}`}
+                target='_blank'
+                rel='noreferrer'
+              >OPEN</Button>
+            </div>
+          }
+        </Input>
+
+        <Input
+          id='name'
+          className='mt-5'
+          label='Name'
+          value={name}
+          onChange={setName}
+          placeholder='Enter your name'
+          maxLength={24}
+        >
+          <div className='absolute bottom-[16px] right-4 text-primary/30 font-semibold'>
+            {name.length} / 24
           </div>
-        }
-      </Input>
+        </Input>
 
-      <Input
-        id='name'
-        className='mt-5'
-        label='Name'
-        value={name}
-        onChange={setName}
-        placeholder='Enter your name'
-        maxLength={24}
-      >
-        <div className='absolute bottom-[16px] right-4 text-primary/30 font-semibold'>
-          {name.length} / 24
+        <Input
+          id='description'
+          className='mt-5'
+          inputClassName='pb-[28px]'
+          type='textarea'
+          label='Description'
+          value={desc}
+          onChange={setDesc}
+          placeholder='Describe who you are'
+          maxLength={100}
+        >
+          <div className='absolute bottom-[16px] right-4 text-primary/30 font-semibold'>
+            {desc.length} / 100
+          </div>
+        </Input>
+
+        <Input
+          id='chain'
+          className='mt-5 mb-3'
+          inputClassName='pl-11'
+          type='select'
+          label='Receive Stablecoins as'
+          value={networkId}
+          onChange={setNetworkId}
+          options={networks}
+        >
+          <div className='absolute left-4 bottom-[10px]'>
+            <NetworkIcon id={networkId} />
+          </div>
+        </Input>
+
+        <TokenSelector
+          networkId={networkId}
+          tokens={tokens}
+          onChange={setTokens}
+        />
+
+        <div className='mt-5'>
+          <Button onClick={saveChange} disabled={btnDisabled}>{btn}</Button>
         </div>
-      </Input>
+      </Card>
+    </CentralCardWithSideInfo>
 
-      <Input
-        id='description'
-        className='mt-5'
-        inputClassName='pb-[28px]'
-        type='textarea'
-        label='Description'
-        value={desc}
-        onChange={setDesc}
-        placeholder='Describe who you are'
-        maxLength={100}
-      >
-        <div className='absolute bottom-[16px] right-4 text-primary/30 font-semibold'>
-          {desc.length} / 100
-        </div>
-      </Input>
-
-      <Input
-        id='chain'
-        className='mt-5 mb-3'
-        inputClassName='pl-11'
-        type='select'
-        label='Receive Stablecoins as'
-        value={networkId}
-        onChange={setNetworkId}
-        options={networks}
-      >
-        <div className='absolute left-4 bottom-[10px]'>
-          <NetworkIcon id={networkId} />
-        </div>
-      </Input>
-
-      <TokenSelector
-        networkId={networkId}
-        tokens={tokens}
-        onChange={setTokens}
-      />
-
-      <div className='mt-5'>
-        <Button onClick={saveChange} disabled={btnDisabled}>{btn}</Button>
-      </div>
-    </Card>
   )
 }

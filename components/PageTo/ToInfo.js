@@ -7,8 +7,8 @@ import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import mesonPresets from '@mesonfi/presets'
 
 import Card from 'components/common/Card'
-import TokenIcon from 'components/common/Icon/TokenIcon'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
+import TokenIcon from 'components/common/Icon/TokenIcon'
 
 const MesonToEmbedded = dynamic(
   import('@mesonfi/to').then(t => t.MesonToEmbedded),

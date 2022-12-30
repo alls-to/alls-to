@@ -2,7 +2,7 @@ import classnames from 'classnames'
 
 import IntroRegion from './IntroRegion'
 
-export default function CentralCardWithSideInfo ({ children, side, steps, button }) {
+export default function CentralCardWithSideInfo ({ children, networkId, token, side, steps, button }) {
   return (
     <div className={classnames(
       'w-full flex flex-col items-center sm:flex-row sm:items-end',
@@ -13,7 +13,7 @@ export default function CentralCardWithSideInfo ({ children, side, steps, button
         {children}
       </div>
       <div className='mt-12 sm:mt-0 mb-6 mx-4 flex-1 flex flex-col items-end'>
-        <IntroRegion side={side} steps={steps} button={button} />
+        <IntroRegion networkId={networkId} token={token} side={side} steps={steps} button={button} />
       </div>
     </div>
   )
