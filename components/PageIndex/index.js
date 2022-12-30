@@ -50,7 +50,7 @@ export default function PageIndex() {
               <div>in Web3</div>
             </div>
             <div className='text-base xs:text-lg sm:text-base md:text-lg font-light mb-6 md:mb-12'>
-              Receive fund with certern network & stablecoins. Pay with any network & stablecoin you like, and let alls.to take care of cross-chain.
+              Receive fund with certern network & stablecoins. Pay with any network & stablecoin you like, and let ALLsTo take care of cross-chain.
             </div>
             <div className='w-fit grid grid-cols-8 md:gap-x-6 gap-x-4 gap-y-4'>
             {icons.map(id => (

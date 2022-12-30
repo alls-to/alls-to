@@ -27,7 +27,7 @@ export default function PageTo ({ to }) {
       <CentralCardWithSideInfo
         networkId={to.networkId}
         token={to.tokens[0]}
-        // side='How to pay with Alls.To?'
+        // side='How to pay with ALLsTo?'
         // steps={steps}
         button={
           <Button

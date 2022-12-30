@@ -4,7 +4,7 @@ import PageIndex from 'components/PageIndex'
 
 export default function Index() {
   const metadata = {
-    title: 'Alls.To',
+    title: 'ALLsTo',
     description: process.env.METADATA_DESC || ''
   }
 

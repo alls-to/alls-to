@@ -11,10 +11,10 @@ import arrow from './arrow.png'
 export default function IntroRegion ({ networkId, token, side, steps = [], button }) {
   return (
     <div className='relative w-[280px] text-sm'>
-      <div className='font-medium'>What is Alls.To?</div>
+      <div className='font-medium'>What is ALLsTo?</div>
 
       <div className='font-light mt-3 leading-[20px]'>
-        Alls.To helps you collect payments from any blockchain network, and you will receive all incomes on a single network.
+        ALLsTo helps you collect payments from any blockchain network, and you will receive all incomes on a single network.
         <Card bg='' className='mt-3 p-4'>
           <div className='flex flex-row justify-between items-center'>
             <div className='w-[88px]'>
