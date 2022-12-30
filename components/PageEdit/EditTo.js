@@ -183,7 +183,7 @@ export default function EditTo ({ to, account }) {
           options={networks}
         >
           <div className='absolute left-4 bottom-[10px]'>
-            <NetworkIcon id={networkId} />
+            <NetworkIcon size={22} id={networkId} />
           </div>
         </Input>
 

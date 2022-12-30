@@ -55,7 +55,7 @@ export default function PageIndex() {
             <div className='w-fit grid grid-cols-8 md:gap-x-6 gap-x-4 gap-y-4'>
             {icons.map(id => (
               <div key={`icon-${id}`} className='w-7 h-7 border-[2px] border-white rounded-full'>
-                <NetworkIcon size='lg' id={id} />
+                <NetworkIcon size={28} id={id} />
               </div>
             ))}
             </div>

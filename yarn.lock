@@ -500,10 +500,10 @@
     tronweb "^4.3.0"
     zksync-web3 "^0.9.0"
 
-"@mesonfi/to@^0.1.5-rc.4":
-  version "0.1.5-rc.4"
-  resolved "https://npm.pkg.github.com/download/@mesonfi/to/0.1.5-rc.4/dee3f32cb3f29f35463eef3cd0902a96e965a126#dee3f32cb3f29f35463eef3cd0902a96e965a126"
-  integrity sha512-F3kmfzpshYczNewfatPJJkyjFUEj0S+gVw3PgHTX2BQ7IE1Z9l2yfj1nxHGNJuPGUwNYv93c6aE80RoHGg1wug==
+"@mesonfi/to@^0.1.5-rc.5":
+  version "0.1.5-rc.5"
+  resolved "https://npm.pkg.github.com/download/@mesonfi/to/0.1.5-rc.5/d9d77921f238650a701c29cf004f44fd3051921e#d9d77921f238650a701c29cf004f44fd3051921e"
+  integrity sha512-P8I08b10UfKMCzYI3Hs/QR2VFRMvkxwiaffTz9GnlyfrFV4ojfFf20pHS0dBjCJRtVlaks6qAu1vxSKUY/gpyA==
 
 "@mesonfi/web3-jwt@^0.1.0-rc.2":
   version "0.1.0-rc.2"

@@ -14,15 +14,15 @@ export default function IntroRegion ({ networkId, token, side, steps = [], butto
       <div className='font-medium'>What is Alls.To?</div>
 
       <div className='font-light mt-3 leading-[20px]'>
-        Alls.To helps you collect payments from any blockchain network, and you will receive all incomes on a single network..
+        Alls.To helps you collect payments from any blockchain network, and you will receive all incomes on a single network.
         <Card bg='' className='mt-3 p-4'>
           <div className='flex flex-row justify-between items-center'>
             <div className='w-[88px]'>
               <div className='text-xs font-medium mb-2'>Send from any network</div>
               <div className='flex gap-2'>
-                <NetworkIcon size='sm' id='eth' />
-                <NetworkIcon size='sm' id='bnb' />
-                <NetworkIcon size='sm' id='polygon' />
+                <NetworkIcon id='eth' />
+                <NetworkIcon id='bnb' />
+                <NetworkIcon id='polygon' />
                 <Image alt='' width={16} height={16} src={dots} />
               </div>
             </div>
@@ -30,9 +30,9 @@ export default function IntroRegion ({ networkId, token, side, steps = [], butto
             <div className='w-[88px]'>
               <div className='text-xs font-medium mb-2'>Receive all payments as</div>
               <div className='flex gap-2'>
-                <TokenIcon size='sm' id={token} />
+                <TokenIcon id={token} />
                 <span className='leading-4 text-xs'>on</span>
-                <NetworkIcon size='sm' id={networkId} />
+                <NetworkIcon id={networkId} />
               </div>
             </div>
           </div>

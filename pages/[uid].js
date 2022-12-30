@@ -36,7 +36,7 @@ export async function getServerSideProps ({ query, res }) {
   if (found) {
     const address = found._id
     const metadata = {
-      title: `→ ${found.name || abbreviate(address)}`,
+      title: `Pay → ${found.name || abbreviate(address)}`,
       description: process.env.METADATA_DESC || '',
       previewImg: `https://img.meson.fi/to/${found.uid || found._id}`
     }
