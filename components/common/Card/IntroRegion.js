@@ -14,7 +14,7 @@ export default function IntroRegion ({ networkId, token, side, steps = [], butto
       <div className='font-medium'>What is ALLsTo?</div>
 
       <div className='font-light mt-3 leading-[20px]'>
-        ALLsTo helps you collect payments from any blockchain network, and you will receive all incomes on a single network.
+        ALLsTo helps you collect stablecoins from any blockchain network, and you will receive all incoming transfers on a single network.
         <Card bg='' className='mt-3 p-4'>
           <div className='flex flex-row justify-between items-center'>
             <div className='w-[88px]'>
@@ -28,7 +28,7 @@ export default function IntroRegion ({ networkId, token, side, steps = [], butto
             </div>
             <Image alt='' width={12} height={12} src={arrow} />
             <div className='w-[88px]'>
-              <div className='text-xs font-medium mb-2'>Receive all payments as</div>
+              <div className='text-xs font-medium mb-2'>Receive all transfers as</div>
               <div className='flex gap-2'>
                 <TokenIcon id={token} />
                 <span className='leading-4 text-xs'>on</span>

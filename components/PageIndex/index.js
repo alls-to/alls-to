@@ -45,12 +45,12 @@ export default function PageIndex() {
             <div className='text-title font-extralight mb-2'>
               <div>Simplify Your</div>
               <div className='text-transparent bg-clip-text bg-gradient-to-r from-[#1B4DFF] via-[#2680FF] to-[#34C2FF]'>
-                Payment & Life
+                Stablecoin Life
               </div>
               <div>in Web3</div>
             </div>
             <div className='text-base xs:text-lg sm:text-base md:text-lg font-light mb-6 md:mb-12'>
-              Receive fund with certern network & stablecoins. Pay with any network & stablecoin you like, and let ALLsTo take care of cross-chain.
+              Receive fund with certern network & stablecoins. Make transfers with any network & stablecoin you like, and let ALLsTo take care of cross-chain.
             </div>
             <div className='w-fit grid grid-cols-8 md:gap-x-6 gap-x-4 gap-y-4'>
             {icons.map(id => (

@@ -35,7 +35,7 @@ export default function ToInfo ({ to }) {
   return (
     <Card bg='pos2' className='text-primary'>
       <div className='flex flex-row justify-between'>
-        <div className='font-bold'>PAY TO</div>
+        <div className='font-bold'>TRANSFER TO</div>
         <div className='font-bold cursor-pointer hover:underline' onClick={saveImage}>
           SHARE
         </div>
@@ -88,7 +88,7 @@ function SuccessInfo ({ data, onNewTransfer }) {
   return (
     <div className='flex flex-col justify-between w-full h-full px-2 pb-4'>
       <div className='mt-6 flex flex-col items-center'>
-        <div className='font-bold'>Payment Successful</div>
+        <div className='font-bold'>Successful</div>
 
         <div className='mt-5 flex flex-row items-center'>
           <div className='w-6 h-6 m-px'>
@@ -117,7 +117,7 @@ function SuccessInfo ({ data, onNewTransfer }) {
       </div>
 
       <div className='flex w-full gap-2'>
-        <Button className='flex-1' type='primary' onClick={onNewTransfer}>PAY AGAIN</Button>
+        <Button className='flex-1' type='primary' onClick={onNewTransfer}>ANOTHER TRANSFER</Button>
         <Button
           className='flex-1'
           as='a'
