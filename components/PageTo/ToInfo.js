@@ -69,19 +69,10 @@ export default function ToInfo ({ to }) {
         <MesonToEmbedded
           appId='alls-to'
           to={{ addr: to.address, chain: to.networkId, tokens: to.tokens }}
-          loading={<Loading />}
           SuccessInfo={SuccessInfo}
         />
       </div>
     </Card>
-  )
-}
-
-function Loading () {
-  return (
-    <div className='flex flex-col items-center w-full h-full pt-[100px]'>
-      Loading...
-    </div>
   )
 }
 
