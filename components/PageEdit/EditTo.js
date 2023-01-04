@@ -109,7 +109,11 @@ export default function EditTo ({ to, account }) {
   return (
     <CentralCardWithSideInfo networkId={networkId} token={tokens[0]}>
       <Card bg='pos2'>
-        <div className='self-center w-16 h-16 rounded-full border-2 border-white box-content'>
+        <div className='flex flex-row justify-between'>
+          <div className='font-bold'>EDIT</div>
+        </div>
+
+        <div className='mt-5 self-center w-16 h-16 rounded-full border-2 border-white box-content'>
           <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
         </div>
 
@@ -132,7 +136,7 @@ export default function EditTo ({ to, account }) {
               <Button
                 as='a'
                 size='sm'
-                type='pure'
+                type='primary'
                 className='text-base font-semibold px-2'
                 href={`/${uid}`}
                 target='_blank'
@@ -157,11 +161,11 @@ export default function EditTo ({ to, account }) {
         </Input>
 
         <Input
-          id='description'
+          id='bio'
           className='mt-5'
           inputClassName='pb-[28px]'
           type='textarea'
-          label='Description'
+          label='Bio'
           value={desc}
           onChange={setDesc}
           placeholder='Describe who you are'

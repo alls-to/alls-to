@@ -60,8 +60,9 @@ export default function ToInfo ({ to }) {
           <div className='ml-1 font-bold'>{token?.symbol}</div>
           <div className='ml-1'>on</div>
           <div className='ml-1 h-4'><NetworkIcon id={to.networkId} /></div>
-          <div className='ml-1 font-bold'>{network.name}</div>
+          <div className='ml-1 font-bold'>{network.name}</div>.
         </div>
+        <div className='ml-1'>You can transfer from any network you like.</div>
       </div>
 
       <div className='mt-4 -mx-2 -mb-4'>
