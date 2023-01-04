@@ -1,5 +1,6 @@
 import React from 'react'
 import { NextSeo } from 'next-seo'
+import TronWeb from 'tronweb'
 
 import { abbreviate } from 'lib'
 import { Recipients } from 'lib/db'
@@ -31,17 +32,25 @@ export async function getServerSideProps ({ query, res }) {
   if (uid.length === 12) {
     conditions.push({ _id: { $gt: uid, $lt: `${uid}~` } })
   }
-  const found = await Recipients.findOne({ $or: conditions })
 
-  if (found) {
-    const address = found._id
+  let match = await Recipients.findOne({ $or: conditions })
+  if (!match && uid.startsWith('T') && TronWeb.isAddress(uid)) {
+    match = await Recipients.findByIdAndUpdate(uid, {
+      _id: uid,
+      networkId: 'tron',
+      tokens: ['usdt']
+    }, { upsert: true, new: true })
+  }
+
+  if (match) {
+    const address = match._id
     const metadata = {
-      title: `Transfer → ${found.name || abbreviate(address)}`,
+      title: `Transfer → ${match.name || abbreviate(address)}`,
       description: process.env.METADATA_DESC || '',
-      previewImg: `https://img.meson.fi/to/${found.uid || found._id}`
+      previewImg: `https://img.meson.fi/to/${match.uid || match._id}`
     }
     return {
-      props: { metadata, to: { address, ...found.toJSON() } }
+      props: { metadata, to: { address, ...match.toJSON() } }
     }
   }
 
