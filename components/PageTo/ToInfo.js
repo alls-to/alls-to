@@ -33,7 +33,7 @@ export default function ToInfo ({ to }) {
   const token = network.tokens.find(t => t.symbol.toLowerCase().includes(to.tokens[0]))
 
   return (
-    <Card bg='pos2' className='text-primary'>
+    <Card bg='pos2' className='p-3 xs:p-4 md:p-6 text-primary'>
       <div className='flex flex-row justify-between'>
         <div className='font-bold'>TRANSFER TO</div>
         <div className='font-bold cursor-pointer hover:underline' onClick={saveImage}>

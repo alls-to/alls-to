@@ -108,7 +108,7 @@ export default function EditTo ({ to, account }) {
 
   return (
     <CentralCardWithSideInfo networkId={networkId} token={tokens[0]}>
-      <Card bg='pos2'>
+      <Card bg='pos2' className='p-3 xs:p-4 md:p-6'>
         <div className='flex flex-row justify-between'>
           <div className='font-bold'>EDIT</div>
         </div>

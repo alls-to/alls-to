@@ -6,7 +6,7 @@ import logo from './logo.svg'
 
 export default function Header ({ logoSrc, children }) {
   return (
-    <div className='relative z-20 w-full flex flex-row items-center justify-between mt-5 px-6 xs:pl-8 xs:pr-9 h-10 shrink-0'>
+    <div className='relative z-20 w-full flex flex-row items-center justify-between mt-5 pl-4 pr-3 xs:px-6 sm:pl-8 sm:pr-9 h-10 shrink-0'>
       <a
         className={classnames(
           'flex h-[30px] w-[160px] items-center',
