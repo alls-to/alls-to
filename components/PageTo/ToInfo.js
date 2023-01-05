@@ -131,9 +131,11 @@ function SuccessInfo ({ data, onNewTransfer }) {
       </div>
 
       <div className='flex w-full gap-2'>
-        <Button className='flex-1' type='primary' onClick={onNewTransfer}>ANOTHER TRANSFER</Button>
+        <Button className='flex-1 text-sm' type='primary' onClick={onNewTransfer}>
+          ANOTHER TRANSFER
+        </Button>
         <Button
-          className='flex-1'
+          className='flex-1 text-sm'
           as='a'
           href='https://alls.to'
           target='_blank'
