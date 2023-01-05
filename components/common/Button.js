@@ -17,13 +17,13 @@ const BTN_TYPES = {
   white : 'bg-white text-primary border border-transparent shadow-lg',
   glass: 'bg-glass-200 border-none border-glass-200',
   transparent: 'bg-transparent text-primary border border-primary',
-  pure: 'bg-transparent text-primary border border-transparent',
+  pure: 'bg-transparent text-primary',
 }
 
 const BTN_TYPES_ON_HOVER = {
   default: 'hover:bg-primary/10',
   primary : 'hover:bg-primary/90',
-  white: 'hover:bg-primary/10',
+  white: 'hover:bg-primary-100',
   glass: 'hover:bg-glass-300',
   transparent: 'hover:bg-primary/10',
   pure: 'hover:bg-primary/10'
@@ -48,7 +48,7 @@ export default function Button ({ as, size = 'md', type = 'default', className, 
   )
   
   if (as) {
-    return React.createElement(as, { className: btnClassName, disabled, ...rest }, children)
+    return React.createElement(as, { className: btnClassName, disabled, onClick, ...rest }, children)
   }
   return (
     <div className={btnClassName} onClick={disabled ? undefined : onClick}>

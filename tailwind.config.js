@@ -21,7 +21,10 @@ module.exports = {
         xl: ['28px', '42px']
       },
       colors: {
-        primary: '#0B2750',
+        primary: {
+          DEFAULT: '#0B2750',
+          100: '#e5e9ed'
+        },
         red: '#FF3838',
         green: '#08B72F',
         glass: {

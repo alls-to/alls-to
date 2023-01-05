@@ -110,7 +110,7 @@ export default function EditTo ({ to, account }) {
     <CentralCardWithSideInfo networkId={networkId} token={tokens[0]}>
       <Card bg='pos2' className='p-3 xs:p-4 md:p-6'>
         <div className='flex flex-row justify-between'>
-          <div className='font-bold'>EDIT</div>
+          <div className='font-semibold'>EDIT</div>
         </div>
 
         <div className='mt-5 self-center w-16 h-16 rounded-full border-2 border-white box-content'>
@@ -137,7 +137,7 @@ export default function EditTo ({ to, account }) {
                 as='a'
                 size='xs'
                 type='primary'
-                className='!px-2 py-0.5'
+                className='text-sm !px-2 py-0.5'
                 href={`/${uid}`}
                 target='_blank'
                 rel='noreferrer'

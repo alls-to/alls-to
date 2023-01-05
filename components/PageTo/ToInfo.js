@@ -10,11 +10,15 @@ import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import mesonPresets from '@mesonfi/presets'
 
 import Card from 'components/common/Card'
+import { DropdownMenu } from 'components/common/Dropdown'
 import Button from 'components/common/Button'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
 import TokenIcon from 'components/common/Icon/TokenIcon'
 
-import check from './check.png'
+import share from './icons/share.svg'
+import download from './icons/download.svg'
+import link from './icons/link.svg'
+import check from './icons/check.svg'
 
 const MesonToEmbedded = dynamic(
   import('@mesonfi/to').then(t => t.MesonToEmbedded),
@@ -36,9 +40,27 @@ export default function ToInfo ({ to }) {
     <Card bg='pos2' className='p-3 xs:p-4 md:p-6 text-primary'>
       <div className='flex flex-row justify-between px-1 xs:px-0'>
         <div className='font-semibold'>TRANSFER TO</div>
-        <Button size='xs' type='pure' className='-mt-1 -mr-3' onClick={saveImage}>
-          SHARE
-        </Button>
+        <DropdownMenu
+          className='-my-1 -mr-3'
+          btn={
+            <Button size='xs' type='pure'>
+              <div className='flex h-4 w-4 mr-2'><Image fill alt='' src={share} /></div>
+              SHARE
+            </Button>
+          }
+          options={[
+            {
+              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={download} /></div>Save Image with QR</>,
+              onClick: saveImage
+            },
+            {
+              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={link} /></div>Copy Link</>,
+              onClick: async () => {
+                await navigator.clipboard.writeText(`https://alls.to/${uid}`)
+              }
+            }
+          ]}
+        />
       </div>
 
       <div className='mt-5 self-center w-16 h-16 rounded-full border-2 border-white box-content'>

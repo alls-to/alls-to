@@ -5,13 +5,15 @@ import { useRouter } from 'next/router'
 import { useExtensions } from '@mesonfi/extensions/react'
 import { useWeb3Login } from '@mesonfi/web3-jwt/react'
 
-import { abbreviate } from 'lib'
 import Container from 'components/common/Container'
 import Header from 'components/common/Header'
-import Button from 'components/common/Button'
+import ConnectedButton from 'components/common/ConnectedButton'
+import { DropdownMenu } from 'components/common/Dropdown'
+
+import open from 'components/icons/open.svg'
+import disconnect from 'components/icons/disconnect.svg'
 
 import EditTo from './EditTo'
-import disconnect from './disconnect.png'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 
@@ -59,20 +61,19 @@ export default function PageEdit ({ to }) {
   return (
     <Container>
       <Header>
-        <Button
-          size='sm'
-          type='white'
-          onClick={logout}
-        >
-          <div className='w-7 h-7 p-1 mr-2'>
-          {
-            browserExt &&
-            <img alt={browserExt.name} crossOrigin='anonymous' className='w-5 h-5' src={browserExt.ext.icon} />
-          }
-          </div>
-          <div className='hidden sm:block'>{abbreviate(browserExt?.currentAccount.address, 6)}</div>
-          <div className='block sm:hidden'>{abbreviate(browserExt?.currentAccount.address)}</div>
-        </Button>
+        <DropdownMenu
+          btn={<ConnectedButton browserExt={browserExt} />}
+          options={[
+            {
+              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={open} /></div>Open My Link</>,
+              onClick: () => window.open(`/${to.uid}`, '_blank')
+            },
+            {
+              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={disconnect} /></div>Disconnect</>,
+              onClick: logout
+            }
+          ]}
+        />
       </Header>
       <EditTo to={to} extensions={extensions} account={account} />
     </Container>
