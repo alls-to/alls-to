@@ -11,7 +11,7 @@ import arrow from './arrow.png'
 export default function IntroRegion ({ networkId, token, side, steps = [], button }) {
   return (
     <div className='relative w-[280px] text-sm'>
-      <div className='font-medium'>What is ALLsTo?</div>
+      <div className='font-medium'>Why use ALLsTo?</div>
 
       <div className='font-light mt-3 leading-[20px]'>
         ALLsTo helps you collect stablecoins from any blockchain network, and you will receive all incoming transfers on a single network.
