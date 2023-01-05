@@ -33,7 +33,8 @@ export default function PageTo ({ to }) {
           <Button
             as='a'
             type='transparent'
-            size='sm'
+            size='xs'
+            className='text-sm'
             href='https://alls.to'
             target='_blank'
             rel='noreferrer'

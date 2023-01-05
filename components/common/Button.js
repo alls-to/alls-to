@@ -4,7 +4,8 @@ import classnames from 'classnames'
 const DEFAULT_CLASSNAME = 'flex items-center justify-center focus:outline-none'
 
 const BTN_SIZES = {
-  sm: 'px-3 py-1 text-sm rounded-lg',
+  xs: 'px-3 py-1 text-base font-semibold rounded-lg',
+  sm: 'px-3 py-2 text-base font-semibold rounded-xl',
   md: 'p-3 text-base font-semibold rounded-xl',
   lg: 'p-3 pl-4 text-base font-bold rounded-xl',
   round: 'px-2 py-1 rounded-full text-sm font-semibold leading-none'
@@ -13,6 +14,7 @@ const BTN_SIZES = {
 const BTN_TYPES = {
   default: 'bg-white text-primary border border-primary',
   primary : 'bg-primary text-white border border-primary',
+  white : 'bg-white text-primary border border-transparent shadow-lg',
   glass: 'bg-glass-200 border-none border-glass-200',
   transparent: 'bg-transparent text-primary border border-primary',
   pure: 'bg-transparent text-primary border border-transparent',
@@ -21,9 +23,10 @@ const BTN_TYPES = {
 const BTN_TYPES_ON_HOVER = {
   default: 'hover:bg-primary/10',
   primary : 'hover:bg-primary/90',
+  white: 'hover:bg-primary/10',
   glass: 'hover:bg-glass-300',
   transparent: 'hover:bg-primary/10',
-  pure: 'hover:bg-primary hover:text-white'
+  pure: 'hover:bg-primary/10'
 }
 
 const BTN_TYPES_DISABLED = {

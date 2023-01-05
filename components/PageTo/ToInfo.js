@@ -34,11 +34,11 @@ export default function ToInfo ({ to }) {
 
   return (
     <Card bg='pos2' className='p-3 xs:p-4 md:p-6 text-primary'>
-      <div className='flex flex-row justify-between'>
-        <div className='font-bold'>TRANSFER TO</div>
-        <div className='font-bold cursor-pointer hover:underline' onClick={saveImage}>
+      <div className='flex flex-row justify-between px-1 xs:px-0'>
+        <div className='font-semibold'>TRANSFER TO</div>
+        <Button size='xs' type='pure' className='-mt-1 -mr-3' onClick={saveImage}>
           SHARE
-        </div>
+        </Button>
       </div>
 
       <div className='mt-5 self-center w-16 h-16 rounded-full border-2 border-white box-content'>

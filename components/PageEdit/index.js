@@ -8,6 +8,7 @@ import { useWeb3Login } from '@mesonfi/web3-jwt/react'
 import { abbreviate } from 'lib'
 import Container from 'components/common/Container'
 import Header from 'components/common/Header'
+import Button from 'components/common/Button'
 
 import EditTo from './EditTo'
 import disconnect from './disconnect.png'
@@ -58,21 +59,24 @@ export default function PageEdit ({ to }) {
   return (
     <Container>
       <Header>
-        {
-          browserExt
-            ? <img alt={browserExt.name} crossOrigin='anonymous' className='w-6 h-6' src={browserExt.ext.icon} />
-            : <div className='w-6 h-6' />
-        }
-        <div className='font-semibold'>{abbreviate(browserExt?.currentAccount.address)}</div>
-        <button
-          type='button'
-          className='flex items-center justify-center rounded-xl w-10 h-10 text-sm text-black bg-white hover:bg-gray-100 focus:outline-none shadow'
+        <Button
+          size='sm'
+          type='white'
           onClick={logout}
         >
-          <Image alt='' width={18} height={18} src={disconnect} />
-        </button>
+          <div className='w-7 h-7 p-1 mr-2'>
+          {
+            browserExt &&
+            <img alt={browserExt.name} crossOrigin='anonymous' className='w-5 h-5' src={browserExt.ext.icon} />
+          }
+          </div>
+          <div className='hidden sm:block'>{abbreviate(browserExt?.currentAccount.address, 6)}</div>
+          <div className='block sm:hidden'>{abbreviate(browserExt?.currentAccount.address)}</div>
+        </Button>
       </Header>
       <EditTo to={to} extensions={extensions} account={account} />
     </Container>
   )
 }
+
+// <Image alt='' width={18} height={18} src={disconnect} />
