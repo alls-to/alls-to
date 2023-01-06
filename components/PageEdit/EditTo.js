@@ -137,7 +137,7 @@ export default function EditTo ({ to, account }) {
                 as='a'
                 size='xs'
                 type='primary'
-                className='text-sm !px-2 py-0.5'
+                className='!text-sm !px-2 !py-0.5'
                 href={`/${uid}`}
                 target='_blank'
                 rel='noreferrer'
