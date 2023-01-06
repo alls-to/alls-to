@@ -37,13 +37,13 @@ export default function PageTo ({ to }) {
   const currentAddress = browserExt?.currentAccount.address
   const options = React.useMemo(() => {
     const options = [{
-      text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={disconnect} /></div>Disconnect</>,
+      text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={disconnect} /></div>Disconnect</>,
       onClick: () => extensions.disconnect()
     }]
 
     if (to.address === currentAddress) {
       options.unshift({
-        text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={edit} /></div>Edit My Link</>,
+        text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={edit} /></div>Edit My Link</>,
         onClick: () => window.open(`/edit/${to.uid}`, '_blank')
       })
     }

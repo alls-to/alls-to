@@ -57,25 +57,25 @@ export default function ToInfo ({ to }) {
           className='-my-1 -mr-3'
           btn={
             <Button size='xs' type='pure'>
-              <div className='flex h-4 w-4 mr-2'><Image fill alt='' src={iconShare} /></div>
+              <div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconShare} /></div>
               SHARE
             </Button>
           }
           options={[
             {
-              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={iconDownload} /></div>Save Image with QR</>,
+              text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconDownload} /></div>Save Image with QR</>,
               onClick: saveImage
             },
             {
-              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={iconTwitter} /></div>Share on Twitter</>,
+              text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconTwitter} /></div>Share on Twitter</>,
               onClick: shareTwitter
             },
             {
-              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={iconTelegram} /></div>Share on Telegram</>,
+              text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconTelegram} /></div>Share on Telegram</>,
               onClick: shareTelegram
             },
             {
-              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={iconLink} /></div>Copy Link</>,
+              text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconLink} /></div>Copy Link</>,
               onClick: async () => {
                 await navigator.clipboard.writeText(link)
               }

@@ -65,11 +65,11 @@ export default function PageEdit ({ to }) {
           btn={<ConnectedButton browserExt={browserExt} />}
           options={[
             {
-              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={open} /></div>Open My Link</>,
+              text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={open} /></div>Open My Link</>,
               onClick: () => window.open(`/${to.uid || to.address.substring(0, 12)}`, '_blank')
             },
             {
-              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={disconnect} /></div>Disconnect</>,
+              text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={disconnect} /></div>Disconnect</>,
               onClick: logout
             }
           ]}
