@@ -132,12 +132,12 @@ export default function EditTo ({ to, account }) {
           <div className='absolute top-[39px] left-4 font-semibold text-gray-400'>https://alls.to/</div>
           {
             (!inputUidValue || uidDisabled) &&
-            <div className='absolute top-[33px] right-2'>
+            <div className='absolute top-[34px] right-2'>
               <Button
                 as='a'
                 size='xs'
                 type='primary'
-                className='!text-sm !px-2 !py-0.5'
+                className='!text-sm !px-2'
                 href={`/${uid}`}
                 target='_blank'
                 rel='noreferrer'
