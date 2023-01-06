@@ -66,7 +66,7 @@ export default function PageEdit ({ to }) {
           options={[
             {
               text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={open} /></div>Open My Link</>,
-              onClick: () => window.open(`/${to.uid}`, '_blank')
+              onClick: () => window.open(`/${to.uid || to.address.substring(0, 12)}`, '_blank')
             },
             {
               text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={disconnect} /></div>Disconnect</>,
