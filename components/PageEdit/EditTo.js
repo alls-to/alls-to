@@ -4,6 +4,7 @@ import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 
 import presets from '@mesonfi/presets'
 import * as api from 'lib/api'
+import { disabledChains } from 'lib/extensions'
 
 import CentralCardWithSideInfo from 'components/common/Card/CentralCardWithSideInfo'
 import Card from 'components/common/Card'
@@ -12,8 +13,6 @@ import Button from 'components/common/Button'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
 
 import TokenSelector from './TokenSelector'
-
-const disabledChains = (process.env.NEXT_PUBLIC_DISABLED_CHAINS || '').split(',')
 
 export default function EditTo ({ to, account }) {
   const router = useRouter()
