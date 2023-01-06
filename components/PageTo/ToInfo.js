@@ -15,10 +15,12 @@ import Button from 'components/common/Button'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
 import TokenIcon from 'components/common/Icon/TokenIcon'
 
-import share from './icons/share.svg'
-import download from './icons/download.svg'
-import link from './icons/link.svg'
-import check from './icons/check.svg'
+import iconShare from './icons/share.svg'
+import iconDownload from './icons/download.svg'
+import iconTwitter from './icons/twitter.svg'
+import iconTelegram from './icons/telegram.svg'
+import iconLink from './icons/link.svg'
+import iconCheck from './icons/check.svg'
 
 const MesonToEmbedded = dynamic(
   import('@mesonfi/to').then(t => t.MesonToEmbedded),
@@ -27,11 +29,22 @@ const MesonToEmbedded = dynamic(
 
 export default function ToInfo ({ to }) {
   const uid = to.uid || to.address
+  const link = `https://alls.to/${to.uid || to.address.substring(0, 12)}`
   const name = to.name || uid
 
   const saveImage = React.useCallback(async () => {
     await saveAs(`https://img.meson.fi/to/${uid}/share`, `Alls_to_${name}.png`)
   }, [uid, name])
+
+  const shareTwitter = React.useCallback(async () => {
+    const text = `Make stablecoin transfers to me\n\n${link}`
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank')
+  }, [link])
+
+  const shareTelegram = React.useCallback(async () => {
+    const text = `Make stablecoin transfers to me`
+    window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`, '_blank')
+  }, [link])
 
   const network = mesonPresets.getNetwork(to.networkId)
   const token = network.tokens.find(t => t.symbol.toLowerCase().includes(to.tokens[0]))
@@ -44,19 +57,27 @@ export default function ToInfo ({ to }) {
           className='-my-1 -mr-3'
           btn={
             <Button size='xs' type='pure'>
-              <div className='flex h-4 w-4 mr-2'><Image fill alt='' src={share} /></div>
+              <div className='flex h-4 w-4 mr-2'><Image fill alt='' src={iconShare} /></div>
               SHARE
             </Button>
           }
           options={[
             {
-              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={download} /></div>Save Image with QR</>,
+              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={iconDownload} /></div>Save Image with QR</>,
               onClick: saveImage
             },
             {
-              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={link} /></div>Copy Link</>,
+              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={iconTwitter} /></div>Share on Twitter</>,
+              onClick: shareTwitter
+            },
+            {
+              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={iconTelegram} /></div>Share on Telegram</>,
+              onClick: shareTelegram
+            },
+            {
+              text: <><div className='flex h-4 w-4 mr-2'><Image fill alt='' src={iconLink} /></div>Copy Link</>,
               onClick: async () => {
-                await navigator.clipboard.writeText(`https://alls.to/${uid}`)
+                await navigator.clipboard.writeText(link)
               }
             }
           ]}
@@ -114,7 +135,7 @@ function SuccessInfo ({ data, onNewTransfer }) {
 
           <div className='bg-green h-0.5 w-16 rounded-full mx-px' />
           <div className='w-6 h-6 rounded-full bg-green m-px'>
-            <Image alt='' width={24} height={24} src={check} />
+            <Image alt='' width={24} height={24} src={iconCheck} />
           </div>
 
           <div className='bg-green h-0.5 w-16 rounded-full mx-px' />
