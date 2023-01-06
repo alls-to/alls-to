@@ -3,7 +3,7 @@ import { abbreviate } from 'lib'
 import Button from './Button'
 
 export default function ConnectedButton ({ browserExt }) {
-  if (!browserExt) {
+  if (!browserExt?.currentAccount) {
     return null
   }
   return (
