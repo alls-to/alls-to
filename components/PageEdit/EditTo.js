@@ -14,7 +14,37 @@ import NetworkIcon from 'components/common/Icon/NetworkIcon'
 
 import TokenSelector from './TokenSelector'
 
-export default function EditTo ({ to, account }) {
+export default function EditTo ({ switching, to, account }) {
+  if (switching) {
+    return <EditLoading notice='Switching address...' />
+  } else if (!to) {
+    return <EditLoading />
+  } else {
+    return <EditToLoaded to={to} account={account} />
+  }
+}
+
+function EditLoading ({ notice = 'Loading...' }) {
+  return (
+    <CentralCardWithSideInfo networkId='polygon' token='usdc'>
+      <Card bg='pos2' className='p-3 xs:p-4 md:p-6 h-[480px]'>
+        <div className='flex flex-row justify-between'>
+          <div className='font-semibold'>EDIT</div>
+        </div>
+
+        <div className='mt-5 self-center w-16 h-16 rounded-full overflow-hidden border-2 border-white box-content'>
+          <div className='w-16 h-16 bg-primary/10' />
+        </div>
+
+        <div className='mt-5 self-center'>
+          {notice}
+        </div>
+      </Card>
+    </CentralCardWithSideInfo>
+  )
+}
+
+function EditToLoaded ({ to, account }) {
   const router = useRouter()
   const [uid, setUid] = React.useState(to.uid || to.address.substring(0, 12))
   const [inputUidValue, setInputUidValue] = React.useState(to.uid || '')

@@ -50,8 +50,8 @@ export default function PageEdit () {
     if (!account) {
       return
     } else if (!account.token) {
-      setTo()
       router.replace('/')
+      setTo()
       return
     }
     setTo()
@@ -66,17 +66,17 @@ export default function PageEdit () {
       return
     }
     if (account.sub !== currentAddress) {
+      setTo()
       login().catch(() => logout())
     }
   }, [account, currentAddress, login, logout])
 
+  let switching
   if (currentAddress && account?.sub !== currentAddress) {
-    return 'Switching account...'
-  } else if (!to) {
-    return 'Loading...'
+    switching = true
   }
 
-  const title = `Edit → ${to.name || abbreviate(to.address)}`
+  const title = to ? `Edit → ${to.name || abbreviate(to.address)}` : 'Loading...'
   return (
     <Container>
       <NextSeo title={title} openGraph={{ title }} />
@@ -86,7 +86,7 @@ export default function PageEdit () {
           options={[
             {
               text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={open} /></div>Open My Link</>,
-              onClick: () => window.open(`/${to.uid || to.address.substring(0, 12)}`, '_blank')
+              onClick: () => to && window.open(`/${to.uid || to.address.substring(0, 12)}`, '_blank')
             },
             {
               text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={disconnect} /></div>Disconnect</>,
@@ -95,7 +95,7 @@ export default function PageEdit () {
           ]}
         />
       </Header>
-      <EditTo to={to} extensions={extensions} account={account} />
+      <EditTo switching={switching} to={to} account={account} />
     </Container>
   )
 }
