@@ -540,10 +540,10 @@
   resolved "https://npm.pkg.github.com/download/@mesonfi/to/0.1.5-rc.12/06b699029711fe6c99d92843ad6d2adcb25996de#06b699029711fe6c99d92843ad6d2adcb25996de"
   integrity sha512-2YBvkWYLPCQkx0+BB8wCjayyS5W+JiopEjlhmRoLDST7gs2YHIwXX0CLfmgbJBpDnpSndJ69vMrUuslL4Ay13A==
 
-"@mesonfi/web3-jwt@^0.1.0-rc.4":
-  version "0.1.0-rc.4"
-  resolved "https://npm.pkg.github.com/download/@mesonfi/web3-jwt/0.1.0-rc.4/97a168e373a7e9a9bcb987056b00f0d5bcb74ec5#97a168e373a7e9a9bcb987056b00f0d5bcb74ec5"
-  integrity sha512-8h+OZzeg7NVas/w+YFYglcokrZzW1ny2Iq6WiKo9WuParjOkxynaq6lXp4Ww5XQQLmkwMOUoUaTBxprDZdc5rQ==
+"@mesonfi/web3-jwt@^0.1.0-rc.12":
+  version "0.1.0-rc.12"
+  resolved "https://npm.pkg.github.com/download/@mesonfi/web3-jwt/0.1.0-rc.12/0d118a1ed79cd5023ed76a5e36b8ebfb0af9ef6b#0d118a1ed79cd5023ed76a5e36b8ebfb0af9ef6b"
+  integrity sha512-7aUobxYqduIZ8R4MEOsCDvohqPOTleC6EGouzQyY/xKCGbnqNMS2vEgkLmwH3ABWY4tZDgjgoyenx875Lkhqvg==
   dependencies:
     jws "^4.0.0"
 

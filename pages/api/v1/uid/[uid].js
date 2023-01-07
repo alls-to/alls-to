@@ -10,6 +10,9 @@ export default async function handler (req, res) {
     }
 
     const { uid } = req.query
+    if (uid === 'edit') {
+      res.json({ result: true })
+    }
     const exist = await Recipients.findOne({ uid })
     res.json({ result: !!exist })
   } else {

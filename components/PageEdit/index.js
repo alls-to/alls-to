@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { NextSeo } from 'next-seo'
 
 import { useExtensions } from '@mesonfi/extensions/react'
 import { useWeb3Login } from '@mesonfi/web3-jwt/react'
@@ -12,6 +13,9 @@ import { DropdownMenu } from 'components/common/Dropdown'
 
 import open from 'components/icons/open.svg'
 import disconnect from 'components/icons/disconnect.svg'
+
+import { abbreviate } from 'lib'
+import * as api from 'lib/api'
 
 import EditTo from './EditTo'
 
@@ -36,30 +40,46 @@ const steps = [
   }
 ]
 
-export default function PageEdit ({ to }) {
+export default function PageEdit () {
   const router = useRouter()
   const { extensions, browserExt } = useExtensions()
-  const { account, logout } = useWeb3Login(extensions, signingMessage, { duration: 86400 * 7, loginAddress: to.address })
+  const { account, login, logout } = useWeb3Login(extensions, signingMessage, { duration: 86400 * 7 })
+  const [to, setTo] = React.useState()
 
   React.useEffect(() => {
     if (!account) {
       return
-    }
-    if (!account.sub) {
+    } else if (!account.token) {
+      setTo()
       router.replace('/')
-    } else if (account.sub !== to.address) {
-      router.replace(`/edit/${account.sub}`)
-    } else if (to.uid && !location.pathname.endsWith(`/${to.uid}`)) {
-      router.replace(`/edit/${to.uid}`)
+      return
     }
-  }, [router, account, to])
+    setTo()
+    api.getRecipient(account.token)
+      .then(setTo)
+      .catch(err => console.warn(err))
+  }, [router, account])
 
-  if (!account || account.sub !== to.address) {
-    return null
+  const currentAddress = browserExt?.currentAccount?.address
+  React.useEffect(() => {
+    if (!account || !currentAddress) {
+      return
+    }
+    if (account.sub !== currentAddress) {
+      login().catch(() => logout())
+    }
+  }, [account, currentAddress, login, logout])
+
+  if (currentAddress && account?.sub !== currentAddress) {
+    return 'Switching account...'
+  } else if (!to) {
+    return 'Loading...'
   }
 
+  const title = `Edit → ${to.name || abbreviate(to.address)}`
   return (
     <Container>
+      <NextSeo title={title} openGraph={{ title }} />
       <Header>
         <DropdownMenu
           btn={<ConnectedButton browserExt={browserExt} />}
@@ -79,5 +99,3 @@ export default function PageEdit ({ to }) {
     </Container>
   )
 }
-
-// <Image alt='' width={18} height={18} src={disconnect} />

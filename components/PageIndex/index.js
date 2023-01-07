@@ -26,7 +26,7 @@ export default function PageIndex() {
 
   React.useEffect(() => {
     if (account?.sub) {
-      router.replace(`/edit/${account.sub}`)
+      router.replace('/edit')
     }
   }, [router, account])
 

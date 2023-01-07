@@ -56,7 +56,7 @@ export default function EditTo ({ to, account }) {
     if (!/^[a-zA-Z0-9._-]{4,12}$/.exec(uid)) {
       throw new Error('Only letters, numbers, and "." "-" "_" are accepted')
     }
-    const result = await api.checkRecipient(uid, account.token)
+    const result = await api.checkUid(uid, account.token)
     if (result) {
       throw new Error('Already exists')
     }
