@@ -76,9 +76,7 @@ export default function ToInfo ({ to }) {
             },
             {
               text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconLink} /></div>Copy Link</>,
-              onClick: async () => {
-                await navigator.clipboard.writeText(link)
-              }
+              onClick: () => navigator.clipboard.writeText(link)
             }
           ]}
         />
