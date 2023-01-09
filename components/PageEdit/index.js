@@ -45,6 +45,7 @@ export default function PageEdit () {
   const { extensions, browserExt } = useExtensions()
   const { account, login, logout } = useWeb3Login(extensions, signingMessage, { duration: 86400 * 7 })
   const [to, setTo] = React.useState()
+  const [extIcon, setExtIcon] = React.useState()
 
   React.useEffect(() => {
     if (!account) {
@@ -71,6 +72,13 @@ export default function PageEdit () {
     }
   }, [account, currentAddress, login, logout])
 
+  const currentExtIcon = browserExt?.ext?.icon
+  React.useEffect(() => {
+    if (currentExtIcon) {
+      setExtIcon(currentExtIcon)
+    }
+  }, [currentExtIcon])
+
   let switching
   if (currentAddress && account?.sub !== currentAddress) {
     switching = true
@@ -82,7 +90,7 @@ export default function PageEdit () {
       <NextSeo title={title} openGraph={{ title }} />
       <Header>
         <DropdownMenu
-          btn={<ConnectedButton browserExt={browserExt} />}
+          btn={<ConnectedButton icon={extIcon} address={account?.sub} />}
           options={[
             {
               text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={open} /></div>Open My Link</>,

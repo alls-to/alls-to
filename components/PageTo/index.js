@@ -67,7 +67,7 @@ export default function PageTo ({ to }) {
     <Container>
       <Header logoSrc='https://alls.to'>
         <DropdownMenu
-          btn={<ConnectedButton browserExt={browserExt} />}
+          btn={<ConnectedButton icon={browserExt?.ext?.icon} address={currentAddress} />}
           options={options}
         />
       </Header>
