@@ -57,11 +57,11 @@ export default function PageTo ({ to }) {
     if (to.address === currentAddress) {
       options.unshift({
         text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconEdit} /></div>Edit My Link</>,
-        onClick: () => window.open(`/edit/${to.uid}`, '_blank')
+        onClick: () => window.open(`/edit`, '_blank')
       })
     }
     return options
-  }, [to.address, to.uid, currentAddress, disconnect])
+  }, [to.address, currentAddress, disconnect])
 
   return (
     <Container>

@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 
@@ -11,6 +12,8 @@ import Card from 'components/common/Card'
 import Input from 'components/common/Input'
 import Button from 'components/common/Button'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
+
+import iconCopy from 'components/icons/copy.svg'
 
 import TokenSelector from './TokenSelector'
 
@@ -122,7 +125,6 @@ function EditToLoaded ({ to, account }) {
       if (inputUidValue) {
         setUid(inputUidValue)
         setUidDisabled(inputUidValue)
-        router.replace(`/edit/${inputUidValue}`)
       }
       setBtn('SAVED!')
       setTimeout(() => setBtn('SAVE'), 1000)
@@ -159,20 +161,13 @@ function EditToLoaded ({ to, account }) {
           underline={uidUnderline}
         >
           <div className='absolute top-[39px] left-4 font-semibold text-gray-400'>https://alls.to/</div>
-          {
-            (!inputUidValue || uidDisabled) &&
-            <div className='absolute top-[34px] right-2'>
-              <Button
-                as='a'
-                size='xs'
-                type='primary'
-                className='!text-sm !px-2'
-                href={`/${uid}`}
-                target='_blank'
-                rel='noreferrer'
-              >OPEN</Button>
-            </div>
-          }
+          <div className='absolute top-[32px] right-2.5'>
+            <Button size='sm' type='pure' className='!px-2'>
+              <div className='flex items-center justify-center h-4 w-4'>
+                <Image fill='true' alt='' src={iconCopy} />
+              </div>
+            </Button>
+          </div>
         </Input>
 
         <Input
@@ -226,8 +221,19 @@ function EditToLoaded ({ to, account }) {
           onChange={setTokens}
         />
 
-        <div className='mt-5'>
-          <Button onClick={saveChange} disabled={btnDisabled}>{btn}</Button>
+        <div className='mt-5 flex flex-row gap-3'>
+          <Button className='flex-1' onClick={saveChange} disabled={btnDisabled}>
+            {btn}
+          </Button>
+          <Button
+            className='flex-1'
+            type='primary'
+            as='a'
+            href={`/${uid}`}
+            target='_blank'
+          >
+            OPEN MY LINK
+          </Button>
         </div>
       </Card>
     </CentralCardWithSideInfo>
