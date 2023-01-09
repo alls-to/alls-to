@@ -15,12 +15,14 @@ import Button from 'components/common/Button'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
 import TokenIcon from 'components/common/Icon/TokenIcon'
 
+import refs from 'lib/refs'
+
+import iconCheck from 'components/icons/check.svg'
 import iconShare from './icons/share.svg'
 import iconDownload from './icons/download.svg'
 import iconTwitter from './icons/twitter.svg'
 import iconTelegram from './icons/telegram.svg'
 import iconLink from './icons/link.svg'
-import iconCheck from './icons/check.svg'
 
 const MesonToEmbedded = dynamic(
   import('@mesonfi/to').then(t => t.MesonToEmbedded),
@@ -44,6 +46,11 @@ export default function ToInfo ({ to }) {
   const shareTelegram = React.useCallback(async () => {
     const text = `Make stablecoin transfers to me`
     window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`, '_blank')
+  }, [link])
+
+  const copyLink = React.useCallback(async () => {
+    await navigator.clipboard.writeText(link)
+    refs.toast.current?.open({ title: 'Link Copied!' })
   }, [link])
 
   const network = mesonPresets.getNetwork(to.networkId)
@@ -76,7 +83,7 @@ export default function ToInfo ({ to }) {
             },
             {
               text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconLink} /></div>Copy Link</>,
-              onClick: () => navigator.clipboard.writeText(link)
+              onClick: copyLink
             }
           ]}
         />

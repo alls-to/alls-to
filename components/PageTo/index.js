@@ -2,9 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import { useExtensions } from '@mesonfi/extensions/react'
-
-import Container from 'components/common/Container'
+import AppContainer from 'components/AppContainer'
 import Header from 'components/common/Header'
 import ConnectedButton from 'components/common/ConnectedButton'
 import { DropdownMenu } from 'components/common/Dropdown'
@@ -64,7 +62,7 @@ export default function PageTo ({ to }) {
   }, [to.address, currentAddress, disconnect])
 
   return (
-    <Container>
+    <AppContainer>
       <Header logoSrc='https://alls.to'>
         <DropdownMenu
           btn={<ConnectedButton icon={browserExt?.ext?.icon} address={currentAddress} />}
@@ -90,6 +88,6 @@ export default function PageTo ({ to }) {
       >
         <ToInfo to={to} />
       </CentralCardWithSideInfo>
-    </Container>
+    </AppContainer>
   )
 }

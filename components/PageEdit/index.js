@@ -6,7 +6,7 @@ import { NextSeo } from 'next-seo'
 import { useExtensions } from '@mesonfi/extensions/react'
 import { useWeb3Login } from '@mesonfi/web3-jwt/react'
 
-import Container from 'components/common/Container'
+import AppContainer from 'components/AppContainer'
 import Header from 'components/common/Header'
 import ConnectedButton from 'components/common/ConnectedButton'
 import { DropdownMenu } from 'components/common/Dropdown'
@@ -86,7 +86,7 @@ export default function PageEdit () {
 
   const title = to ? `Edit → ${to.name || abbreviate(to.address)}` : 'Loading...'
   return (
-    <Container>
+    <AppContainer>
       <NextSeo title={title} openGraph={{ title }} />
       <Header>
         <DropdownMenu
@@ -104,6 +104,6 @@ export default function PageEdit () {
         />
       </Header>
       <EditTo switching={switching} to={to} account={account} />
-    </Container>
+    </AppContainer>
   )
 }

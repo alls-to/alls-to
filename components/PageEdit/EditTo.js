@@ -14,6 +14,8 @@ import NetworkIcon from 'components/common/Icon/NetworkIcon'
 
 import iconCopy from 'components/icons/copy.svg'
 
+import refs from 'lib/refs'
+
 import TokenSelector from './TokenSelector'
 
 export default function EditTo ({ switching, to, account }) {
@@ -103,6 +105,12 @@ function EditToLoaded ({ to, account }) {
     }
   }, [uidDisabled, inputUidValue])
 
+  const copyLink = React.useCallback(() => {
+    const link = `https://alls.to/${uid}`
+    navigator.clipboard.writeText(link)
+    refs.toast.current?.open({ title: 'Link Copied!' })
+  }, [uid])
+
   if (!account?.sub) {
     return
   }
@@ -135,8 +143,6 @@ function EditToLoaded ({ to, account }) {
     }
   }
 
-  const link = `https://alls.to/${uid}`
-
   return (
     <CentralCardWithSideInfo networkId={networkId} token={tokens[0]}>
       <Card bg='pos2' className='p-3 xs:p-4 md:p-6'>
@@ -162,7 +168,7 @@ function EditToLoaded ({ to, account }) {
         >
           <div className='absolute top-[39px] left-4 font-semibold text-gray-400'>https://alls.to/</div>
           <div className='absolute top-[32px] right-2.5'>
-            <Button size='sm' type='pure' className='!px-2' onClick={() => navigator.clipboard.writeText(link)}>
+            <Button size='sm' type='pure' className='!px-2' onClick={copyLink}>
               <div className='flex items-center justify-center h-4 w-4'>
                 <Image fill='true' alt='' src={iconCopy} />
               </div>

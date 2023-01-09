@@ -7,7 +7,7 @@ import mapValues from 'lodash/mapValues'
 import { useExtensions } from '@mesonfi/extensions/react'
 import { useWeb3Login } from '@mesonfi/web3-jwt/react'
 
-import Container from 'components/common/Container'
+import AppContainer from 'components/AppContainer'
 import Header from 'components/common/Header'
 import Card from 'components/common/Card'
 import Button from 'components/common/Button'
@@ -33,7 +33,7 @@ export default function PageIndex() {
   const loading = !account || account.sub
 
   return (
-    <Container className='sm:overflow-y-hidden'>
+    <AppContainer className='sm:overflow-y-hidden'>
       <Header />
       <div className={classnames(
         'w-full flex flex-col sm:flex-row items-start justify-between',
@@ -69,7 +69,7 @@ export default function PageIndex() {
           </Card>
         </div>
       </div>
-    </Container>
+    </AppContainer>
   )
 }
 

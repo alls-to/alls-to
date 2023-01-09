@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import 'styles/index.css'
 
-import extensions from 'lib/extensions'
 import { ExtensionProvider } from '@mesonfi/extensions/react'
+import extensions from 'lib/extensions'
 
 export default function App({ Component, pageProps }) {
   return (
