@@ -108,7 +108,7 @@ function EditToLoaded ({ to, account }) {
   const copyLink = React.useCallback(() => {
     const link = `https://alls.to/${uid}`
     navigator.clipboard.writeText(link)
-    refs.toast.current?.open({ title: 'Link Copied!' })
+    refs.toast.current?.show({ title: 'Link Copied!' })
   }, [uid])
 
   if (!account?.sub) {

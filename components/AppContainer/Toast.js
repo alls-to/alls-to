@@ -12,6 +12,12 @@ const LONG_DURATION = 8000
 const INFINITY_DURATION = 86400_000 // 24h
 const DELAY_TO_CLOSE = 1000
 
+const ICONS = {
+  success: <Image alt='' width={20} height={20} src={iconCheck} />,
+  warning: <div className='w-5 h-5 bg-primary' />,
+  error: <div className='w-5 h-5 bg-red' />
+}
+
 export function ToastCard ({ title, subtitle, type, onClose, withCloseButton, onMouseEnter, onMouseLeave }) {
   return (
     <Transition
@@ -33,19 +39,16 @@ export function ToastCard ({ title, subtitle, type, onClose, withCloseButton, on
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
-        <div className='flex items-start'>
-          <div className='w-5 h-5 rounded-full mr-2'>
-            <Image alt='' width={20} height={20} src={iconCheck} />
+        <div className='flex justify-between'>
+          <div className='flex items-start'>
+            <div className='w-5 h-5 rounded-full mr-2'>
+              {ICONS[type]}
+            </div>
+            <span className='overflow-hidden break-words text-sm leading-[20px]'>
+              {title}
+            </span>
           </div>
-          <span className='overflow-hidden break-words text-sm leading-[20px]'>
-            {title}
-          </span>
-          {withCloseButton &&
-            <>
-              <div className='flex-1' />
-              x
-            </>
-          }
+          {withCloseButton && 'x'}
         </div>
         {
           subtitle &&
@@ -86,7 +89,7 @@ function useTimedToasts () {
     const {
       title,
       subtitle = '',
-      type = 'warning',
+      type = 'success',
       withCloseButton = false,
       sticky = false,
       clearPrevAll = false,
@@ -128,12 +131,12 @@ export default function Toast () {
   const { toasts, addToast, closeToast } = useTimedToasts()
 
   React.useImperativeHandle(refs.toast, () => ({
-    open: addToast,
+    show: addToast,
     close: closeToast
   }))
 
   return (
-    <div className='absolute z-[100] top-5 inset-x-0 mx-auto flex flex-col w-60'>
+    <div className='absolute z-[100] top-5 inset-x-0 mx-auto flex flex-col w-60 gap-1.5'>
     {
       toasts.map(toast => (
         <ToastCard key={toast.id} {...toast} onClose={() => closeToast(toast.id)} />

@@ -50,7 +50,7 @@ export default function ToInfo ({ to }) {
 
   const copyLink = React.useCallback(async () => {
     await navigator.clipboard.writeText(link)
-    refs.toast.current?.open({ title: 'Link Copied!' })
+    refs.toast.current?.show({ title: 'Link Copied!' })
   }, [link])
 
   const network = mesonPresets.getNetwork(to.networkId)
