@@ -31,7 +31,7 @@ const BTN_TYPES_ON_HOVER = {
 
 const BTN_TYPES_DISABLED = {
   default: 'bg-white opacity-50',
-  primary : '',
+  primary : 'opacity-50',
   glass: '',
   transparent: '',
   pure: ''

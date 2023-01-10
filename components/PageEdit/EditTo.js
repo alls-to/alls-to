@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
+import debounce from 'lodash/debounce'
 
 import presets from '@mesonfi/presets'
 import * as api from 'lib/api'
@@ -52,13 +53,7 @@ function EditToLoaded ({ to, account }) {
   const [uid, setUid] = React.useState(to.uid || to.address.substring(0, 12))
   const [inputUidValue, setInputUidValue] = React.useState(to.uid || '')
   const [uidDisabled, setUidDisabled] = React.useState(!!to.uid)
-  const [name, setName] = React.useState(to.name || '')
-  const [desc, setDesc] = React.useState(to.desc || '')
-  const [networkId, setNetworkId] = React.useState(to.networkId || '')
-  const [tokens, setTokens] = React.useState(to.tokens)
-
-  const [btn, setBtn] = React.useState('SAVE')
-  const [btnDisabled, setBtnDisabled] = React.useState(false)
+  const [claimDisabled, setClaimDisabled] = React.useState(false)
 
   const extType = account?.iss?.split(':')[0]
   const networks = React.useMemo(() => {
@@ -79,10 +74,10 @@ function EditToLoaded ({ to, account }) {
 
   const uidValidator = React.useCallback(async uid => {
     if (!uid) {
-      setBtnDisabled(false)
+      setClaimDisabled(true)
       return
     }
-    setBtnDisabled(true)
+    setClaimDisabled(true)
     if (uid.length < 4) {
       throw new Error('Length needs to be at least 4')
     }
@@ -93,15 +88,15 @@ function EditToLoaded ({ to, account }) {
     if (result) {
       throw new Error('Already exists')
     }
-    setBtnDisabled(false)
-    return 'Good!'
+    setClaimDisabled(false)
+    return 'Good choice!'
   }, [account.token])
 
   const uidUnderline = React.useMemo(() => {
     if (uidDisabled) {
       return ''
     } else if (!inputUidValue) {
-      return 'You can setup a customized ID once. Cannot change.'
+      return 'You can claim a customized ID. Cannot change.'
     }
   }, [uidDisabled, inputUidValue])
 
@@ -111,36 +106,52 @@ function EditToLoaded ({ to, account }) {
     refs.toast.current?.show({ title: 'Link Copied!' })
   }, [uid])
 
-  if (!account?.sub) {
-    return
+  const claim = React.useCallback(async () => {
+    if (inputUidValue) {
+      await api.claimUid(inputUidValue, account.token)
+      setUid(inputUidValue)
+      setUidDisabled(true)
+      setInputUidValue()
+      refs.toast.current?.show({ title: 'Link Claimed!' })
+    }
+  }, [account.token, inputUidValue])
+
+  const [name, setName] = React.useState(to.name || '')
+  const [desc, setDesc] = React.useState(to.desc || '')
+  const [networkId, setNetworkId] = React.useState(to.networkId || '')
+  const [tokens, setTokens] = React.useState(to.tokens)
+
+  const autoSave = React.useMemo(() => debounce(async data => {
+    try {
+      await api.updateRecipient(data, account.token)
+      refs.toast.current?.show({ title: 'Change auto-saved!' })
+    } catch (e) {
+      console.warn(e)
+    }
+  }, 2000), [account.token])
+
+  const updateName = name => {
+    setName(name)
+    autoSave({ name, desc, networkId, tokens })
   }
 
-  const saveChange = async () => {
-    if (!tokens.length) {
-      window.alert('Please select at least one token')
-      return
-    }
+  const updateDesc = desc => {
+    setDesc(desc)
+    autoSave({ name, desc, networkId, tokens })
+  }
 
-    try {
-      setBtn('SAVING...')
-      const data = { name, desc, networkId, tokens }
-      if (inputUidValue && !uidDisabled) {
-        data.uid = inputUidValue
-      }
-      await api.updateRecipient(data, account.token)
-      if (inputUidValue) {
-        setUid(inputUidValue)
-        setUidDisabled(inputUidValue)
-      }
-      setBtn('SAVED!')
-      setTimeout(() => setBtn('SAVE'), 1000)
-    } catch (e) {
-      if (e.code === 409) {
-        // setUid(to.uid)
-      }
-      console.warn(e)
-      setBtn('SAVE')
-    }
+  const updateNetworkId = networkId => {
+    setNetworkId(networkId)
+    autoSave({ name, desc, networkId, tokens })
+  }
+
+  const updateTokens = tokens => {
+    setTokens(tokens)
+    autoSave({ name, desc, networkId, tokens })
+  }
+
+  if (!account?.sub) {
+    return
   }
 
   return (
@@ -167,12 +178,19 @@ function EditToLoaded ({ to, account }) {
           underline={uidUnderline}
         >
           <div className='absolute top-[39px] left-4 font-semibold text-gray-400'>https://alls.to/</div>
-          <div className='absolute top-[32px] right-2.5'>
-            <Button size='sm' type='pure' className='!px-2' onClick={copyLink}>
-              <div className='flex items-center justify-center h-4 w-4'>
-                <Image fill='true' alt='' src={iconCopy} />
-              </div>
-            </Button>
+          <div className='absolute top-[22px] right-2.5 flex items-center h-[52px]'>
+          {
+            !inputUidValue
+            ? <Button size='sm' type='pure' className='!px-2' onClick={copyLink}>
+                <div className='flex items-center justify-center h-4 w-4'>
+                  <Image fill='true' alt='' src={iconCopy} />
+                </div>
+              </Button>
+            : !claimDisabled &&
+              <Button size='xs' type='primary' className='!px-2 !py-1 !text-sm' onClick={claim}>
+                CLAIM
+              </Button>
+          }
           </div>
         </Input>
 
@@ -181,7 +199,7 @@ function EditToLoaded ({ to, account }) {
           className='mt-5'
           label='Name'
           value={name}
-          onChange={setName}
+          onChange={updateName}
           placeholder='Enter your name'
           maxLength={24}
         >
@@ -197,7 +215,7 @@ function EditToLoaded ({ to, account }) {
           type='textarea'
           label='Bio'
           value={desc}
-          onChange={setDesc}
+          onChange={updateDesc}
           placeholder='Describe who you are'
           maxLength={100}
         >
@@ -213,7 +231,7 @@ function EditToLoaded ({ to, account }) {
           type='select'
           label='Receive Stablecoins as'
           value={networkId}
-          onChange={setNetworkId}
+          onChange={updateNetworkId}
           options={networks}
         >
           <div className='absolute left-4 bottom-[10px]'>
@@ -224,13 +242,10 @@ function EditToLoaded ({ to, account }) {
         <TokenSelector
           networkId={networkId}
           tokens={tokens}
-          onChange={setTokens}
+          onChange={updateTokens}
         />
 
-        <div className='mt-5 flex flex-row gap-3'>
-          <Button className='flex-1' onClick={saveChange} disabled={btnDisabled}>
-            {btn}
-          </Button>
+        <div className='mt-5'>
           <Button
             className='flex-1'
             type='primary'
