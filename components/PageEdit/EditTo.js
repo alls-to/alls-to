@@ -150,7 +150,7 @@ function EditToLoaded ({ to, account }) {
           <div className='font-semibold'>EDIT</div>
         </div>
 
-        <div className='mt-5 self-center w-16 h-16 rounded-full border-2 border-white box-content'>
+        <div className='mt-5 mb-4 self-center w-16 h-16 rounded-full border-2 border-white box-content'>
           <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
         </div>
 
