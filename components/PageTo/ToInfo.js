@@ -70,7 +70,7 @@ export default function ToInfo ({ to }) {
           }
           options={[
             {
-              text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconDownload} /></div>Save Image with QR</>,
+              text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconDownload} /></div>Save Image</>,
               onClick: saveImage
             },
             {
