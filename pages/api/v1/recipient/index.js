@@ -37,13 +37,13 @@ export default async function handler (req, res) {
 
     res.json({ result: { address: doc._id, ...doc.toJSON() } })
   } else if (req.method === 'PUT') {
-    const { uid, name, desc, networkId, tokens } = req.body
+    const { uid, name, desc, networkId, tokens, avatar } = req.body
     if (uid === 'edit') {
       res.status(400).end()
       return
     }
     try {
-      const result = await Recipients.findByIdAndUpdate(addr, { uid, name, desc, networkId, tokens }, { upsert: true, new: true })
+      const result = await Recipients.findByIdAndUpdate(addr, { uid, name, desc, avatar, networkId, tokens }, { upsert: true, new: true })
       res.json({ result })
     } catch (e) {
       const code = e.codeName === 'DuplicateKey' ? 409 : 400

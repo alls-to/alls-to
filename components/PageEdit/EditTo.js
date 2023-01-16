@@ -1,25 +1,29 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Image from 'next/image'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import debounce from 'lodash/debounce'
-
+import iconCamera from 'components/icons/icon-camera.svg'
 import presets from '@mesonfi/presets'
 import * as api from 'lib/api'
 import { disabledChains } from 'lib/extensions'
-
+import { useDropzone } from 'react-dropzone'
 import CentralCardWithSideInfo from 'components/common/Card/CentralCardWithSideInfo'
 import Card from 'components/common/Card'
 import Input from 'components/common/Input'
 import Button from 'components/common/Button'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
-
 import iconCopy from 'components/icons/copy.svg'
 
 import refs from 'lib/refs'
 
 import TokenSelector from './TokenSelector'
+import { utils as etherUtils } from 'ethers'
+import classNames from 'classnames'
 
-export default function EditTo ({ switching, to, account }) {
+const BUCKET = process.env.NEXT_PUBLIC_AWS_BUCKET
+const REGION = process.env.NEXT_PUBLIC_AWS_REGION
+
+export default function EditTo({ switching, to, account }) {
   if (switching) {
     return <EditLoading notice='Switching address...' />
   } else if (!to) {
@@ -29,7 +33,7 @@ export default function EditTo ({ switching, to, account }) {
   }
 }
 
-function EditLoading ({ notice = 'Loading...' }) {
+function EditLoading({ notice = 'Loading...' }) {
   return (
     <CentralCardWithSideInfo networkId='polygon' token='usdc'>
       <Card bg='pos2' className='p-3 xs:p-4 md:p-6 h-[480px]'>
@@ -49,7 +53,26 @@ function EditLoading ({ notice = 'Loading...' }) {
   )
 }
 
-function EditToLoaded ({ to, account }) {
+function EditToLoaded({ to, account }) {
+  const baseStyle = {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    color: '#bdbdbd',
+    borderRadius: '100%',
+    outline: 'none',
+    transition: 'border .24s ease-in-out'
+  }
+
+  const acceptStyle = {
+    borderColor: '#08B72F'
+  }
+
+  const rejectStyle = {
+    borderColor: '#FF3838'
+  }
+
   const [uid, setUid] = React.useState(to.uid || to.address.substring(0, 12))
   const [inputUidValue, setInputUidValue] = React.useState(to.uid || '')
   const [uidDisabled, setUidDisabled] = React.useState(!!to.uid)
@@ -120,6 +143,32 @@ function EditToLoaded ({ to, account }) {
   const [desc, setDesc] = React.useState(to.desc || '')
   const [networkId, setNetworkId] = React.useState(to.networkId || '')
   const [tokens, setTokens] = React.useState(to.tokens)
+  const [avatar, setAvatar] = React.useState(to.avatar)
+
+  const {
+    getRootProps,
+    getInputProps,
+    isFocused,
+    isDragAccept,
+    isDragReject,
+  } = useDropzone({
+    accept: { 'image/*': [] },
+    multiple: false,
+    onDrop: acceptedFiles => {
+      setAvatar(URL.createObjectURL(acceptedFiles[0]))
+      updateAvatar(acceptedFiles[0])
+    }
+  })
+
+  const style = useMemo(() => ({
+    ...baseStyle,
+    ...(isDragAccept ? acceptStyle : {}),
+    ...(isDragReject ? rejectStyle : {})
+  }), [
+    isFocused,
+    isDragAccept,
+    isDragReject
+  ])
 
   const autoSave = React.useMemo(() => debounce(async data => {
     try {
@@ -133,6 +182,27 @@ function EditToLoaded ({ to, account }) {
   const updateName = name => {
     setName(name)
     autoSave({ name, desc, networkId, tokens })
+  }
+
+  const updateAvatar = async (file) => {
+    const toastId = refs.toast.current?.show({ title: 'Uploading...', sticky: true, type: 'info' })
+    const folder = 'avatars'
+    const ext = /[^.]+$/.exec(file.name)
+    const key = `${folder}/${to.address}-${etherUtils.id(file.name)}.${ext}`
+    const url = await api.getAWSPresignUrlByFileKey(account.token, key)
+
+    const res = await window.fetch(url, {
+      method: 'PUT',
+      body: file
+    })
+
+    const publicUrl = `https://${BUCKET}.s3.${REGION}.amazonaws.com/${key}`
+    if (res.status === 200) {
+      refs.toast.current?.close(toastId)
+      autoSave({ name, desc, networkId, tokens, avatar: publicUrl })
+    } else {
+      refs.toast.current?.show({ title: 'Upload failed.' })
+    }
   }
 
   const updateDesc = desc => {
@@ -161,8 +231,14 @@ function EditToLoaded ({ to, account }) {
           <div className='font-semibold'>EDIT</div>
         </div>
 
-        <div className='mt-5 mb-4 self-center w-16 h-16 rounded-full border-2 border-white box-content'>
+        <div {...getRootProps({ style })} className='mt-5 mb-4 self-center w-16 h-16 rounded-full border-2 relative overflow-hidden border-white box-content'>
           <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
+          <div className={classNames('absolute top-0 left-0 w-full h-full hover:bg-primary/70 flex items-center justify-center cursor-pointer', avatar ? 'opacity-100' : 'opacity-0 hover:opacity-100')} >
+            {
+              !avatar && (<input  {...getInputProps()} />)
+            }
+            <Image fill='true' width={avatar ? '100%' : ''} height={avatar ? '100%' : ''} alt='' src={avatar || iconCamera} />
+          </div>
         </div>
 
         <Input
@@ -179,18 +255,18 @@ function EditToLoaded ({ to, account }) {
         >
           <div className='absolute top-[39px] left-4 font-semibold text-gray-400'>https://alls.to/</div>
           <div className='absolute top-[22px] right-2.5 flex items-center h-[52px]'>
-          {
-            !inputUidValue
-            ? <Button size='sm' type='pure' className='!px-2' onClick={copyLink}>
-                <div className='flex items-center justify-center h-4 w-4'>
-                  <Image fill='true' alt='' src={iconCopy} />
-                </div>
-              </Button>
-            : !claimDisabled &&
-              <Button size='xs' type='primary' className='!px-2 !py-1 !text-sm' onClick={claim}>
-                CLAIM
-              </Button>
-          }
+            {
+              !inputUidValue
+                ? <Button size='sm' type='pure' className='!px-2' onClick={copyLink}>
+                  <div className='flex items-center justify-center h-4 w-4'>
+                    <Image fill='true' alt='' src={iconCopy} />
+                  </div>
+                </Button>
+                : !claimDisabled &&
+                <Button size='xs' type='primary' className='!px-2 !py-1 !text-sm' onClick={claim}>
+                  CLAIM
+                </Button>
+            }
           </div>
         </Input>
 
