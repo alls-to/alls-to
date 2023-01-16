@@ -6,36 +6,36 @@ const REGION = process.env.NEXT_PUBLIC_AWS_REGION
 const BUCKET = process.env.NEXT_PUBLIC_AWS_BUCKET
 
 const s3Client = new S3Client({
-	region: REGION,
-	credentials: {
+  region: REGION,
+  credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY,
     secretAccessKey: process.env.AWS_SECRET_KEY,
   },
-	signatureVersion: 'v4'
+  signatureVersion: 'v4'
 })
 
-export default async function handler (req, res) {
-  if(req.method === 'POST') {
-		const encoded = verifyJwt(req.headers.authorization)
-		if (!encoded) {
+export default async function handler(req, res) {
+  if (req.method === 'POST') {
+    const encoded = verifyJwt(req.headers.authorization)
+    if (!encoded) {
       res.status(401).end()
       return
     }
-		
-		const { key } = req.body
-		const command = new PutObjectCommand({
-			Bucket: BUCKET,
-			Key: key
-		})
-		const signedUrl = await getSignedUrl(s3Client, command, {
+
+    const { key } = req.body
+    const command = new PutObjectCommand({
+      Bucket: BUCKET,
+      Key: key
+    })
+    const signedUrl = await getSignedUrl(s3Client, command, {
       expiresIn: 3600,
     })
 
-		res.json({
-			result: signedUrl
-		})
+    res.json({
+      result: signedUrl
+    })
 
-	} else {
-		res.status(401).end()
-	}
+  } else {
+    res.status(401).end()
+  }
 }
