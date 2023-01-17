@@ -3,8 +3,7 @@ import Image from 'next/image'
 
 import ConnectedButton from 'components/common/ConnectedButton'
 import { DropdownMenu } from 'components/common/Dropdown'
-
-import iconDisconnect from 'components/icons/disconnect.svg'
+import Icon from 'components/icons'
 
 export default function MesonToSyncedWallet ({ browserExt, setBrowserExt }) {
   const onMeson2Event = React.useCallback(({ data }) => {
@@ -25,7 +24,7 @@ export default function MesonToSyncedWallet ({ browserExt, setBrowserExt }) {
   const currentAddress = browserExt?.currentAccount?.address
   const options = React.useMemo(() => {
     const options = [{
-      text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconDisconnect} /></div>Disconnect</>,
+      text: <><div className='flex h-4 w-4 mr-2'><Icon type='icon-disconnect'/></div>Disconnect</>,
       onClick: disconnect
     }]
 

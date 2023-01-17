@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 
@@ -15,16 +14,19 @@ import Input from 'components/common/Input'
 import Button from 'components/common/Button'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
 
-import iconLink from 'components/icons/link.svg'
-import iconCopy from 'components/icons/copy.svg'
-
+import { useDropzone } from 'react-dropzone'
 import refs from 'lib/refs'
 
 import TokenSelector from './TokenSelector'
+import { utils as etherUtils } from 'ethers'
+import classNames from 'classnames'
+import Icon from 'components/icons'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
+const BUCKET = process.env.NEXT_PUBLIC_AWS_BUCKET
+const REGION = process.env.NEXT_PUBLIC_AWS_REGION
 
-export default function CardBodyEdit ({ to, setTo, setModified, onSubmitted }) {
+export default function CardBodyEdit({ to, setTo, setModified, onSubmitted }) {
   const { extensions } = useExtensions()
   const { account, login } = useWeb3Login(extensions, signingMessage, {
     duration: 86400 * 7,
@@ -62,7 +64,7 @@ export default function CardBodyEdit ({ to, setTo, setModified, onSubmitted }) {
   )
 }
 
-function CardBodyLoading ({ notice = 'Loading...' }) {
+function CardBodyLoading({ notice = 'Loading...' }) {
   return (
     <div className='flex flex-col items-center h-[480px]'>
       <div className='mt-5 self-center w-16 h-16 rounded-full overflow-hidden border-2 border-white box-content'>
@@ -76,13 +78,50 @@ function CardBodyLoading ({ notice = 'Loading...' }) {
   )
 }
 
-function CardBodyEditWithAccount ({ to, setTo, setModified, onSubmitted, account }) {
+function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account }) {
   const [name, setName] = React.useState(to.name || '')
   const [desc, setDesc] = React.useState(to.desc || '')
   const [networkId, setNetworkId] = React.useState(to.networkId || '')
   const [tokens, setTokens] = React.useState(to.tokens)
-
   const extType = account?.iss?.split(':')[0]
+  const avatar = React.useRef(to.avatar)
+
+  const {
+    getRootProps,
+    getInputProps,
+    isFocused,
+    isDragAccept,
+    isDragReject,
+    fileRejections
+  } = useDropzone({
+
+    accept: {
+      'image/png': ['.png'],
+      'image/jpeg': ['.jpeg'],
+      'image/jpg': ['.jpg'],
+    },
+    multiple: false,
+    onDrop: acceptedFiles => {
+      const file = acceptedFiles[0]
+      if (!file) {
+        return
+      }
+
+      const size = file.size / 1024
+      if (size > 5000) {
+        refs.toast.current?.show({ title: 'The maximum file size is 5M.', type: 'warning' })
+        return
+      }
+      updateAvatar(file)
+    }
+  })
+
+  const style = React.useMemo(() => ({}), [
+    isFocused,
+    isDragAccept,
+    isDragReject
+  ])
+
   const networks = React.useMemo(() => {
     if (!extType) {
       return []
@@ -99,6 +138,28 @@ function CardBodyEditWithAccount ({ to, setTo, setModified, onSubmitted, account
       setTo(to => ({ ...to, networkId: defaultNetworkId }))
     }
   }, [defaultNetworkId, setTo])
+
+  const updateAvatar = async (file) => {
+    const toastId = refs.toast.current?.show({ title: 'Uploading...', sticky: true, type: 'info' })
+    const folder = 'avatars'
+    const ext = /[^.]+$/.exec(file.name)
+    const key = `${folder}/${to.address}-${etherUtils.id(file.name)}.${ext}`
+    const url = await api.getAWSPresignUrlByFileKey(account.token, key)
+
+    const res = await window.fetch(url, {
+      method: 'PUT',
+      body: file
+    })
+
+    const publicUrl = `https://${BUCKET}.s3.${REGION}.amazonaws.com/${key}`
+    if (res.status === 200) {
+      avatar.current = publicUrl
+      await onSave()
+      refs.toast.current?.close(toastId)
+    } else {
+      refs.toast.current?.show({ title: 'Upload failed.', type: 'error' })
+    }
+  }
 
   const updateName = React.useCallback(v => {
     setName(v)
@@ -123,16 +184,23 @@ function CardBodyEditWithAccount ({ to, setTo, setModified, onSubmitted, account
   }, [setTo, setModified])
 
   const onSave = React.useCallback(async () => {
-    const data = { name, desc, networkId, tokens }
+    const data = { name, desc, networkId, tokens, avatar: avatar.current }
+
     try {
       const newTo = await api.updateRecipient(data, account.token)
       refs.toast.current?.show({ title: 'Saved!' })
-      onSubmitted(newTo)
+
+      setTimeout(() => onSubmitted(newTo), 300)
     } catch (e) {
       console.warn(e)
     }
-  }, [name, desc, networkId, tokens, account.token, onSubmitted])
+  }, [name, desc, networkId, avatar, tokens, account.token, onSubmitted])
 
+  React.useEffect(() => {
+    if (fileRejections.length > 0) {
+      refs.toast.current?.show({ title: 'Only PNG, JPEG files are accepted.', type: 'warning' })
+    }
+  }, [fileRejections])
 
   if (!account?.sub) {
     return
@@ -140,8 +208,21 @@ function CardBodyEditWithAccount ({ to, setTo, setModified, onSubmitted, account
 
   return (
     <>
-      <div className='mt-5 mb-1 self-center w-16 h-16 rounded-full border-2 border-white box-content'>
-        <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
+      <div {...getRootProps({ style })} className='group mt-5 mb-1 bg-primary/10 self-center w-16 h-16 rounded-full border-2 border-white box-content relative overflow-hidden'>
+        <div className={classNames('w-full h-full', avatar.current ? 'invisible group-hover:visible' : 'visible')}>
+          <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
+        </div>
+        <div className={classNames('absolute top-0 left-0 w-full h-full hover:bg-primary/70 flex items-center justify-center cursor-pointer', isDragAccept ? 'bg-primary/70' : '')} >
+          {
+            !avatar.current && (<input  {...getInputProps()} />)
+          }
+          <div className={classNames('w-4 h-4 group-hover:visible', isDragAccept ? 'visible' : 'invisible')}>
+            <Icon type='icon-camera' />
+          </div>
+        </div>
+        <div className={classNames('group-hover:invisible absolute top-0 left-0 w-full h-full', isDragAccept ? 'invisible' : '')}>
+          <img width='100%' height='100%' alt={name} src={avatar.current} />
+        </div>
       </div>
 
       <LinkInput to={to} accountToken={account.token} />
@@ -206,7 +287,7 @@ function CardBodyEditWithAccount ({ to, setTo, setModified, onSubmitted, account
   )
 }
 
-function LinkInput ({ to, accountToken }) {
+function LinkInput({ to, accountToken }) {
   const router = useRouter()
 
   const [uid, setUid] = React.useState(to.uid || to.address?.substring(0, 12))
@@ -273,22 +354,22 @@ function LinkInput ({ to, accountToken }) {
         underline={uidUnderline}
       >
         <div className='absolute top-[22px] h-[52px] left-4 flex items-center'>
-          <div className='h-4 w-4'><Image fill='true' alt='' src={iconLink} /></div>
+          <div className='h-4 w-4'><Icon type='icon-link' /></div>
           <div className='ml-2 font-semibold text-gray-400'>https://alls.to/</div>
         </div>
         <div className='absolute top-[22px] h-[52px] right-2 flex items-center'>
-        {
-          uidClaimed || !inputUidValue
-          ? <Button size='2xs' type='pure' className='!py-2' onClick={copyLink}>
-              <div className='flex items-center justify-center h-4 w-4'>
-                <Image fill='true' alt='' src={iconCopy} />
-              </div>
-            </Button>
-          : showClaim &&
-            <Button size='2xs' type='primary' onClick={claim}>
-              CLAIM
-            </Button>
-        }
+          {
+            uidClaimed || !inputUidValue
+              ? <Button size='2xs' type='pure' className='!py-2' onClick={copyLink}>
+                <div className='flex items-center justify-center h-4 w-4'>
+                  <Icon type='icon-copy' />
+                </div>
+              </Button>
+              : showClaim &&
+              <Button size='2xs' type='primary' onClick={claim}>
+                CLAIM
+              </Button>
+          }
         </div>
       </Input>
     </div>
