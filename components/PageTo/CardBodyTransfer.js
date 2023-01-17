@@ -28,8 +28,10 @@ export default function CardBodyTransfer ({ to }) {
 
   return (
     <>
-      <div className='mt-5 self-center w-16 h-16 rounded-full border-2 border-white box-content'>
-        <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
+      <div className='mt-5 self-center w-16 h-16 rounded-full border-2 border-white box-content overflow-hidden'>
+        {
+          to.avatar ? <Image fill='true' width='100%' height='100%' alt='' src={to.avatar} /> : <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
+        }
       </div>
       
       <div className='mt-5 flex flex-col items-center'>
