@@ -8,7 +8,7 @@ import TokenIcon from 'components/common/Icon/TokenIcon'
 import dots from './dots.png'
 import arrow from './arrow.png'
 
-export default function IntroRegion ({ networkId, token, side, steps = [], button }) {
+export default function IntroRegion ({ networkId = 'polygon', token = 'usdc', side, steps = [], children }) {
   return (
     <div className='relative w-[280px] text-sm'>
       <div className='font-medium'>Why use ALLsTo?</div>
@@ -53,7 +53,7 @@ export default function IntroRegion ({ networkId, token, side, steps = [], butto
         ))
       }
       </div>
-      {button && <div className='mt-6 inline-block'>{button}</div>}
+      {children && <div className='mt-6 inline-block'>{children}</div>}
     </div>
   )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import classnames from 'classnames'
 import debounce from 'lodash/debounce'
 
-const defaultInputClassName = 'mt-1 w-full rounded-2xl bg-glass-200 placeholder-gray-400/60 p-4 font-semibold text-sm border border-transparent focus:border-primary focus:ring-0'
+const defaultInputClassName = 'w-full rounded-2xl bg-glass-200 placeholder-gray-400/60 p-4 font-semibold text-sm border border-transparent focus:border-primary focus:ring-0'
 
 const getEl = type => {
   if (['textarea', 'select'].includes(type)) {
@@ -83,16 +83,18 @@ export default function Input ({
     } else if (validated) {
       return {
         message: typeof validated === 'string' && <span className='text-green'>{validated}</span>,
-        className: '!border-green !focus:border-green'
       }
     }
   }, [disabled, checking, error, validated])
 
   return (
     <div className={classnames('relative text-sm', className)}>
-      <label htmlFor={id} className='block text-primary h-4.5'>
-        {label}
-      </label>
+      {
+        label &&
+        <label htmlFor={id} className='block text-primary h-4.5 mb-1'>
+          {label}
+        </label>
+      }
       {React.createElement(
         getEl(type),
         {
@@ -106,8 +108,8 @@ export default function Input ({
           : undefined
       )}
       {children}
-      {validInfo && <div className='mt-1 text-xs'>{validInfo.message}</div>}
-      {!validInfo && underline && <div className='mt-1 text-xs text-primary'>{underline}</div>}
+      {validInfo && <div className='mt-1 ml-4 text-xs'>{validInfo.message}</div>}
+      {!validInfo && underline && <div className='mt-1 ml-4 text-xs text-primary'>{underline}</div>}
     </div>
   )
 }

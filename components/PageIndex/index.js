@@ -7,6 +7,9 @@ import mapValues from 'lodash/mapValues'
 import { useExtensions } from '@mesonfi/extensions/react'
 import { useWeb3Login } from '@mesonfi/web3-jwt/react'
 
+import { showInfoToast, showErrorToast } from 'lib/refs'
+import * as api from 'lib/api'
+
 import AppContainer from 'components/AppContainer'
 import Header from 'components/common/Header'
 import Card from 'components/common/Card'
@@ -22,15 +25,29 @@ const icons = 'eth|polygon|bnb|arb|opt|avax|zksync|aurora|tron|aptos|ftm|cronos|
 export default function PageIndex() {
   const router = useRouter()
   const { extensions } = useExtensions()
-  const { account, login } = useWeb3Login(extensions, signingMessage, { duration: 86400 * 7 })
+  const { login } = useWeb3Login(extensions, signingMessage, {
+    duration: 86400 * 7,
+    onInfo: showInfoToast,
+    onError: showErrorToast
+  })
+  const [loading, setLoading] = React.useState(false)
 
-  React.useEffect(() => {
-    if (account?.sub) {
-      router.replace('/edit')
+  const onConnect = React.useCallback(async ext => {
+    const account = await login(ext)
+    if (account?.token) {
+      setLoading(true)
+      api.getRecipient(account.token)
+        .then(async to => {
+          if (to) {
+            router.push(`/${to.uid || to.address.substring(0, 12)}`)
+          } else {
+            await api.createRecipient(account.token)
+            router.push(`/${to.address.substring(0, 12)}`)
+          }
+        })
+        .catch(() => setLoading(false))
     }
-  }, [router, account])
-
-  const loading = !account || account.sub
+  }, [router, login])
 
   return (
     <AppContainer className='sm:overflow-y-hidden'>
@@ -65,7 +82,7 @@ export default function PageIndex() {
           <Card className='p-6 md:p-8'>
             <div className='text-xl font-bold mb-2'>Create My Link</div>
             <div className='mb-5 font-light'>Choose the wallet you want to connect and customize your link.</div>
-            <LoginWallets loading={loading} extensions={extensions} login={login} />
+            <LoginWallets loading={loading} extensions={extensions} onConnect={onConnect} />
           </Card>
         </div>
       </div>
@@ -73,7 +90,7 @@ export default function PageIndex() {
   )
 }
 
-function LoginWallets ({ loading, extensions, login }) {
+function LoginWallets ({ loading, extensions, onConnect }) {
   const [extList, setExtList] = React.useState([])
 
   React.useEffect(() => {
@@ -101,7 +118,7 @@ function LoginWallets ({ loading, extensions, login }) {
           size='lg'
           type='glass'
           className='justify-between'
-          onClick={() => ext.notInstalled ? window.open(ext.installLink, '_blank') : login(ext)}
+          onClick={() => ext.notInstalled ? window.open(ext.installLink, '_blank') : onConnect(ext)}
         >
           {
             ext.notInstalled

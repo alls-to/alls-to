@@ -3,92 +3,31 @@ import classnames from 'classnames'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 
-import { saveAs } from 'file-saver'
 import { utils } from 'ethers'
 
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import mesonPresets from '@mesonfi/presets'
 
-import Card from 'components/common/Card'
-import { DropdownMenu } from 'components/common/Dropdown'
 import Button from 'components/common/Button'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
 import TokenIcon from 'components/common/Icon/TokenIcon'
 
-import refs from 'lib/refs'
-
 import iconCheck from 'components/icons/check.svg'
-import iconShare from './icons/share.svg'
-import iconDownload from './icons/download.svg'
-import iconTwitter from './icons/twitter.svg'
-import iconTelegram from './icons/telegram.svg'
-import iconLink from './icons/link.svg'
 
 const MesonToEmbedded = dynamic(
   import('@mesonfi/to').then(t => t.MesonToEmbedded),
   { ssr: false }
 )
 
-export default function ToInfo ({ to }) {
+export default function CardBodyTransfer ({ to }) {
   const uid = to.uid || to.address
-  const link = `https://alls.to/${to.uid || to.address.substring(0, 12)}`
   const name = to.name || uid
-
-  const saveImage = React.useCallback(async () => {
-    await saveAs(`https://img.meson.fi/to/${uid}/share`, `Alls_to_${name}.png`)
-  }, [uid, name])
-
-  const shareTwitter = React.useCallback(async () => {
-    const text = `Make stablecoin transfers to me\n\n${link}`
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank')
-  }, [link])
-
-  const shareTelegram = React.useCallback(async () => {
-    const text = `Make stablecoin transfers to me`
-    window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`, '_blank')
-  }, [link])
-
-  const copyLink = React.useCallback(async () => {
-    await navigator.clipboard.writeText(link)
-    refs.toast.current?.show({ title: 'Link Copied!' })
-  }, [link])
 
   const network = mesonPresets.getNetwork(to.networkId)
   const token = network.tokens.find(t => t.symbol.toLowerCase().includes(to.tokens[0]))
 
   return (
-    <Card bg='pos2' className='p-3 xs:p-4 md:p-6 text-primary'>
-      <div className='flex flex-row justify-between px-1 xs:px-0'>
-        <div className='font-semibold'>TRANSFER TO</div>
-        <DropdownMenu
-          className='-my-1 -mr-3'
-          btn={
-            <Button size='xs' type='pure'>
-              <div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconShare} /></div>
-              SHARE
-            </Button>
-          }
-          options={[
-            {
-              text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconDownload} /></div>Save Image</>,
-              onClick: saveImage
-            },
-            {
-              text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconTwitter} /></div>Share on Twitter</>,
-              onClick: shareTwitter
-            },
-            {
-              text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconTelegram} /></div>Share on Telegram</>,
-              onClick: shareTelegram
-            },
-            {
-              text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconLink} /></div>Copy Link</>,
-              onClick: copyLink
-            }
-          ]}
-        />
-      </div>
-
+    <>
       <div className='mt-5 self-center w-16 h-16 rounded-full border-2 border-white box-content'>
         <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
       </div>
@@ -120,7 +59,7 @@ export default function ToInfo ({ to }) {
           SuccessInfo={SuccessInfo}
         />
       </div>
-    </Card>
+    </>
   )
 }
 

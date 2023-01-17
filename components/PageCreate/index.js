@@ -6,6 +6,9 @@ import { NextSeo } from 'next-seo'
 import { useExtensions } from '@mesonfi/extensions/react'
 import { useWeb3Login } from '@mesonfi/web3-jwt/react'
 
+import { abbreviate } from 'lib'
+import * as api from 'lib/api'
+
 import AppContainer from 'components/AppContainer'
 import Header from 'components/common/Header'
 import ConnectedButton from 'components/common/ConnectedButton'
@@ -14,10 +17,7 @@ import { DropdownMenu } from 'components/common/Dropdown'
 import open from 'components/icons/open.svg'
 import disconnect from 'components/icons/disconnect.svg'
 
-import { abbreviate } from 'lib'
-import * as api from 'lib/api'
-
-import EditTo from './EditTo'
+import CardCreate from './CardCreate'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 
@@ -40,7 +40,7 @@ const steps = [
   }
 ]
 
-export default function PageEdit () {
+export default function PageCreate () {
   const router = useRouter()
   const { extensions, browserExt } = useExtensions()
   const { account, login, logout } = useWeb3Login(extensions, signingMessage, { duration: 86400 * 7 })
@@ -56,7 +56,7 @@ export default function PageEdit () {
       return
     }
     setTo()
-    api.getRecipient(account.token)
+    api.createRecipient(account.token)
       .then(setTo)
       .catch(err => console.warn(err))
   }, [router, account])
@@ -84,7 +84,7 @@ export default function PageEdit () {
     switching = true
   }
 
-  const title = to ? `Edit → ${to.name || abbreviate(to.address)}` : 'Loading...'
+  const title = to ? `Create → ${to.name || abbreviate(to.address)}` : 'Loading...'
   return (
     <AppContainer>
       <NextSeo title={title} openGraph={{ title }} />
@@ -103,7 +103,7 @@ export default function PageEdit () {
           ]}
         />
       </Header>
-      <EditTo switching={switching} to={to} account={account} />
+      <CardCreate switching={switching} to={to} account={account} />
     </AppContainer>
   )
 }

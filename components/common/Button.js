@@ -4,6 +4,7 @@ import classnames from 'classnames'
 const DEFAULT_CLASSNAME = 'flex items-center justify-center focus:outline-none'
 
 const BTN_SIZES = {
+  '2xs': 'px-2 py-0.5 text-base font-semibold rounded-lg !border-none',
   xs: 'px-3 py-1 text-base font-semibold rounded-lg',
   sm: 'px-3 py-2 text-base font-semibold rounded-xl',
   md: 'p-3 text-base font-semibold rounded-xl',

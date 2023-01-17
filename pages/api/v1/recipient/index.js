@@ -3,6 +3,8 @@ import { getAddressFormat } from '@mesonfi/web3-jwt/lib'
 import { Recipients } from 'lib/db'
 import verifyJwt from 'lib/verifyJwt'
 
+const reservedWords = process.env.RESERVED_WORDS.split(',')
+
 const DEFAULT_NETWORKS = {
   ethers: 'polygon',
   tron: 'tron',
@@ -17,7 +19,14 @@ export default async function handler (req, res) {
   }
   const addr = encoded.sub
   
-  if (req.method === 'POST') {
+  if (req.method === 'GET') {
+    const doc = await Recipients.findById(addr)
+    if (!doc) {
+      res.json({ result: null })
+      return
+    }
+    res.json({ result: { address: doc._id, ...doc.toJSON() } })
+  } else if (req.method === 'POST') {
     let doc = await Recipients.findById(addr)
 
     if (!doc) {
@@ -38,13 +47,17 @@ export default async function handler (req, res) {
     res.json({ result: { address: doc._id, ...doc.toJSON() } })
   } else if (req.method === 'PUT') {
     const { uid, name, desc, networkId, tokens } = req.body
-    if (uid === 'edit') {
+    if (reservedWords.includes(uid)) {
       res.status(400).end()
       return
     }
     try {
-      const result = await Recipients.findByIdAndUpdate(addr, { uid, name, desc, networkId, tokens }, { upsert: true, new: true })
-      res.json({ result })
+      const doc = await Recipients.findByIdAndUpdate(
+        addr,
+        { uid, name, desc, networkId, tokens },
+        { upsert: true, new: true }
+      )
+      res.json({ result: { address: doc._id, ...doc.toJSON() } })
     } catch (e) {
       const code = e.codeName === 'DuplicateKey' ? 409 : 400
       res.status(code).json({

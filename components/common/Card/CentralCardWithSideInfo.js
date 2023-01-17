@@ -1,8 +1,6 @@
 import classnames from 'classnames'
 
-import IntroRegion from './IntroRegion'
-
-export default function CentralCardWithSideInfo ({ children, networkId, token, side, steps, button }) {
+export default function CentralCardWithSideInfo ({ children }) {
   return (
     <div className={classnames(
       'w-full flex flex-col items-center sm:flex-row sm:items-end',
@@ -10,10 +8,10 @@ export default function CentralCardWithSideInfo ({ children, networkId, token, s
     )}>
       <div className='flex-1' />
       <div className='max-w-full w-[460px] px-3 xs:px-4'>
-        {children}
+        {children[0]}
       </div>
       <div className='mt-12 sm:mt-0 mb-6 mx-4 flex-1 flex flex-col items-end'>
-        <IntroRegion networkId={networkId} token={token} side={side} steps={steps} button={button} />
+        {children[1]}
       </div>
     </div>
   )
