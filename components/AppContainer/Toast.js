@@ -1,7 +1,10 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Transition } from '@headlessui/react'
-import Icon from '../icons'
+import Image from 'next/image'
+
+import iconCheck from 'components/icons/check.svg'
+
 import refs from 'lib/refs'
 
 const SHORT_DURATION = 2500
@@ -10,10 +13,9 @@ const INFINITY_DURATION = 86400_000 // 24h
 const DELAY_TO_CLOSE = 1000
 
 const ICONS = {
-  success: <Icon type='icon-check' />,
-  warning: <Icon type='icon-warning' />,
-  error: <Icon type='icon-error' />,
-  info: <Icon type='icon-info' />,
+  success: <Image alt='' width={20} height={20} src={iconCheck} />,
+  warning: <div className='w-5 h-5 bg-primary' />,
+  error: <div className='w-5 h-5 bg-red' />
 }
 
 export function ToastCard ({ title, subtitle, type, onClose, withCloseButton, onMouseEnter, onMouseLeave }) {
@@ -38,7 +40,7 @@ export function ToastCard ({ title, subtitle, type, onClose, withCloseButton, on
         onMouseLeave={onMouseLeave}
       >
         <div className='flex justify-between'>
-          <div className='flex items-center'>
+          <div className='flex items-start'>
             <div className='w-5 h-5 rounded-full mr-2'>
               {ICONS[type]}
             </div>
@@ -63,7 +65,7 @@ export function ToastCard ({ title, subtitle, type, onClose, withCloseButton, on
 ToastCard.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  type: PropTypes.oneOf(['warning', 'success', 'error', 'info']),
+  type: PropTypes.oneOf(['warning', 'success', 'error']),
   show: PropTypes.bool,
   onClose: PropTypes.func,
   afterClosed: PropTypes.func
@@ -120,11 +122,9 @@ function useTimedToasts () {
     } else {
       setToasts(prev => [...prev, toast])
     }
-
-    return id
   }, [timers, closeToast])
 
-  return {toasts, addToast, closeToast }
+  return { toasts, addToast, closeToast }
 }
 
 export default function Toast () {
