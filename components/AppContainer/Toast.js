@@ -1,13 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Transition } from '@headlessui/react'
-import Image from 'next/image'
-
-import iconCheck from 'components/icons/check.svg'
-import iconError from 'components/icons/icon-error.svg'
-import iconInfo from 'components/icons/icon-info.svg'
-import iconWarning from 'components/icons/icon-warning.svg'
-
+import Icon from '../icons'
 import refs from 'lib/refs'
 
 const SHORT_DURATION = 2500
@@ -16,10 +10,10 @@ const INFINITY_DURATION = 86400_000 // 24h
 const DELAY_TO_CLOSE = 1000
 
 const ICONS = {
-  success: <Image alt='' width={20} height={20} src={iconCheck} />,
-  warning: <Image alt='' width={20} height={20} src={iconWarning} />,
-  error: <Image alt='' width={20} height={20} src={iconError} />,
-  info: <Image alt='' width={20} height={20} src={iconInfo} />
+  success: <Icon type='icon-check' />,
+  warning: <Icon type='icon-warning' />,
+  error: <Icon type='icon-error' />,
+  info: <Icon type='icon-info' />,
 }
 
 export function ToastCard ({ title, subtitle, type, onClose, withCloseButton, onMouseEnter, onMouseLeave }) {
@@ -44,7 +38,7 @@ export function ToastCard ({ title, subtitle, type, onClose, withCloseButton, on
         onMouseLeave={onMouseLeave}
       >
         <div className='flex justify-between'>
-          <div className='flex items-start'>
+          <div className='flex items-center'>
             <div className='w-5 h-5 rounded-full mr-2'>
               {ICONS[type]}
             </div>

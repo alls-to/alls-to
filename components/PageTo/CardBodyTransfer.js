@@ -12,7 +12,7 @@ import Button from 'components/common/Button'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
 import TokenIcon from 'components/common/Icon/TokenIcon'
 
-import iconCheck from 'components/icons/check.svg'
+import iconCheck from 'components/icons/icon-check.svg'
 
 const MesonToEmbedded = dynamic(
   import('@mesonfi/to').then(t => t.MesonToEmbedded),
@@ -28,7 +28,7 @@ export default function CardBodyTransfer ({ to }) {
 
   return (
     <>
-      <div className='mt-5 self-center w-16 h-16 rounded-full border-2 border-white box-content overflow-hidden'>
+      <div className='mt-5 self-center bg-primary/10 w-16 h-16 rounded-full border-2 border-white box-content overflow-hidden'>
         {
           to.avatar ? <Image fill='true' width='100%' height='100%' alt='' src={to.avatar} /> : <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
         }
