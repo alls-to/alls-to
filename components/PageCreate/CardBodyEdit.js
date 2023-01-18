@@ -15,15 +15,13 @@ import Input from 'components/common/Input'
 import Button from 'components/common/Button'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
 
-import iconLink from 'components/icons/link.svg'
-import iconCopy from 'components/icons/copy.svg'
-import iconCamera from 'components/icons/icon-camera.svg'
 import { useDropzone } from 'react-dropzone'
 import refs from 'lib/refs'
 
 import TokenSelector from './TokenSelector'
 import { utils as etherUtils } from 'ethers'
 import classNames from 'classnames'
+import Icon from 'components/icons'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 const BUCKET = process.env.NEXT_PUBLIC_AWS_BUCKET
@@ -93,14 +91,6 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     transition: 'border .24s ease-in-out'
   }
 
-  const acceptStyle = {
-    borderColor: '#08B72F'
-  }
-
-  const rejectStyle = {
-    borderColor: '#FF3838'
-  }
-
   const [name, setName] = React.useState(to.name || '')
   const [desc, setDesc] = React.useState(to.desc || '')
   const [networkId, setNetworkId] = React.useState(to.networkId || '')
@@ -124,15 +114,12 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
         refs.toast.current?.show({ title: 'The maximum file size is 5M.', type: 'warning' })
         return
       }
-      avatar.current = URL.createObjectURL(file)
       updateAvatar(file)
     }
   })
 
   const style = React.useMemo(() => ({
     ...baseStyle,
-    ...(isDragAccept ? acceptStyle : {}),
-    ...(isDragReject ? rejectStyle : {})
   }), [
     isFocused,
     isDragAccept,
@@ -206,7 +193,8 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     try {
       const newTo = await api.updateRecipient(data, account.token)
       refs.toast.current?.show({ title: 'Saved!' })
-      onSubmitted(newTo)
+
+      setTimeout(() => onSubmitted(newTo), 300)
     } catch (e) {
       console.warn(e)
     }
@@ -219,13 +207,18 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
 
   return (
     <>
-      <div {...getRootProps({ style })} className='mt-5 mb-1 self-center w-16 h-16 rounded-full border-2 border-white box-content relative overflow-hidden'>
+      <div {...getRootProps({ style })} className='group mt-5 mb-1 self-center w-16 h-16 rounded-full border-2 border-white box-content relative overflow-hidden'>
         <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
-        <div className={classNames('absolute top-0 left-0 w-full h-full hover:bg-primary/70 flex items-center justify-center cursor-pointer', avatar.current ? 'opacity-100' : 'opacity-0 hover:opacity-100')} >
+        <div className={classNames('absolute top-0 left-0 w-full h-full hover:bg-primary/70 flex items-center justify-center cursor-pointer', isDragAccept ? 'bg-primary/70' : '', avatar.current ? 'opacity-100' : 'opacity-0 hover:opacity-100')} >
           {
             !avatar.current && (<input  {...getInputProps()} />)
           }
-          <Image fill='true' width={avatar.current ? '100%' : ''} height={avatar.current ? '100%' : ''} alt='' src={avatar.current || iconCamera} />
+          <div className={classNames('w-4 h-4  group-hover:visible', isDragAccept ? 'visible': 'invisible')}>
+            <Icon type='icon-camera' />
+          </div>
+        </div>
+        <div className={classNames('group-hover:invisible absolute top-0 left-0 w-full h-full', isDragAccept ? 'invisible' : '')}>
+          <Image fill='true' width='100%' height='100%' alt={account.uid} src={avatar.current} />
         </div>
       </div>
 
@@ -358,7 +351,7 @@ function LinkInput({ to, accountToken }) {
         underline={uidUnderline}
       >
         <div className='absolute top-[22px] h-[52px] left-4 flex items-center'>
-          <div className='h-4 w-4'><Image fill='true' alt='' src={iconLink} /></div>
+          <div className='h-4 w-4'><Icon type='icon-link' /></div>
           <div className='ml-2 font-semibold text-gray-400'>https://alls.to/</div>
         </div>
         <div className='absolute top-[22px] h-[52px] right-2 flex items-center'>
@@ -366,7 +359,7 @@ function LinkInput({ to, accountToken }) {
             uidClaimed || !inputUidValue
               ? <Button size='2xs' type='pure' className='!py-2' onClick={copyLink}>
                 <div className='flex items-center justify-center h-4 w-4'>
-                  <Image fill='true' alt='' src={iconCopy} />
+                  <Icon type='icon-copy' />
                 </div>
               </Button>
               : showClaim &&
