@@ -80,17 +80,6 @@ function CardBodyLoading({ notice = 'Loading...' }) {
 }
 
 function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account }) {
-  const baseStyle = {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    color: '#bdbdbd',
-    borderRadius: '100%',
-    outline: 'none',
-    transition: 'border .24s ease-in-out'
-  }
-
   const [name, setName] = React.useState(to.name || '')
   const [desc, setDesc] = React.useState(to.desc || '')
   const [networkId, setNetworkId] = React.useState(to.networkId || '')
@@ -118,9 +107,7 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     }
   })
 
-  const style = React.useMemo(() => ({
-    ...baseStyle,
-  }), [
+  const style = React.useMemo(() => ({}), [
     isFocused,
     isDragAccept,
     isDragReject
@@ -207,13 +194,15 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
 
   return (
     <>
-      <div {...getRootProps({ style })} className='group mt-5 mb-1 self-center w-16 h-16 rounded-full border-2 border-white box-content relative overflow-hidden'>
-        <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
-        <div className={classNames('absolute top-0 left-0 w-full h-full hover:bg-primary/70 flex items-center justify-center cursor-pointer', isDragAccept ? 'bg-primary/70' : '', avatar.current ? 'opacity-100' : 'opacity-0 hover:opacity-100')} >
+      <div {...getRootProps({ style })} className='group mt-5 mb-1 bg-primary/10 self-center w-16 h-16 rounded-full border-2 border-white box-content relative overflow-hidden'>
+        <div className={classNames('w-full h-full', avatar.current ? 'invisible group-hover:visible' : 'visible')}>
+          <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
+        </div>
+        <div className={classNames('absolute top-0 left-0 w-full h-full hover:bg-primary/70 flex items-center justify-center cursor-pointer', isDragAccept ? 'bg-primary/70' : '')} >
           {
             !avatar.current && (<input  {...getInputProps()} />)
           }
-          <div className={classNames('w-4 h-4  group-hover:visible', isDragAccept ? 'visible': 'invisible')}>
+          <div className={classNames('w-4 h-4 group-hover:visible', isDragAccept ? 'visible': 'invisible')}>
             <Icon type='icon-camera' />
           </div>
         </div>
