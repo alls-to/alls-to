@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 
@@ -93,11 +92,16 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     isFocused,
     isDragAccept,
     isDragReject,
+    fileRejections
   } = useDropzone({
     accept: { 'image/*': [] },
     multiple: false,
     onDrop: acceptedFiles => {
       const file = acceptedFiles[0]
+      if(!file) {
+        return
+      }
+
       const size = file.size / 1024
       if (size > 5000) {
         refs.toast.current?.show({ title: 'The maximum file size is 5M.', type: 'warning' })
@@ -187,6 +191,11 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     }
   }, [name, desc, networkId, avatar, tokens, account.token, onSubmitted])
 
+  React.useEffect(() => {
+    if(fileRejections.length > 0) {
+      refs.toast.current?.show({ title: 'Only PNG, JPEG files are accepted.', type: 'warning' })
+    }
+  }, [fileRejections])
 
   if (!account?.sub) {
     return
