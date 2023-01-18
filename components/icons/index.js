@@ -18,7 +18,7 @@ import iconCamera from 'components/icons/icon-camera.svg'
 
 const ICONS = {
   'icon-check': iconCheck,
-  'icon-iconEror': iconError,
+  'icon-error': iconError,
   'icon-info': iconInfo,
   'icon-warning': iconWarning,
   'icon-disconnect': iconDisconnect,
