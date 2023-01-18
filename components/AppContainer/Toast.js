@@ -6,6 +6,7 @@ import Image from 'next/image'
 import iconCheck from 'components/icons/check.svg'
 import iconError from 'components/icons/icon-error.svg'
 import iconInfo from 'components/icons/icon-info.svg'
+import iconWarning from 'components/icons/icon-warning.svg'
 
 import refs from 'lib/refs'
 
@@ -16,7 +17,7 @@ const DELAY_TO_CLOSE = 1000
 
 const ICONS = {
   success: <Image alt='' width={20} height={20} src={iconCheck} />,
-  warning: <div className='w-5 h-5 bg-primary' />,
+  warning: <Image alt='' width={20} height={20} src={iconWarning} />,
   error: <Image alt='' width={20} height={20} src={iconError} />,
   info: <Image alt='' width={20} height={20} src={iconInfo} />
 }

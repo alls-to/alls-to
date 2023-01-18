@@ -106,8 +106,7 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
   const [networkId, setNetworkId] = React.useState(to.networkId || '')
   const [tokens, setTokens] = React.useState(to.tokens)
   const extType = account?.iss?.split(':')[0]
-  const [avatar, setAvatar] = React.useState(to.avatar)
-  const [avatarFile, setAvatarFile] = React.useState()
+  const avatar = React.useRef(to.avatar)
 
   const {
     getRootProps,
@@ -119,9 +118,14 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     accept: { 'image/*': [] },
     multiple: false,
     onDrop: acceptedFiles => {
-      setAvatar(URL.createObjectURL(acceptedFiles[0]))
-      setAvatarFile(acceptedFiles[0])
-      setModified(true)
+      const file = acceptedFiles[0]
+      const size = file.size / 1024
+      if (size > 5000) {
+        refs.toast.current?.show({ title: 'The maximum file size is 5M.', type: 'warning' })
+        return
+      }
+      avatar.current = URL.createObjectURL(file)
+      updateAvatar(file)
     }
   })
 
@@ -153,6 +157,7 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
   }, [defaultNetworkId, setTo])
 
   const updateAvatar = async (file) => {
+    const toastId = refs.toast.current?.show({ title: 'Uploading...', sticky: true, type: 'info' })
     const folder = 'avatars'
     const ext = /[^.]+$/.exec(file.name)
     const key = `${folder}/${to.address}-${etherUtils.id(file.name)}.${ext}`
@@ -165,7 +170,11 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
 
     const publicUrl = `https://${BUCKET}.s3.${REGION}.amazonaws.com/${key}`
     if (res.status === 200) {
-      setAvatar(publicUrl)
+      avatar.current = publicUrl
+      await onSave()
+      refs.toast.current?.close(toastId)
+    } else {
+      refs.toast.current?.show({ title: 'Upload failed.', type: 'error' })
     }
   }
 
@@ -192,13 +201,9 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
   }, [setTo, setModified])
 
   const onSave = React.useCallback(async () => {
-    const data = { name, desc, networkId, tokens, avatar }
+    const data = { name, desc, networkId, tokens, avatar: avatar.current }
+
     try {
-      if(avatarFile) {
-        const toastId = refs.toast.current?.show({ title: 'Updating...', sticky: true, type: 'info' })
-        await updateAvatar(avatarFile)
-        refs.toast.current?.close(toastId)
-      }
       const newTo = await api.updateRecipient(data, account.token)
       refs.toast.current?.show({ title: 'Saved!' })
       onSubmitted(newTo)
@@ -216,11 +221,11 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     <>
       <div {...getRootProps({ style })} className='mt-5 mb-1 self-center w-16 h-16 rounded-full border-2 border-white box-content relative overflow-hidden'>
         <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
-        <div className={classNames('absolute top-0 left-0 w-full h-full hover:bg-primary/70 flex items-center justify-center cursor-pointer', avatar ? 'opacity-100' : 'opacity-0 hover:opacity-100')} >
+        <div className={classNames('absolute top-0 left-0 w-full h-full hover:bg-primary/70 flex items-center justify-center cursor-pointer', avatar.current ? 'opacity-100' : 'opacity-0 hover:opacity-100')} >
           {
-            !avatar && (<input  {...getInputProps()} />)
+            !avatar.current && (<input  {...getInputProps()} />)
           }
-          <Image fill='true' width={avatar ? '100%' : ''} height={avatar ? '100%' : ''} alt='' src={avatar || iconCamera} />
+          <Image fill='true' width={avatar.current ? '100%' : ''} height={avatar.current ? '100%' : ''} alt='' src={avatar.current || iconCamera} />
         </div>
       </div>
 
