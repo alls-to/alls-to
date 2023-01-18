@@ -94,11 +94,16 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     isDragReject,
     fileRejections
   } = useDropzone({
-    accept: { 'image/*': [] },
+
+    accept: {
+      'image/png': ['.png'],
+      'image/jpeg': ['.jpeg'],
+      'image/jpg': ['.jpg'],
+    },
     multiple: false,
     onDrop: acceptedFiles => {
       const file = acceptedFiles[0]
-      if(!file) {
+      if (!file) {
         return
       }
 
@@ -192,7 +197,7 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
   }, [name, desc, networkId, avatar, tokens, account.token, onSubmitted])
 
   React.useEffect(() => {
-    if(fileRejections.length > 0) {
+    if (fileRejections.length > 0) {
       refs.toast.current?.show({ title: 'Only PNG, JPEG files are accepted.', type: 'warning' })
     }
   }, [fileRejections])
@@ -211,7 +216,7 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
           {
             !avatar.current && (<input  {...getInputProps()} />)
           }
-          <div className={classNames('w-4 h-4 group-hover:visible', isDragAccept ? 'visible': 'invisible')}>
+          <div className={classNames('w-4 h-4 group-hover:visible', isDragAccept ? 'visible' : 'invisible')}>
             <Icon type='icon-camera' />
           </div>
         </div>
