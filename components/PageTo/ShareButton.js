@@ -7,12 +7,6 @@ import { DropdownMenu } from 'components/common/Dropdown'
 import Button from 'components/common/Button'
 
 import refs from 'lib/refs'
-
-import iconShare from './icons/share.svg'
-import iconDownload from './icons/download.svg'
-import iconTwitter from './icons/twitter.svg'
-import iconTelegram from './icons/telegram.svg'
-import iconLink from './icons/link.svg'
 import Icon from 'components/icons'
 
 export default function ShareButton ({ to }) {
