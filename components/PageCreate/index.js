@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 
@@ -13,7 +12,6 @@ import AppContainer from 'components/AppContainer'
 import Header from 'components/common/Header'
 import ConnectedButton from 'components/common/ConnectedButton'
 import { DropdownMenu } from 'components/common/Dropdown'
-import open from 'components/icons/open.svg'
 import CardCreate from './CardCreate'
 import Icon from 'components/icons'
 
