@@ -207,7 +207,7 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
           </div>
         </div>
         <div className={classNames('group-hover:invisible absolute top-0 left-0 w-full h-full', isDragAccept ? 'invisible' : '')}>
-          <Image fill='true' width='100%' height='100%' alt={account.uid} src={avatar.current} />
+          <img width='100%' height='100%' alt={name} src={avatar.current} />
         </div>
       </div>
 
