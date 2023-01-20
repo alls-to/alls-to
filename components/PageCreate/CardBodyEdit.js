@@ -209,8 +209,11 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
   return (
     <>
       <div {...getRootProps({ style })} className='group mt-5 mb-1 bg-primary/10 self-center w-16 h-16 rounded-full border-2 border-white box-content relative overflow-hidden'>
-        <div className={classNames('w-full h-full', avatar.current ? 'invisible group-hover:visible' : 'visible')}>
-          <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
+        {
+          !avatar.current && <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
+        }
+        <div className={classNames('absolute top-0 left-0 w-full h-full')}>
+          <img width='100%' height='100%' alt={name} src={avatar.current} />
         </div>
         <div className={classNames('absolute top-0 left-0 w-full h-full hover:bg-primary/70 flex items-center justify-center cursor-pointer', isDragAccept ? 'bg-primary/70' : '')} >
           {
@@ -219,9 +222,6 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
           <div className={classNames('w-4 h-4 group-hover:visible', isDragAccept ? 'visible' : 'invisible')}>
             <Icon type='icon-camera' />
           </div>
-        </div>
-        <div className={classNames('group-hover:invisible absolute top-0 left-0 w-full h-full', isDragAccept ? 'invisible' : '')}>
-          <img width='100%' height='100%' alt={name} src={avatar.current} />
         </div>
       </div>
 
