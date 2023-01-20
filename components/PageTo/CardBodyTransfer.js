@@ -7,12 +7,10 @@ import { utils } from 'ethers'
 
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import mesonPresets from '@mesonfi/presets'
-
 import Button from 'components/common/Button'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
 import TokenIcon from 'components/common/Icon/TokenIcon'
-
-import iconCheck from 'components/icons/check.svg'
+import Icon from 'components/icons'
 
 const MesonToEmbedded = dynamic(
   import('@mesonfi/to').then(t => t.MesonToEmbedded),
@@ -28,8 +26,10 @@ export default function CardBodyTransfer ({ to }) {
 
   return (
     <>
-      <div className='mt-5 self-center w-16 h-16 rounded-full border-2 border-white box-content'>
-        <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
+      <div className='mt-5 self-center bg-primary/10 w-16 h-16 rounded-full border-2 border-white box-content overflow-hidden'>
+        {
+          to.avatar ? <img width='100%' height='100%' alt={name} src={to.avatar} /> : <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
+        }
       </div>
       
       <div className='mt-5 flex flex-col items-center'>
@@ -79,7 +79,7 @@ function SuccessInfo ({ data, onNewTransfer }) {
 
           <div className='bg-green h-0.5 w-16 rounded-full mx-px' />
           <div className='w-6 h-6 rounded-full bg-green m-px'>
-            <Image alt='' width={24} height={24} src={iconCheck} />
+            <Icon type='icon-check' />
           </div>
 
           <div className='bg-green h-0.5 w-16 rounded-full mx-px' />
