@@ -33,12 +33,13 @@ export async function getServerSideProps ({ query, res }) {
     conditions.push({ _id: { $gt: uid, $lt: `${uid}~` } })
   }
 
-  let match = await Recipients.findOne({ $or: conditions })
+  let match = await Recipients.findOneAndUpdate({ $or: conditions }, { $inc: { clicks: 1 } })
   if (!match && uid.startsWith('T') && TronWeb.isAddress(uid)) {
     match = await Recipients.findByIdAndUpdate(uid, {
       _id: uid,
       networkId: 'tron',
-      tokens: ['usdt']
+      tokens: ['usdt'],
+      clicks: 1
     }, { upsert: true, new: true })
   }
 
