@@ -16,7 +16,7 @@ export default async function handler (req, res) {
       _id: address,
       networkId,
       tokens: [token]
-    }, { upsert: true, new: true })
+    }, { upsert: true, new: true }).select('uid networkId tokens')
 
     res.json({ result: { link: doc.uid || address.substring(0, 12), address, ...doc.toJSON() } })
   } else {
