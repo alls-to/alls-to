@@ -17,10 +17,12 @@ import NetworkIcon from 'components/common/Icon/NetworkIcon'
 import { useDropzone } from 'react-dropzone'
 import refs from 'lib/refs'
 
-import TokenSelector from './TokenSelector'
+import TokenSelector from '../PageCreate/TokenSelector'
 import { utils as etherUtils } from 'ethers'
 import classNames from 'classnames'
 import Icon from 'components/icons'
+
+import SocialButtons from './SocialButtons'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 const BUCKET = process.env.NEXT_PUBLIC_AWS_BUCKET
@@ -80,7 +82,7 @@ function CardBodyLoading({ notice = 'Loading...' }) {
 
 function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account }) {
   const [name, setName] = React.useState(to.name || '')
-  const [desc, setDesc] = React.useState(to.desc || '')
+  const [bio, setBio] = React.useState(to.bio || '')
   const [networkId, setNetworkId] = React.useState(to.networkId || '')
   const [tokens, setTokens] = React.useState(to.tokens)
   const extType = account?.iss?.split(':')[0]
@@ -166,8 +168,8 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     setModified(true)
   }, [setModified])
 
-  const updateDesc = React.useCallback(v => {
-    setDesc(v)
+  const updateBio = React.useCallback(v => {
+    setBio(v)
     setModified(true)
   }, [setModified])
 
@@ -184,7 +186,7 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
   }, [setTo, setModified])
 
   const onSave = React.useCallback(async () => {
-    const data = { name, desc, networkId, tokens, avatar: avatar.current }
+    const data = { name, bio, networkId, tokens, avatar: avatar.current }
 
     try {
       const newTo = await api.updateRecipient(data, account.token)
@@ -194,7 +196,7 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     } catch (e) {
       console.warn(e)
     }
-  }, [name, desc, networkId, avatar, tokens, account.token, onSubmitted])
+  }, [name, bio, networkId, avatar, tokens, account.token, onSubmitted])
 
   React.useEffect(() => {
     if (fileRejections.length > 0) {
@@ -208,7 +210,7 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
 
   return (
     <>
-      <div {...getRootProps({ style })} className='group mt-5 mb-1 bg-primary/10 self-center w-16 h-16 rounded-full border-2 border-white box-content relative overflow-hidden'>
+      <div {...getRootProps({ style })} className='group mt-5 bg-primary/10 self-center w-16 h-16 rounded-full border-2 border-white box-content relative overflow-hidden'>
         {
           !avatar.current && <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
         }
@@ -220,12 +222,18 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
             !avatar.current && (<input  {...getInputProps()} />)
           }
           <div className={classNames('w-4 h-4 group-hover:visible', isDragAccept ? 'visible' : 'invisible')}>
-            <Icon type='icon-camera' />
+            <Icon type='camera' />
           </div>
         </div>
       </div>
+      
+      <div className='mt-3 self-center'>
+        <SocialButtons socials={to.socials} />
+      </div>
 
-      <LinkInput to={to} accountToken={account.token} />
+      <div className='mt-3'>
+        <LinkInput to={to} accountToken={account.token} />
+      </div>
 
       <Input
         id='name'
@@ -247,13 +255,13 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
         inputClassName='pb-[28px]'
         type='textarea'
         label='Bio'
-        value={desc}
-        onChange={updateDesc}
+        value={bio}
+        onChange={updateBio}
         placeholder='Describe who you are'
         maxLength={100}
       >
         <div className='absolute bottom-[16px] right-4 text-primary/30 font-semibold'>
-          {desc.length} / 100
+          {bio.length} / 100
         </div>
       </Input>
 
@@ -354,7 +362,7 @@ function LinkInput({ to, accountToken }) {
         underline={uidUnderline}
       >
         <div className='absolute top-[22px] h-[52px] left-4 flex items-center'>
-          <div className='h-4 w-4'><Icon type='icon-link' /></div>
+          <div className='h-4 w-4'><Icon type='link' /></div>
           <div className='ml-2 font-semibold text-gray-400'>https://alls.to/</div>
         </div>
         <div className='absolute top-[22px] h-[52px] right-2 flex items-center'>
@@ -362,7 +370,7 @@ function LinkInput({ to, accountToken }) {
             uidClaimed || !inputUidValue
               ? <Button size='2xs' type='pure' className='!py-2' onClick={copyLink}>
                 <div className='flex items-center justify-center h-4 w-4'>
-                  <Icon type='icon-copy' />
+                  <Icon type='copy' />
                 </div>
               </Button>
               : showClaim &&

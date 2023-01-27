@@ -1,7 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
 import dynamic from 'next/dynamic'
-import Image from 'next/image'
 
 import { utils } from 'ethers'
 
@@ -11,6 +10,8 @@ import Button from 'components/common/Button'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
 import TokenIcon from 'components/common/Icon/TokenIcon'
 import Icon from 'components/icons'
+
+import SocialButtons from './SocialButtons'
 
 const MesonToEmbedded = dynamic(
   import('@mesonfi/to').then(t => t.MesonToEmbedded),
@@ -26,17 +27,29 @@ export default function CardBodyTransfer ({ to }) {
 
   return (
     <>
-      <div className='mt-5 self-center bg-primary/10 w-16 h-16 rounded-full border-2 border-white box-content overflow-hidden'>
+      <div className='mt-5 relative self-center'>
+        <div className='bg-primary/10 w-16 h-16 rounded-full border-2 border-white box-content overflow-hidden'>
         {
-          to.avatar ? <img width='100%' height='100%' alt={name} src={to.avatar} /> : <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
+          to.avatar
+            ? <img width='100%' height='100%' alt={name} src={to.avatar} />
+            : <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
+        }
+        </div>
+        {
+          to.did &&
+          <div className='absolute bottom-px right-px w-5 h-5 flex items-center justify-center'>
+            <div className='absolute w-3 h-3 bg-white rounded-full' />
+            <Icon type={to.did} className='absolute w-5 h-5' />
+          </div>
         }
       </div>
       
-      <div className='mt-5 flex flex-col items-center'>
+      <div className='mt-3 flex flex-col items-center'>
         <div className={classnames('break-all text-center', (to.name || to.uid) ? 'font-bold text-lg' : 'font-medium text-sm')}>
           {name}
         </div>
-        <div className='mt-1 text-sm'>{to.desc}</div>
+        <div className='text-sm mt-1'>{to.bio}</div>
+        <SocialButtons socials={to.socials} className='mt-2' />
       </div>
 
       <div className='mt-5 flex flex-row flex-wrap items-center justify-center bg-primary bg-opacity-5 rounded-xl p-4 text-sm'>
@@ -79,7 +92,7 @@ function SuccessInfo ({ data, onNewTransfer }) {
 
           <div className='bg-green h-0.5 w-16 rounded-full mx-px' />
           <div className='w-6 h-6 rounded-full bg-green m-px'>
-            <Icon type='icon-check' />
+            <Icon type='check' />
           </div>
 
           <div className='bg-green h-0.5 w-16 rounded-full mx-px' />

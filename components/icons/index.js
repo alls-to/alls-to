@@ -1,46 +1,48 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
-import iconCheck from 'components/icons/icon-check.svg'
-import iconError from 'components/icons/icon-error.svg'
-import iconInfo from 'components/icons/icon-info.svg'
-import iconWarning from 'components/icons/icon-warning.svg'
-import iconDisconnect from 'components/icons/icon-disconnect.svg'
-import iconCopy from 'components/icons/icon-copy.svg'
-import iconEdit from 'components/icons/icon-edit.svg'
-import iconLink from 'components/icons/icon-link.svg'
-import iconShare from 'components/icons/icon-share.svg'
-import iconTwitter from 'components/icons/icon-twitter.svg'
-import iconTelegram from 'components/icons/icon-telegram.svg'
-import iconDownload from 'components/icons/icon-download.svg'
-import iconLink2 from 'components/icons/icon-link-2.svg'
-import iconCamera from 'components/icons/icon-camera.svg'
+
+import iconCamera from './camera.svg'
+import iconCheck from './check.svg'
+import iconCopy from './copy.svg'
+import iconDownload from './download.svg'
+import iconDisconnect from './disconnect.svg'
+import iconEdit from './edit.svg'
+import iconError from './error.svg'
+import iconInfo from './info.svg'
+import iconLink from './link.svg'
+import iconLink2 from './link2.svg'
+import iconShare from './share.svg'
+import iconWarning from './warning.svg'
+import iconTwitter from './socials/twitter.svg'
+import iconTelegram from './socials/telegram.svg'
+import iconGithub from './socials/github.svg'
+import iconCyberconnect from './did/cyberconnect.svg'
 
 const ICONS = {
-  'icon-check': iconCheck,
-  'icon-error': iconError,
-  'icon-info': iconInfo,
-  'icon-warning': iconWarning,
-  'icon-disconnect': iconDisconnect,
-  'icon-copy': iconCopy,
-  'icon-edit': iconEdit,
-  'icon-link': iconLink,
-  'icon-link2': iconLink2,
-  'icon-share': iconShare,
-  'icon-twitter': iconTwitter,
-  'icon-telegram': iconTelegram,
-  'icon-download': iconDownload,
-  'icon-camera': iconCamera
+  camera: iconCamera,
+  check: iconCheck,
+  copy: iconCopy,
+  download: iconDownload,
+  disconnect: iconDisconnect,
+  edit: iconEdit,
+  error: iconError,
+  info: iconInfo,
+  link: iconLink,
+  link2: iconLink2,
+  share: iconShare,
+  warning: iconWarning,
+  twitter: iconTwitter,
+  telegram: iconTelegram,
+  github: iconGithub,
+  cyberconnect: iconCyberconnect,
 }
 
-export default function Icon({
-  className = undefined,
-  type = '',
-}) {
+export default function Icon({ className, type = '' }) {
   let icon
   if (ICONS[type]) {
     const IconComponent = ICONS[type]
-    icon = <IconComponent />
+    icon = <IconComponent className={className} />
   }
   if (!icon) {
     console.warn('Unknown icon type:' + type)
@@ -50,7 +52,7 @@ export default function Icon({
   return (
     <span
       className={classNames(
-        'inline-flex w-full h-full items-center justify-center shrink-0 select-none',
+        'flex w-full h-full items-center justify-center shrink-0 select-none',
         className
       )}
     >

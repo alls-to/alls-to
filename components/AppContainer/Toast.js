@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Transition } from '@headlessui/react'
-import Icon from '../icons'
+
 import refs from 'lib/refs'
+
+import Icon from '../icons'
 
 const SHORT_DURATION = 2500
 const LONG_DURATION = 8000
@@ -10,10 +12,10 @@ const INFINITY_DURATION = 86400_000 // 24h
 const DELAY_TO_CLOSE = 1000
 
 const ICONS = {
-  success: <Icon type='icon-check' />,
-  warning: <Icon type='icon-warning' />,
-  error: <Icon type='icon-error' />,
-  info: <Icon type='icon-info' />,
+  success: <Icon type='check' />,
+  warning: <Icon type='warning' />,
+  error: <Icon type='error' />,
+  info: <Icon type='info' />,
 }
 
 export function ToastCard ({ title, subtitle, type, onClose, withCloseButton, onMouseEnter, onMouseLeave }) {

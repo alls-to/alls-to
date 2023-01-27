@@ -38,25 +38,25 @@ export default function ShareButton ({ to }) {
       className='-my-1 -mr-3'
       btn={
         <Button size='xs' type='pure'>
-          <div className='flex h-4 w-4 mr-2'><Icon type='icon-share' /></div>
+          <div className='flex h-4 w-4 mr-2'><Icon type='share' /></div>
           SHARE
         </Button>
       }
       options={[
         {
-          text: <><div className='flex h-4 w-4 mr-2'><Icon type='icon-download' /></div>Save Image</>,
+          text: <><div className='flex h-4 w-4 mr-2'><Icon type='download' /></div>Save Image</>,
           onClick: saveImage
         },
         {
-          text: <><div className='flex h-4 w-4 mr-2'><Icon type='icon-twitter' /></div>Share on Twitter</>,
+          text: <><div className='flex h-4 w-4 mr-2'><Icon type='twitter' /></div>Share on Twitter</>,
           onClick: shareTwitter
         },
         {
-          text: <><div className='flex h-4 w-4 mr-2'><Icon type='icon-telegram' /></div>Share on Telegram</>,
+          text: <><div className='flex h-4 w-4 mr-2'><Icon type='telegram' /></div>Share on Telegram</>,
           onClick: shareTelegram
         },
         {
-          text: <><div className='flex h-4 w-4 mr-2'><Icon type='icon-link2' /></div>Copy Link</>,
+          text: <><div className='flex h-4 w-4 mr-2'><Icon type='link2' /></div>Copy Link</>,
           onClick: copyLink
         }
       ]}

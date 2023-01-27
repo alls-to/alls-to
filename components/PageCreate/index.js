@@ -89,11 +89,11 @@ export default function PageCreate () {
           btn={<ConnectedButton icon={extIcon} address={account?.sub} />}
           options={[
             {
-              text: <><div className='flex h-4 w-4 mr-2'><Icon type='icon-open'/></div>Open My Link</>,
+              text: <><div className='flex h-4 w-4 mr-2'><Icon type='open'/></div>Open My Link</>,
               onClick: () => to && window.open(`/${to.uid || to.address.substring(0, 12)}`, '_blank')
             },
             {
-              text: <><div className='flex h-4 w-4 mr-2'><Icon type='icon-disconnect' /></div>Disconnect</>,
+              text: <><div className='flex h-4 w-4 mr-2'><Icon type='disconnect' /></div>Disconnect</>,
               onClick: logout
             }
           ]}

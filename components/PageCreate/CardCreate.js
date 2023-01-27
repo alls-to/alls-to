@@ -4,7 +4,7 @@ import CentralCardWithSideInfo from 'components/common/Card/CentralCardWithSideI
 import IntroRegion from 'components/common/Card/IntroRegion'
 import Card from 'components/common/Card'
 
-import CardBodyEdit from './CardBodyEdit'
+import CardBodyEdit from '../PageTo/CardBodyEdit'
 
 export default function CardCreate ({ to }) {
   return (

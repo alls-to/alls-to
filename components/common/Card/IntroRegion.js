@@ -48,7 +48,7 @@ export default function IntroRegion ({ networkId = 'polygon', token = 'usdc', si
               <div className='-ml-4 w-4'>{i+1}.</div>
               <div>{step.title}</div>
             </div>
-            <div className='mt-1 text-primary/40'>{step.desc}</div>
+            <div className='mt-1 text-primary/50'>{step.desc}</div>
           </React.Fragment>
         ))
       }

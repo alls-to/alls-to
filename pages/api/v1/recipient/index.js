@@ -1,15 +1,8 @@
-import { getAddressFormat } from '@mesonfi/web3-jwt/lib'
-
+import { getRecipientWithProfile, postRecipient } from 'lib/alls.to'
 import { Recipients } from 'lib/db'
 import verifyJwt from 'lib/verifyJwt'
 
 const reservedWords = process.env.RESERVED_WORDS.split(',')
-
-const DEFAULT_NETWORKS = {
-  ethers: 'polygon',
-  tron: 'tron',
-  aptos: 'aptos'
-}
 
 export default async function handler (req, res) {
   const encoded = verifyJwt(req.headers.authorization)
@@ -20,31 +13,15 @@ export default async function handler (req, res) {
   const addr = encoded.sub
   
   if (req.method === 'GET') {
-    const doc = await Recipients.findById(addr)
-    if (!doc) {
-      res.json({ result: null })
+    const result = await getRecipientWithProfile(addr)
+    res.json({ result })
+  } else if (req.method === 'POST') {
+    const result = await postRecipient(addr)
+    if (!result) {
+      res.status(404).end()
       return
     }
-    res.json({ result: { address: doc._id, ...doc.toJSON() } })
-  } else if (req.method === 'POST') {
-    let doc = await Recipients.findById(addr)
-
-    if (!doc) {
-      const type = getAddressFormat(addr)
-      if (!type) {
-        res.status(404).end()
-        return
-      }
-
-      const _id = type === 'tron' ? addr : addr.toLowerCase()
-      doc = await Recipients.create({
-        _id,
-        networkId: DEFAULT_NETWORKS[type],
-        tokens: [type === 'tron' ? 'usdt' : 'usdc']
-      })
-    }
-
-    res.json({ result: { address: doc._id, ...doc.toJSON() } })
+    res.json({ result })
   } else if (req.method === 'PUT') {
     const { uid, name, desc, networkId, tokens, avatar } = req.body
     if (reservedWords.includes(uid)) {

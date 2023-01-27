@@ -23,7 +23,6 @@ export default async function handler (req, res) {
       res.status(400).end()
       return
     }
-    console.log(encoded)
     await Recipients.findByIdAndUpdate(encoded.sub, { uid })
     res.json({ result: true })
   } else {
