@@ -97,13 +97,6 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     }
   }, [defaultNetworkId, setTo])
 
-  const updateAvatar = v => {
-    setAvatar(v)
-    setTimeout(() => {
-      onSave()
-    }, 100)
-  }
-
   const updateName = React.useCallback(v => {
     setName(v)
     setModified(true)
@@ -148,7 +141,7 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
       <AvatarUploader
         address={to.address}
         current={avatar}
-        onUploaded={updateAvatar}
+        onUploaded={setAvatar}
         token={account.token}
       />
       
