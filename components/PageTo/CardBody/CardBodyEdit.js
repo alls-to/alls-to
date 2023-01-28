@@ -97,10 +97,12 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     }
   }, [defaultNetworkId, setTo])
 
-  const updateAvatar = React.useCallback(v => {
+  const updateAvatar = v => {
     setAvatar(v)
-    onSave()
-  }, [onSave])
+    setTimeout(() => {
+      onSave()
+    }, 100)
+  }
 
   const updateName = React.useCallback(v => {
     setName(v)
