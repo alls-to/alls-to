@@ -23,7 +23,7 @@ export default async function handler (req, res) {
     }
     res.json({ result })
   } else if (req.method === 'PUT') {
-    const { uid, name, desc, networkId, tokens, avatar } = req.body
+    const { uid, name, bio, networkId, tokens, avatar } = req.body
     if (reservedWords.includes(uid)) {
       res.status(400).end()
       return
@@ -31,7 +31,7 @@ export default async function handler (req, res) {
     try {
       const doc = await Recipients.findByIdAndUpdate(
         addr,
-        { uid, name, desc, networkId, tokens, avatar },
+        { uid, name, bio, networkId, tokens, avatar },
         { upsert: true, new: true }
       )
       res.json({ result: { address: doc._id, ...doc.toJSON() } })
