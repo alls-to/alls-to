@@ -12,8 +12,9 @@ import AppContainer from 'components/AppContainer'
 import Header from 'components/common/Header'
 import ConnectedButton from 'components/common/ConnectedButton'
 import { DropdownMenu } from 'components/common/Dropdown'
-import CardCreate from './CardCreate'
 import Icon from 'components/icons'
+
+import CardCreate from './CardCreate'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 

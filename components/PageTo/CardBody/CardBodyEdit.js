@@ -1,6 +1,5 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 
 import presets from '@mesonfi/presets'
 import { useExtensions } from '@mesonfi/extensions/react'
@@ -8,25 +7,18 @@ import { useWeb3Login } from '@mesonfi/web3-jwt/react'
 
 import * as api from 'lib/api'
 import { disabledChains } from 'lib/extensions'
-import { showInfoToast, showErrorToast } from 'lib/refs'
+import refs, { showInfoToast, showErrorToast } from 'lib/refs'
 
 import Input from 'components/common/Input'
 import Button from 'components/common/Button'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
-
-import { useDropzone } from 'react-dropzone'
-import refs from 'lib/refs'
-
-import TokenSelector from '../PageCreate/TokenSelector'
-import { utils as etherUtils } from 'ethers'
-import classNames from 'classnames'
 import Icon from 'components/icons'
 
 import SocialButtons from './SocialButtons'
+import TokenSelector from './TokenSelector'
+import AvatarUploader from './Avatar/AvatarUploader'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
-const BUCKET = process.env.NEXT_PUBLIC_AWS_BUCKET
-const REGION = process.env.NEXT_PUBLIC_AWS_REGION
 
 export default function CardBodyEdit({ to, setTo, setModified, onSubmitted }) {
   const { extensions } = useExtensions()
@@ -81,48 +73,12 @@ function CardBodyLoading({ notice = 'Loading...' }) {
 }
 
 function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account }) {
+  const [avatar, setAvatar] = React.useState(to.avatar || '')
   const [name, setName] = React.useState(to.name || '')
   const [bio, setBio] = React.useState(to.bio || '')
   const [networkId, setNetworkId] = React.useState(to.networkId || '')
   const [tokens, setTokens] = React.useState(to.tokens)
   const extType = account?.iss?.split(':')[0]
-  const avatar = React.useRef(to.avatar)
-
-  const {
-    getRootProps,
-    getInputProps,
-    isFocused,
-    isDragAccept,
-    isDragReject,
-    fileRejections
-  } = useDropzone({
-
-    accept: {
-      'image/png': ['.png'],
-      'image/jpeg': ['.jpeg'],
-      'image/jpg': ['.jpg'],
-    },
-    multiple: false,
-    onDrop: acceptedFiles => {
-      const file = acceptedFiles[0]
-      if (!file) {
-        return
-      }
-
-      const size = file.size / 1024
-      if (size > 5000) {
-        refs.toast.current?.show({ title: 'The maximum file size is 5M.', type: 'warning' })
-        return
-      }
-      updateAvatar(file)
-    }
-  })
-
-  const style = React.useMemo(() => ({}), [
-    isFocused,
-    isDragAccept,
-    isDragReject
-  ])
 
   const networks = React.useMemo(() => {
     if (!extType) {
@@ -141,27 +97,10 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     }
   }, [defaultNetworkId, setTo])
 
-  const updateAvatar = async (file) => {
-    const toastId = refs.toast.current?.show({ title: 'Uploading...', sticky: true, type: 'info' })
-    const folder = 'avatars'
-    const ext = /[^.]+$/.exec(file.name)
-    const key = `${folder}/${to.address}-${etherUtils.id(file.name)}.${ext}`
-    const url = await api.getAWSPresignUrlByFileKey(account.token, key)
-
-    const res = await window.fetch(url, {
-      method: 'PUT',
-      body: file
-    })
-
-    const publicUrl = `https://${BUCKET}.s3.${REGION}.amazonaws.com/${key}`
-    if (res.status === 200) {
-      avatar.current = publicUrl
-      await onSave()
-      refs.toast.current?.close(toastId)
-    } else {
-      refs.toast.current?.show({ title: 'Upload failed.', type: 'error' })
-    }
-  }
+  const updateAvatar = React.useCallback(v => {
+    setAvatar(v)
+    onSave()
+  }, [onSave])
 
   const updateName = React.useCallback(v => {
     setName(v)
@@ -186,7 +125,7 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
   }, [setTo, setModified])
 
   const onSave = React.useCallback(async () => {
-    const data = { name, bio, networkId, tokens, avatar: avatar.current }
+    const data = { avatar, name, bio, networkId, tokens }
 
     try {
       const newTo = await api.updateRecipient(data, account.token)
@@ -196,13 +135,7 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     } catch (e) {
       console.warn(e)
     }
-  }, [name, bio, networkId, avatar, tokens, account.token, onSubmitted])
-
-  React.useEffect(() => {
-    if (fileRejections.length > 0) {
-      refs.toast.current?.show({ title: 'Only PNG, JPEG files are accepted.', type: 'warning' })
-    }
-  }, [fileRejections])
+  }, [avatar, name, bio, networkId, tokens, account.token, onSubmitted])
 
   if (!account?.sub) {
     return
@@ -210,22 +143,12 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
 
   return (
     <>
-      <div {...getRootProps({ style })} className='group mt-5 bg-primary/10 self-center w-16 h-16 rounded-full border-2 border-white box-content relative overflow-hidden'>
-        {
-          !avatar.current && <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
-        }
-        <div className={classNames('absolute top-0 left-0 w-full h-full')}>
-          <img width='100%' height='100%' alt={name} src={avatar.current} />
-        </div>
-        <div className={classNames('absolute top-0 left-0 w-full h-full hover:bg-primary/70 flex items-center justify-center cursor-pointer', isDragAccept ? 'bg-primary/70' : '')} >
-          {
-            !avatar.current && (<input  {...getInputProps()} />)
-          }
-          <div className={classNames('w-4 h-4 group-hover:visible', isDragAccept ? 'visible' : 'invisible')}>
-            <Icon type='camera' />
-          </div>
-        </div>
-      </div>
+      <AvatarUploader
+        address={to.address}
+        current={avatar}
+        onUploaded={updateAvatar}
+        token={account.token}
+      />
       
       <div className='mt-3 self-center'>
         <SocialButtons socials={to.socials} />

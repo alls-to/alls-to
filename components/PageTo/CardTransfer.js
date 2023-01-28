@@ -6,8 +6,8 @@ import Card from 'components/common/Card'
 import Button from 'components/common/Button'
 
 import ShareButton from './ShareButton'
-import CardBodyTransfer from './CardBodyTransfer'
-import CardBodyEdit from './CardBodyEdit'
+import CardBodyTransfer from './CardBody/CardBodyTransfer'
+import CardBodyEdit from './CardBody/CardBodyEdit'
 
 export default function CardTransfer ({ to: initialTo, currentAddress }) {
   const [to, setTo] = React.useState(initialTo)

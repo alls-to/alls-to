@@ -1,12 +1,11 @@
 import React from 'react'
-import Image from 'next/image'
 
 import { saveAs } from 'file-saver'
 
+import refs from 'lib/refs'
+
 import { DropdownMenu } from 'components/common/Dropdown'
 import Button from 'components/common/Button'
-
-import refs from 'lib/refs'
 import Icon from 'components/icons'
 
 export default function ShareButton ({ to }) {
