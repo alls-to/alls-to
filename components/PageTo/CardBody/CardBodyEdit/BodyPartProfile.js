@@ -40,7 +40,29 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
 
   return (
     <>
-      <div className='mt-5 self-center'>
+      <div className='flex flex-row items-center justify-between'>
+        <div className='text-xl font-semibold'>Profile</div>
+        {
+          to.did &&
+          <Button size='xs' type='pure' className='!text-sm !font-normal !py-1.5 -mr-3'>
+            Synced with
+            <div className='w-4 h-4 mx-1'><Icon type={to.did} /></div>
+            <div className='font-semibold'>Link3</div>
+          </Button>
+        }
+      </div>
+
+      {
+        to.did &&
+        <div className='mt-1 text-sm'>
+          Edit on{' '}
+          <a className='underline cursor-pointer' href={`https://link3.to/${to.uid}`} target='_blank' rel='noreferrer'>
+            link3.to
+          </a>
+        </div>
+      }
+
+      <div className='mt-2 self-center'>
         <AvatarWrapper badge={{ type: to.did, href: `https://link3.to/${to.uid}` }}>
           <AvatarUploader
             address={to.address}
@@ -52,13 +74,13 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
         </AvatarWrapper>
       </div>
 
-      <div className='mt-3'>
+      <div className='mt-2'>
         <LinkInput to={to} accountToken={accountToken} />
       </div>
 
       <Input
         id='name'
-        className='mt-5'
+        className='mt-4'
         label='Name'
         value={name}
         onChange={updateName}
@@ -73,7 +95,7 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
 
       <Input
         id='bio'
-        className='mt-5'
+        className='mt-4'
         inputClassName='pb-[28px]'
         type='textarea'
         label='Bio'
@@ -88,9 +110,15 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
         </div>
       </Input>
 
-      <div className='mt-3'>
-        <SocialButtons socials={to.socials} />
-      </div>
+      {
+        to.did && !!to.socials?.length &&
+        <div className='mt-4'>
+          <label className='block text-primary text-sm h-4.5'>
+            Social Links
+          </label>
+          <SocialButtons socials={to.socials} className='mt-2' />
+        </div>
+      }
     </>
   )
 }

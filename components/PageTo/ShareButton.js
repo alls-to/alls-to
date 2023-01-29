@@ -47,11 +47,11 @@ export default function ShareButton ({ to }) {
           onClick: saveImage
         },
         {
-          text: <><div className='flex h-4 w-4 mr-2'><Icon type='twitter' /></div>Share on Twitter</>,
+          text: <><div className='flex h-4 w-4 mr-2'><Icon type='twitter_gray' /></div>Share on Twitter</>,
           onClick: shareTwitter
         },
         {
-          text: <><div className='flex h-4 w-4 mr-2'><Icon type='telegram' /></div>Share on Telegram</>,
+          text: <><div className='flex h-4 w-4 mr-2'><Icon type='telegram_gray' /></div>Share on Telegram</>,
           onClick: shareTelegram
         },
         {

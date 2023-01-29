@@ -53,7 +53,7 @@ export default function CardTransfer ({ to: initialTo, currentAddress }) {
             editing={editing}
             onUpdate={onUpdateEditing}
           />
-          <ShareButton to={to} />
+          {!editing && <ShareButton to={to} />}
         </div>
         {body}
       </Card>

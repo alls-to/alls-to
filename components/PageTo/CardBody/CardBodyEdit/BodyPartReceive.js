@@ -49,12 +49,12 @@ function BodyPartReceive({ to, onModified, account }, ref) {
 
   return (
     <>
+      <div className='text-xl font-semibold'>Receive as</div>
       <Input
         id='chain'
-        className='mt-5 mb-3'
+        className='mt-1 mb-3'
         inputClassName='pl-11'
         type='select'
-        label='Receive Stablecoins as'
         value={networkId}
         onChange={updateNetworkId}
         options={networks}

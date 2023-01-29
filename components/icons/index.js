@@ -14,10 +14,17 @@ import iconLink from './link.svg'
 import iconLink2 from './link2.svg'
 import iconShare from './share.svg'
 import iconWarning from './warning.svg'
-import iconTwitter from './socials/twitter.svg'
-import iconTelegram from './socials/telegram.svg'
-import iconGithub from './socials/github.svg'
+
 import iconCyberconnect from './did/cyberconnect.svg'
+
+import iconTelegramGray from './socials/telegram_gray.svg'
+import iconTwitterGray from './socials/twitter_gray.svg'
+
+import iconDiscord from './socials/discord.svg'
+import iconTelegram from './socials/telegram.svg'
+import iconTwitter from './socials/twitter.svg'
+import iconGithub from './socials/github.svg'
+import iconMedium from './socials/medium.svg'
 
 const ICONS = {
   camera: iconCamera,
@@ -32,9 +39,13 @@ const ICONS = {
   link2: iconLink2,
   share: iconShare,
   warning: iconWarning,
+  twitter_gray: iconTwitterGray,
+  telegram_gray: iconTelegramGray,
   twitter: iconTwitter,
   telegram: iconTelegram,
+  discord: iconDiscord,
   github: iconGithub,
+  medium: iconMedium,
   cyberconnect: iconCyberconnect,
 }
 
@@ -42,7 +53,7 @@ export default function Icon({ className, type = '' }) {
   let icon
   if (ICONS[type]) {
     const IconComponent = ICONS[type]
-    icon = <IconComponent className={className} />
+    icon = <IconComponent className='w-full h-full' />
   }
   if (!icon) {
     console.warn('Unknown icon type:' + type)

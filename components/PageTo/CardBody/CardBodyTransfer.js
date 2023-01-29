@@ -43,7 +43,7 @@ export default function CardBodyTransfer ({ to }) {
           {name}
         </div>
         <div className='text-sm mt-1'>{to.bio}</div>
-        <SocialButtons socials={to.socials} className='mt-2' />
+        <SocialButtons socials={to.socials} size='sm' className='mt-2' />
       </div>
 
       <div className='mt-5 flex flex-row flex-wrap items-center justify-center bg-primary bg-opacity-5 rounded-xl p-4 text-sm'>

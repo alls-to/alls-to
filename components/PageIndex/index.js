@@ -80,7 +80,7 @@ export default function PageIndex() {
         </div>
         <div className='relative self-center sm:self-start max-w-full w-[360px] sm:w-[300px] md:w-[360px] mb-12'>
           <Card className='p-6 md:p-8'>
-            <div className='text-xl font-bold mb-2'>Create My Link</div>
+            <div className='text-2xl font-bold mb-2'>Create My Link</div>
             <div className='mb-5 font-light'>Choose the wallet you want to connect and customize your link.</div>
             <LoginWallets loading={loading} extensions={extensions} onConnect={onConnect} />
           </Card>
