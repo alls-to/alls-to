@@ -28,26 +28,14 @@ export default function CardBodyTransfer ({ to }) {
 
   return (
     <>
-      <div className='mt-5 relative self-center'>
-        <AvatarWrapper>
+      <div className='mt-5 self-center'>
+        <AvatarWrapper badge={{ type: to.did, href: `https://link3.to/${to.uid}` }}>
         {
           to.avatar
-            ? <img width='100%' height='100%' alt='' src={to.avatar} />
-            : <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
+          ? <img width='100%' height='100%' alt='' src={to.avatar} />
+          : <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
         }
         </AvatarWrapper>
-        {
-          to.did &&
-          <a
-            className='block absolute bottom-px right-px w-5 h-5 flex items-center justify-center hover:contrast-75'
-            href={`https://link3.to/${to.uid}`}
-            target='_blank'
-            rel='noreferrer'
-          >
-            <div className='absolute w-3 h-3 bg-white rounded-full' />
-            <Icon type={to.did} className='absolute w-5 h-5' />
-          </a>
-        }
       </div>
       
       <div className='mt-3 flex flex-col items-center'>

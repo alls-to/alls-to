@@ -12,7 +12,8 @@ import Icon from 'components/icons'
 const BUCKET = process.env.NEXT_PUBLIC_AWS_BUCKET
 const REGION = process.env.NEXT_PUBLIC_AWS_REGION
 
-export default function AvatarUploader({ address, current, onUploaded, token }) {
+export default function AvatarUploader({ address, current, onUploaded, disabled, accountToken }) {
+  // TODO: implement disabled
   const {
     getRootProps,
     getInputProps,
@@ -53,7 +54,7 @@ export default function AvatarUploader({ address, current, onUploaded, token }) 
     const folder = 'avatars'
     const ext = /[^.]+$/.exec(file.name)
     const key = `${folder}/${address}-${utils.id(file.name)}.${ext}`
-    const url = await api.getAWSPresignUrlByFileKey(token, key)
+    const url = await api.getAWSPresignUrlByFileKey(accountToken, key)
 
     const res = await window.fetch(url, {
       method: 'PUT',
@@ -77,17 +78,13 @@ export default function AvatarUploader({ address, current, onUploaded, token }) 
 
   // getRootProps({ style })
   return (
-    <div {...getRootProps()} className='group mt-5 bg-primary/10 self-center w-16 h-16 rounded-full border-2 border-white box-content relative overflow-hidden'>
-      {
-        !current && <Jazzicon seed={jsNumberForAddress(address)} diameter={64} />
-      }
-      <div className={classNames('absolute top-0 left-0 w-full h-full')}>
+    <div {...getRootProps()} className='group relative w-full h-full'>
+      {!current && <Jazzicon seed={jsNumberForAddress(address)} diameter={64} />}
+      <div className={classNames('absolute inset-0')}>
         <img width='100%' height='100%' alt='' src={current} />
       </div>
-      <div className={classNames('absolute top-0 left-0 w-full h-full hover:bg-primary/70 flex items-center justify-center cursor-pointer', isDragAccept ? 'bg-primary/70' : '')} >
-        {
-          !current && <input {...getInputProps()} />
-        }
+      <div className={classNames('absolute inset-0 hover:bg-primary/70 flex items-center justify-center cursor-pointer', isDragAccept ? 'bg-primary/70' : '')} >
+        {!current && <input {...getInputProps()} />}
         <div className={classNames('w-4 h-4 group-hover:visible', isDragAccept ? 'visible' : 'invisible')}>
           <Icon type='camera' />
         </div>
