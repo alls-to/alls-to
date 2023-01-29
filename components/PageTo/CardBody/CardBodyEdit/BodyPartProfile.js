@@ -56,7 +56,12 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
         to.did &&
         <div className='mt-1 text-sm'>
           Edit on{' '}
-          <a className='underline cursor-pointer' href={`https://link3.to/${to.uid}`} target='_blank' rel='noreferrer'>
+          <a
+            className='underline cursor-pointer hover:text-primary/50'
+            href={`https://link3.to/${to.uid}`}
+            target='_blank'
+            rel='noreferrer'
+          >
             link3.to
           </a>
         </div>
