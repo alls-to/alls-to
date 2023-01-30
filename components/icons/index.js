@@ -24,6 +24,7 @@ import iconDiscord from './socials/discord.svg'
 import iconTelegram from './socials/telegram.svg'
 import iconTwitter from './socials/twitter.svg'
 import iconGithub from './socials/github.svg'
+import iconLinkedin from './socials/linkedin.svg'
 import iconMedium from './socials/medium.svg'
 
 const ICONS = {
@@ -45,6 +46,7 @@ const ICONS = {
   telegram: iconTelegram,
   discord: iconDiscord,
   github: iconGithub,
+  linkedin: iconLinkedin,
   medium: iconMedium,
   cyberconnect: iconCyberconnect,
 }
