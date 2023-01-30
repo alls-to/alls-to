@@ -6,16 +6,20 @@ import { DropdownMenu } from 'components/common/Dropdown'
 import Button from 'components/common/Button'
 import Icon from 'components/icons'
 
-export default function SyncDidButton ({ to, onModified, accountToken }) {
+export default function SyncDidButton ({ to, onSynced, accountToken }) {
   const sync = React.useCallback(async did => {
-    const synced = await api.syncDid(did, accountToken)
-    onModified(to => ({ ...to, ...synced }))
-  }, [onModified, accountToken])
+    try {
+      const synced = await api.syncDid(did, accountToken)
+      onSynced(synced)
+    } catch (e) {
+      console.warn(e)
+    }
+  }, [onSynced, accountToken])
 
   const unsync = React.useCallback(async () => {
     await api.unsyncDid(accountToken)
-    onModified(to => ({ ...to, did: undefined, socials: [] }))
-  }, [onModified, accountToken])
+    onSynced()
+  }, [onSynced, accountToken])
 
   let btn
   let options
