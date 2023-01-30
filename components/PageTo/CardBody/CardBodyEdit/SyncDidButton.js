@@ -1,17 +1,21 @@
 import React from 'react'
 
+import * as api from 'lib/api'
+
 import { DropdownMenu } from 'components/common/Dropdown'
 import Button from 'components/common/Button'
 import Icon from 'components/icons'
 
-export default function SyncDidButton ({ to, onModified }) {
-  const sync = React.useCallback(did => {
-    onModified(to => ({ ...to, did }))
-  }, [onModified])
+export default function SyncDidButton ({ to, onModified, accountToken }) {
+  const sync = React.useCallback(async did => {
+    const synced = await api.syncDid(did, accountToken)
+    onModified(to => ({ ...to, ...synced }))
+  }, [onModified, accountToken])
 
-  const unsync = React.useCallback(() => {
-    onModified(to => ({ ...to, did: undefined }))
-  }, [onModified])
+  const unsync = React.useCallback(async () => {
+    await api.unsyncDid(accountToken)
+    onModified(to => ({ ...to, did: undefined, socials: [] }))
+  }, [onModified, accountToken])
 
   let btn
   let options

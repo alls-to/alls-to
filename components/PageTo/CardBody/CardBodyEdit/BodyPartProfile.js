@@ -46,7 +46,7 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
     <>
       <div className='flex flex-row items-center justify-between'>
         <div className='text-xl font-semibold'>Profile</div>
-        <SyncDidButton to={to} onModified={onModified} />
+        <SyncDidButton to={to} onModified={onModified} accountToken={accountToken} />
       </div>
 
       {
