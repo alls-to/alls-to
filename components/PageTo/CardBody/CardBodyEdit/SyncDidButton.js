@@ -1,6 +1,7 @@
 import React from 'react'
 
 import * as api from 'lib/api'
+import { showSuccessToast, showInfoToast, showErrorToast } from 'lib/refs'
 
 import { DropdownMenu } from 'components/common/Dropdown'
 import Button from 'components/common/Button'
@@ -10,14 +11,17 @@ export default function SyncDidButton ({ to, onSynced, accountToken }) {
   const sync = React.useCallback(async did => {
     try {
       const synced = await api.syncDid(did, accountToken)
+      showSuccessToast({ message: 'Synced with Link3 Profile!' })
       onSynced(synced)
     } catch (e) {
       console.warn(e)
+      showErrorToast(new Error('No Link3 profile found for the current address. Please go to link3.to to create one.'))
     }
   }, [onSynced, accountToken])
 
   const unsync = React.useCallback(async () => {
     await api.unsyncDid(accountToken)
+    showInfoToast({ message: 'Unsynced with Link3.' })
     onSynced()
   }, [onSynced, accountToken])
 

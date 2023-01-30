@@ -41,7 +41,7 @@ export function ToastCard ({ title, subtitle, type, onClose, withCloseButton, on
       >
         <div className='flex justify-between'>
           <div className='flex items-center'>
-            <div className='w-5 h-5 rounded-full mr-2'>
+            <div className='w-5 h-5 rounded-full mr-2 shrink-0'>
               {ICONS[type]}
             </div>
             <span className='overflow-hidden break-words text-sm leading-[20px]'>
