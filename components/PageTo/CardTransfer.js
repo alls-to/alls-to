@@ -34,14 +34,12 @@ export default function CardTransfer ({ to: initialTo, currentAddress }) {
   }, [])
 
   const body = editing
-    ? (
-        <CardBodyEdit
-          to={to}
-          setTo={setTo}
-          setModified={setModified}
-          onSubmitted={onSubmitted}
-        />
-      )
+    ? <CardBodyEdit
+        to={to}
+        setTo={setTo}
+        setModified={setModified}
+        onSubmitted={onSubmitted}
+      />
     : <CardBodyTransfer to={to} />
 
   return (
@@ -80,7 +78,7 @@ export default function CardTransfer ({ to: initialTo, currentAddress }) {
 function CardTransferTitle ({ isOwner, editing, onUpdate }) {
   if (isOwner) {
     return (
-      <div className='-my-1.5 flex p-1 rounded-xl bg-glass-200 gap-1'>
+      <div className='-my-1.5 -ml-2 flex p-1 rounded-xl bg-glass-200 gap-1'>
         <Button
           size='2xs'
           type={editing ? 'transparent' : 'primary'}
