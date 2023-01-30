@@ -1,6 +1,5 @@
 import React from 'react'
-import classNames from 'classnames'
-import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
+import classnames from 'classnames'
 import { useDropzone } from 'react-dropzone'
 import { utils } from 'ethers'
 
@@ -12,8 +11,7 @@ import Icon from 'components/icons'
 const BUCKET = process.env.NEXT_PUBLIC_AWS_BUCKET
 const REGION = process.env.NEXT_PUBLIC_AWS_REGION
 
-export default function AvatarUploader({ address, current, onUploaded, disabled, accountToken }) {
-  // TODO: implement disabled
+export default function AvatarUploader({ address, onUploaded, accountToken, children }) {
   const {
     getRootProps,
     getInputProps,
@@ -79,13 +77,10 @@ export default function AvatarUploader({ address, current, onUploaded, disabled,
   // getRootProps({ style })
   return (
     <div {...getRootProps()} className='group relative w-full h-full'>
-      {!current && <Jazzicon seed={jsNumberForAddress(address)} diameter={64} />}
-      <div className={classNames('absolute inset-0')}>
-        <img width='100%' height='100%' alt='' src={current} />
-      </div>
-      <div className={classNames('absolute inset-0 hover:bg-primary/70 flex items-center justify-center cursor-pointer', isDragAccept ? 'bg-primary/70' : '')} >
-        {!current && <input {...getInputProps()} />}
-        <div className={classNames('w-4 h-4 group-hover:visible', isDragAccept ? 'visible' : 'invisible')}>
+      {children}
+      <div className={classnames('absolute inset-0 hover:bg-primary/70 flex items-center justify-center cursor-pointer', isDragAccept ? 'bg-primary/70' : '')} >
+        <input {...getInputProps()} />
+        <div className={classnames('w-4 h-4 group-hover:visible', isDragAccept ? 'visible' : 'invisible')}>
           <Icon type='camera' />
         </div>
       </div>

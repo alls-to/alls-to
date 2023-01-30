@@ -91,7 +91,7 @@ export default function Input ({
     <div className={classnames('relative text-sm', className)}>
       {
         label &&
-        <label htmlFor={id} className='block text-primary h-4.5 mb-1'>
+        <label htmlFor={id} className='flex flex-row text-primary h-4.5 mb-1'>
           {label}
         </label>
       }

@@ -8,9 +8,11 @@ import Input from 'components/common/Input'
 import Button from 'components/common/Button'
 import Icon from 'components/icons'
 
-import SocialButtons from '../SocialButtons'
+import Avatar from '../Avatar'
 import AvatarWrapper from '../Avatar/AvatarWrapper'
 import AvatarUploader from '../Avatar/AvatarUploader'
+import SocialButtons from '../SocialButtons'
+import SyncDidButton from './SyncDidButton'
 
 export default React.forwardRef(BodyPartProfile)
 
@@ -38,18 +40,13 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
     onModified()
   }, [onModified])
 
+  const labelIcon = to.did && <div className='ml-1 w-4 h-4'><Icon type={to.did} /></div>
+
   return (
     <>
       <div className='flex flex-row items-center justify-between'>
         <div className='text-xl font-semibold'>Profile</div>
-        {
-          to.did &&
-          <Button size='xs' type='pure' className='!text-sm !font-normal !py-1.5 -mr-3'>
-            Synced with
-            <div className='w-4 h-4 mx-1'><Icon type={to.did} /></div>
-            <div className='font-semibold'>Link3</div>
-          </Button>
-        }
+        <SyncDidButton to={to} onModified={onModified} />
       </div>
 
       {
@@ -69,24 +66,28 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
 
       <div className='mt-2 self-center'>
         <AvatarWrapper badge={{ type: to.did, href: `https://link3.to/${to.uid}` }}>
-          <AvatarUploader
-            address={to.address}
-            current={avatar}
-            onUploaded={updateAvatar}
-            disabled={!!to.did}
-            accountToken={accountToken}
-          />
+        {
+          to.did
+          ? <Avatar to={to} />
+          : <AvatarUploader
+              address={to.address}
+              onUploaded={updateAvatar}
+              accountToken={accountToken}
+            >
+              <Avatar to={to} />
+            </AvatarUploader>
+        }
         </AvatarWrapper>
       </div>
 
       <div className='mt-2'>
-        <LinkInput to={to} accountToken={accountToken} />
+        <LinkInput to={to} labelIcon={labelIcon} accountToken={accountToken} />
       </div>
 
       <Input
         id='name'
         className='mt-4'
-        label='Name'
+        label={<>Name{labelIcon}</>}
         value={name}
         onChange={updateName}
         disabled={!!to.did}
@@ -103,7 +104,7 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
         className='mt-4'
         inputClassName='pb-[28px]'
         type='textarea'
-        label='Bio'
+        label={<>Bio{labelIcon}</>}
         value={bio}
         onChange={updateBio}
         disabled={!!to.did}
@@ -118,8 +119,8 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
       {
         to.did && !!to.socials?.length &&
         <div className='mt-4'>
-          <label className='block text-primary text-sm h-4.5'>
-            Social Links
+          <label className='flex flex-row text-primary text-sm h-4.5'>
+            Social Links{labelIcon}
           </label>
           <SocialButtons socials={to.socials} className='mt-2' />
         </div>
@@ -128,7 +129,7 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
   )
 }
 
-function LinkInput({ to, accountToken }) {
+function LinkInput({ to, labelIcon, accountToken }) {
   const router = useRouter()
 
   const [uid, setUid] = React.useState(to.uid || to.address?.substring(0, 12))
@@ -184,7 +185,7 @@ function LinkInput({ to, accountToken }) {
     <div className=''>
       <Input
         id='uid'
-        label='My Link'
+        label={<>My Link{labelIcon}</>}
         inputClassName='pl-[144px]'
         value={inputUidValue}
         onChange={setInputUidValue}

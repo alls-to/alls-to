@@ -13,6 +13,7 @@ import iconInfo from './info.svg'
 import iconLink from './link.svg'
 import iconLink2 from './link2.svg'
 import iconShare from './share.svg'
+import iconUnsync from './unsync.svg'
 import iconWarning from './warning.svg'
 
 import iconCyberconnect from './did/cyberconnect.svg'
@@ -39,6 +40,7 @@ const ICONS = {
   link: iconLink,
   link2: iconLink2,
   share: iconShare,
+  unsync: iconUnsync,
   warning: iconWarning,
   twitter_gray: iconTwitterGray,
   telegram_gray: iconTelegramGray,

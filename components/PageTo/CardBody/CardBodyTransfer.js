@@ -1,7 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
 import dynamic from 'next/dynamic'
-import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import { utils } from 'ethers'
 
 import mesonPresets from '@mesonfi/presets'
@@ -11,6 +10,7 @@ import NetworkIcon from 'components/common/Icon/NetworkIcon'
 import TokenIcon from 'components/common/Icon/TokenIcon'
 import Icon from 'components/icons'
 
+import Avatar from './Avatar'
 import AvatarWrapper from './Avatar/AvatarWrapper'
 import SocialButtons from './SocialButtons'
 
@@ -30,11 +30,7 @@ export default function CardBodyTransfer ({ to }) {
     <>
       <div className='mt-5 self-center'>
         <AvatarWrapper badge={{ type: to.did, href: `https://link3.to/${to.uid}` }}>
-        {
-          to.avatar
-          ? <img width='100%' height='100%' alt='' src={to.avatar} />
-          : <Jazzicon seed={jsNumberForAddress(to.address)} diameter={64} />
-        }
+          <Avatar to={to} />
         </AvatarWrapper>
       </div>
       
