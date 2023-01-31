@@ -12,7 +12,7 @@ import LinkInput from './LinkInput'
 
 export default React.forwardRef(BodyPartProfile)
 
-function BodyPartProfile({ to, onModified, accountToken, onAutoSaveAvatar }, ref) {
+function BodyPartProfile({ to, onModified, accountToken }, ref) {
   const refLink = React.useRef()
 
   const [avatar, setAvatar] = React.useState(to.avatar || '')
@@ -40,7 +40,6 @@ function BodyPartProfile({ to, onModified, accountToken, onAutoSaveAvatar }, ref
   const updateAvatar = React.useCallback(async v => {
     setAvatar(v)
     onModified()
-    onAutoSaveAvatar(v)
   }, [onModified])
 
   const updateName = React.useCallback(v => {
