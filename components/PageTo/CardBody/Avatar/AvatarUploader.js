@@ -1,7 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
 import { useDropzone } from 'react-dropzone'
-import { utils } from 'ethers'
 
 import * as api from 'lib/api'
 import refs from 'lib/refs'
@@ -15,9 +14,7 @@ export default function AvatarUploader({ address, onUploaded, accountToken, chil
   const {
     getRootProps,
     getInputProps,
-    // isFocused,
     isDragAccept,
-    // isDragReject,
     fileRejections
   } = useDropzone({
     accept: {
@@ -41,17 +38,11 @@ export default function AvatarUploader({ address, onUploaded, accountToken, chil
     }
   })
 
-  // const style = React.useMemo(() => ({}), [
-  //   isFocused,
-  //   isDragAccept,
-  //   isDragReject
-  // ])
-
   const updateAvatar = async file => {
     const toastId = refs.toast.current?.show({ title: 'Uploading...', sticky: true, type: 'info' })
     const folder = 'avatars'
     const ext = /[^.]+$/.exec(file.name)
-    const key = `${folder}/${address}-${utils.id(file.name)}.${ext}`
+    const key = `${folder}/${address}.${ext}`
     const url = await api.getAWSPresignUrlByFileKey(accountToken, key)
 
     const res = await window.fetch(url, {
@@ -74,7 +65,6 @@ export default function AvatarUploader({ address, onUploaded, accountToken, chil
     }
   }, [fileRejections])
 
-  // getRootProps({ style })
   return (
     <div {...getRootProps()} className='group relative w-full h-full'>
       {children}

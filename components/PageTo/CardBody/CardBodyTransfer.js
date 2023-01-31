@@ -30,7 +30,7 @@ export default function CardBodyTransfer ({ to }) {
     <>
       <div className='mt-5 self-center'>
         <AvatarWrapper badge={{ type: to.did, href: `https://link3.to/${to.uid}` }}>
-          <Avatar to={to} />
+          <Avatar address={to.address} url={to.avatar}/>
         </AvatarWrapper>
       </div>
       
