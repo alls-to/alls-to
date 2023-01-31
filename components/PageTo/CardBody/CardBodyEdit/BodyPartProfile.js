@@ -12,7 +12,7 @@ import LinkInput from './LinkInput'
 
 export default React.forwardRef(BodyPartProfile)
 
-function BodyPartProfile({ to, onModified, accountToken }, ref) {
+function BodyPartProfile({ to, onModified, accountToken, onAutoSaveAvatar }, ref) {
   const refLink = React.useRef()
 
   const [avatar, setAvatar] = React.useState(to.avatar || '')
@@ -37,9 +37,10 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
     }
   }, [onModified])
 
-  const updateAvatar = React.useCallback(v => {
+  const updateAvatar = React.useCallback(async v => {
     setAvatar(v)
     onModified()
+    onAutoSaveAvatar(v)
   }, [onModified])
 
   const updateName = React.useCallback(v => {
@@ -80,13 +81,13 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
         <AvatarWrapper badge={{ type: to.did, href: `https://link3.to/${to.uid}` }}>
         {
           to.did
-          ? <Avatar to={to} />
+          ? <Avatar url={avatar} address={to.address} />
           : <AvatarUploader
               address={to.address}
               onUploaded={updateAvatar}
               accountToken={accountToken}
             >
-              <Avatar to={to} />
+              <Avatar url={avatar} address={to.address} />
             </AvatarUploader>
         }
         </AvatarWrapper>

@@ -76,6 +76,18 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     setModified(true)
   }, [setTo, setModified])
 
+  const onAutoSaveAvatar = async (url) => {
+    const data = {
+      ...to,
+      avatar: url
+    }
+    try {
+      const newTo = await api.updateRecipient(data, account.token)
+      setTimeout(() => onSubmitted(newTo), 300)
+    } catch (e) {
+      console.warn(e)
+    }
+  }
   const onSave = React.useCallback(async () => {
     const profileData = refProfile.current?.getData()
     const receiveData = refReceive.current?.getData()
@@ -98,7 +110,7 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
   return (
     <>
       <div className='mt-6' />
-      <BodyPartProfile ref={refProfile} to={to} onModified={onModified} accountToken={account.token} />
+      <BodyPartProfile ref={refProfile} to={to} onAutoSaveAvatar={onAutoSaveAvatar} onModified={onModified} accountToken={account.token} />
       
       <div className='my-4' />
       <BodyPartReceive ref={refReceive} to={to} onModified={onModified} account={account} />
