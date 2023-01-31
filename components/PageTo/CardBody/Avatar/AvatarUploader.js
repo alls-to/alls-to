@@ -1,6 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 import { useDropzone } from 'react-dropzone'
+import { utils } from 'ethers'
 
 import * as api from 'lib/api'
 import refs from 'lib/refs'
@@ -42,7 +43,7 @@ export default function AvatarUploader({ address, onUploaded, accountToken, chil
     const toastId = refs.toast.current?.show({ title: 'Uploading...', sticky: true, type: 'info' })
     const folder = 'avatars'
     const ext = /[^.]+$/.exec(file.name)
-    const key = `${folder}/${address}.${ext}`
+    const key = `${folder}/${address}-${utils.id(file.name)}.${ext}`
     const url = await api.getAWSPresignUrlByFileKey(accountToken, key)
 
     const res = await window.fetch(url, {
