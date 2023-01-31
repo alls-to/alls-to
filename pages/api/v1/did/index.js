@@ -14,6 +14,7 @@ export default async function handler (req, res) {
     const profile = await getProfileFromAddress(addr)
     if (!profile) {
       res.status(400).end()
+      return
     }
     const doc = await Recipients.findByIdAndUpdate(addr, { did: 'cyberconnect', ...profile }, { new: true })
     res.json({ result: { address: doc._id, ...doc.toJSON(), ...profile } })
