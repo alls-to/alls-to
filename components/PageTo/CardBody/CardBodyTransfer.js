@@ -20,8 +20,7 @@ const MesonToEmbedded = dynamic(
 )
 
 export default function CardBodyTransfer ({ to }) {
-  const handle = to.handle || to.addr
-  const name = to.name || handle
+  const title = to.name || (to.key ? to.handle : to.addr)
 
   const network = mesonPresets.getNetwork(to.networkId)
   const token = network.tokens.find(t => t.symbol.toLowerCase().includes(to.tokens[0]))
@@ -35,15 +34,15 @@ export default function CardBodyTransfer ({ to }) {
       </div>
       
       <div className='mt-3 flex flex-col items-center'>
-        <div className={classnames('break-all text-center', (to.name || to.handle) ? 'font-bold text-lg' : 'font-medium text-sm')}>
-          {name}
+        <div className={classnames('break-all text-center', (to.name || to.key) ? 'font-bold text-lg' : 'font-medium text-sm')}>
+          {title}
         </div>
         <div className='text-sm mt-1'>{to.bio}</div>
         <SocialButtons socials={to.socials} size='sm' className='mt-2' />
       </div>
 
       <div className='mt-5 flex flex-row flex-wrap items-center justify-center bg-primary bg-opacity-5 rounded-xl p-4 text-sm'>
-        <div className='break-all text-center'>{name}</div>
+        <div className='break-all text-center'>{title}</div>
         <div className='ml-1'>will receive</div>
         <div className='flex flex-row'>
           <div className='ml-1 h-4'><TokenIcon id={to.tokens[0]} /></div>
