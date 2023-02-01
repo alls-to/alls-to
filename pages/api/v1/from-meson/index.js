@@ -12,6 +12,8 @@ export default async function handler (req, res) {
       return
     }
 
+    res.status(400).end()
+
     // TODO
     // const doc = await AllsTo.findByIdAndUpdate(address, {
     //   _id: address,
