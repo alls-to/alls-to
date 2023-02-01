@@ -1,8 +1,6 @@
-import { createToForAddr } from 'lib/alls.to'
+import { queryWithAddr } from 'lib/alls.to'
 import { AllsTo } from 'lib/db'
 import verifyJwt from 'lib/verifyJwt'
-
-const reservedWords = process.env.RESERVED_WORDS.split(',')
 
 export default async function handler (req, res) {
   const encoded = verifyJwt(req.headers.authorization)
@@ -11,23 +9,16 @@ export default async function handler (req, res) {
     return
   }
   const addr = encoded.sub
-  
-  if (req.method === 'GET') {
-    const result = await AllsTo.find({ addr })
-    res.json({ result })
-  } else if (req.method === 'POST') {
-    const result = await createToForAddr(addr)
+
+  if (req.method === 'POST') {
+    const result = await queryWithAddr(addr)
     if (!result) {
-      res.status(404).end()
+      res.status(400).end()
       return
     }
     res.json({ result })
   } else if (req.method === 'PUT') {
     const { name, avatar, bio, networkId, tokens } = req.body
-    // if (reservedWords.includes(uid)) {
-    //   res.status(400).end()
-    //   return
-    // }
     try {
       const doc = await AllsTo.findOneAndUpdate(
         { addr },

@@ -36,14 +36,13 @@ export default function PageIndex() {
     const account = await login(ext)
     if (account?.token) {
       setLoading(true)
-      api.getMyToList(account.token)
+      api.postMyself(account.token)
         .then(async toList => {
           if (toList.length) {
             const to = toList[0]
             router.push(`/${to.handle}`)
           } else {
-            const to = await api.createMyself(account.token)
-            router.push(`/${to.handle}`)
+            setLoading(false)
           }
         })
         .catch(() => setLoading(false))
