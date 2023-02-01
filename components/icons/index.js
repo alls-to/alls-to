@@ -12,11 +12,12 @@ import iconError from './error.svg'
 import iconInfo from './info.svg'
 import iconLink from './link.svg'
 import iconLink2 from './link2.svg'
+import iconOpen from './open.svg'
 import iconShare from './share.svg'
 import iconUnsync from './unsync.svg'
 import iconWarning from './warning.svg'
 
-import iconCyberconnect from './did/cyberconnect.svg'
+import iconLink3 from './did/link3.svg'
 
 import iconTelegramGray from './socials/telegram_gray.svg'
 import iconTwitterGray from './socials/twitter_gray.svg'
@@ -39,6 +40,7 @@ const ICONS = {
   info: iconInfo,
   link: iconLink,
   link2: iconLink2,
+  open: iconOpen,
   share: iconShare,
   unsync: iconUnsync,
   warning: iconWarning,
@@ -50,7 +52,7 @@ const ICONS = {
   github: iconGithub,
   linkedin: iconLinkedin,
   medium: iconMedium,
-  cyberconnect: iconCyberconnect,
+  link3: iconLink3,
 }
 
 export default function Icon({ className, type = '' }) {

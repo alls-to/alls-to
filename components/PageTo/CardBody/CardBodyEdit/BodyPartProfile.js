@@ -25,10 +25,10 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
 
   const onSynced = React.useCallback(synced => {
     if (!synced) {
-      onModified(to => ({ ...to, did: '', socials: [] }))
+      onModified(to => ({ ...to, key: to.key.split('#')[0], did: '', socials: [] }))
     } else {
-      if (synced.uid) {
-        refLink.current?.updateUid(synced.uid)
+      if (synced.handle) { // TODO
+        refLink.current?.updateHandle(synced.handle)
       }
       setAvatar(synced.avatar)
       setName(synced.name)
@@ -67,7 +67,7 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
           Edit on{' '}
           <a
             className='underline cursor-pointer hover:text-primary/50'
-            href={`https://link3.to/${to.uid}`}
+            href={`https://link3.to/${to.handle}`}
             target='_blank'
             rel='noreferrer'
           >
@@ -77,16 +77,16 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
       }
 
       <div className='mt-2 self-center'>
-        <AvatarWrapper badge={{ type: to.did, href: `https://link3.to/${to.uid}` }}>
+        <AvatarWrapper badge={{ type: to.did, href: `https://link3.to/${to.handle}` }}>
         {
           to.did
-          ? <Avatar url={avatar} address={to.address} />
+          ? <Avatar url={avatar} addr={to.addr} />
           : <AvatarUploader
-              address={to.address}
+              addr={to.addr}
               onUploaded={updateAvatar}
               accountToken={accountToken}
             >
-              <Avatar url={avatar} address={to.address} />
+              <Avatar url={avatar} addr={to.addr} />
             </AvatarUploader>
         }
         </AvatarWrapper>

@@ -14,17 +14,17 @@ export default function PageTo ({ to }) {
   React.useEffect(() => {
     if (!to) {
       router.replace(`/`)
-    } else if (to.uid && !location.pathname.endsWith(`/${to.uid}`)) {
-      router.replace(`/${to.uid}`)
+    } else if (!location.pathname.endsWith(`/${to.handle}`)) {
+      router.replace(`/${to.handle}`)
     }
   }, [router, to])
 
   return (
     <AppContainer>
       <Header logoSrc='/'>
-        <MesonToSyncedWallet browserExt={browserExt} setBrowserExt={setBrowserExt} />
+        <MesonToSyncedWallet to={to} browserExt={browserExt} setBrowserExt={setBrowserExt} />
       </Header>
-      <CardTransfer to={to} currentAddress={browserExt?.currentAccount?.address} />
+      <CardTransfer key={to.handle} to={to} currentAddress={browserExt?.currentAccount?.address} />
     </AppContainer>
   )
 }

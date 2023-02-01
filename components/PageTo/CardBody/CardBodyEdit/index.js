@@ -82,7 +82,7 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     const data = { ...profileData, ...receiveData }
 
     try {
-      const newTo = await api.updateRecipient(data, account.token)
+      const newTo = await api.updateMyself(data, account.token)
       refs.toast.current?.show({ title: 'Saved!' })
 
       setTimeout(() => onSubmitted(newTo), 300)

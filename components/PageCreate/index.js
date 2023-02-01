@@ -81,17 +81,17 @@ export default function PageCreate () {
     switching = true
   }
 
-  const title = to ? `Create → ${to.name || abbreviate(to.address)}` : 'Loading...'
+  const title = to ? `Create → ${to.name || abbreviate(to.addr)}` : 'Loading...'
   return (
     <AppContainer>
       <NextSeo title={title} openGraph={{ title }} />
       <Header>
         <DropdownMenu
-          btn={<ConnectedButton icon={extIcon} address={account?.sub} />}
+          btn={<ConnectedButton icon={extIcon} addr={account?.sub} />}
           options={[
             {
               text: <><div className='flex h-4 w-4 mr-2'><Icon type='open'/></div>Open My Link</>,
-              onClick: () => to && window.open(`/${to.uid || to.address.substring(0, 12)}`, '_blank')
+              onClick: () => to && window.open(`/${to.handle}`, '_blank')
             },
             {
               text: <><div className='flex h-4 w-4 mr-2'><Icon type='disconnect' /></div>Disconnect</>,

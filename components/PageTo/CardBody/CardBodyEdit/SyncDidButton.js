@@ -10,20 +10,20 @@ import Icon from 'components/icons'
 export default function SyncDidButton ({ to, onSynced, accountToken }) {
   const sync = React.useCallback(async did => {
     try {
-      const synced = await api.syncDid(did, accountToken)
+      const synced = await api.syncDid(to.key, did, accountToken)
       showSuccessToast({ message: 'Synced with Link3 Profile!' })
       onSynced(synced)
     } catch (e) {
       console.warn(e)
       showErrorToast(new Error('No Link3 profile found for the current address. Please go to link3.to to create one.'))
     }
-  }, [onSynced, accountToken])
+  }, [to.key, onSynced, accountToken])
 
   const unsync = React.useCallback(async () => {
-    await api.unsyncDid(accountToken)
+    await api.unsyncDid(to.key, accountToken)
     showInfoToast({ message: 'Unsynced with Link3.' })
     onSynced()
-  }, [onSynced, accountToken])
+  }, [to.key, onSynced, accountToken])
 
   let btn
   let options
@@ -46,8 +46,8 @@ export default function SyncDidButton ({ to, onSynced, accountToken }) {
       </Button>
     )
     options = [{
-      text: <><div className='flex h-4 w-4 mr-2'><Icon type='cyberconnect' /></div>Link3 / CyberConnect</>,
-      onClick: () => sync('cyberconnect')
+      text: <><div className='flex h-4 w-4 mr-2'><Icon type='link3' /></div>Link3 / CyberConnect</>,
+      onClick: () => sync('link3')
     }]
   }
 

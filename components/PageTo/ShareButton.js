@@ -9,13 +9,13 @@ import Button from 'components/common/Button'
 import Icon from 'components/icons'
 
 export default function ShareButton ({ to }) {
-  const uid = to.uid || to.address
-  const link = `https://alls.to/${to.uid || to.address.substring(0, 12)}`
-  const name = to.name || uid
+  const link = `https://alls.to/${to.handle}`
 
+  const keyOrAddr = to.key || to.addr
+  const name = to.name || keyOrAddr
   const saveImage = React.useCallback(async () => {
-    await saveAs(`https://img.meson.fi/to/${uid}/share`, `Alls_to_${name}.png`)
-  }, [uid, name])
+    await saveAs(`https://img.meson.fi/to/${encodeURIComponent(keyOrAddr)}/share`, `AllsTo_${name}.png`)
+  }, [keyOrAddr, name])
 
   const shareTwitter = React.useCallback(async () => {
     const text = `Make stablecoin transfers to me\n\n${link}`

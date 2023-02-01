@@ -11,7 +11,7 @@ import CardBodyEdit from './CardBody/CardBodyEdit'
 
 export default function CardTransfer ({ to: initialTo, currentAddress }) {
   const [to, setTo] = React.useState(initialTo)
-  const isOwner = to.address === currentAddress
+  const isOwner = to.addr === currentAddress
   const [editing, setEditing] = React.useState(false)
   const [modified, setModified] = React.useState(false)
 

@@ -1,4 +1,4 @@
-import { Recipients } from 'lib/db'
+import { AllsTo } from 'lib/db'
 import verifyJwt from 'lib/verifyJwt'
 
 const reservedWords = process.env.RESERVED_WORDS.split(',')
@@ -9,21 +9,23 @@ export default async function handler (req, res) {
     res.status(401).end()
     return
   }
-  const { uid } = req.query
+  const { handle } = req.query
 
   if (req.method === 'GET') {
-    if (reservedWords.includes(uid)) {
+    if (reservedWords.includes(handle)) {
       res.json({ result: true })
       return
     }
-    const exist = await Recipients.findOne({ uid })
+    // TODO
+    const exist = await AllsTo.findOne({ key: handle })
     res.json({ result: !!exist })
   } else if (req.method === 'POST') {
-    if (reservedWords.includes(uid)) {
+    if (reservedWords.includes(handle)) {
       res.status(400).end()
       return
     }
-    await Recipients.findByIdAndUpdate(encoded.sub, { uid })
+    // TODO
+    await AllsTo.findByIdAndUpdate(handle, { key: handle })
     res.json({ result: true })
   } else {
     res.end()

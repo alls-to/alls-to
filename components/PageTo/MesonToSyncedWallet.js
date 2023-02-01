@@ -1,10 +1,13 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 
 import ConnectedButton from 'components/common/ConnectedButton'
 import { DropdownMenu } from 'components/common/Dropdown'
 import Icon from 'components/icons'
 
-export default function MesonToSyncedWallet ({ browserExt, setBrowserExt }) {
+export default function MesonToSyncedWallet ({ to, browserExt, setBrowserExt }) {
+  const router = useRouter()
+
   const onMeson2Event = React.useCallback(({ data }) => {
     if (data.type === 'update-browser-ext') {
       setBrowserExt(data.data)
@@ -21,24 +24,25 @@ export default function MesonToSyncedWallet ({ browserExt, setBrowserExt }) {
   }, [])
 
   const currentAddress = browserExt?.currentAccount?.address
+  const isOwner = currentAddress === to.addr
   const options = React.useMemo(() => {
     const options = [{
       text: <><div className='flex h-4 w-4 mr-2'><Icon type='disconnect'/></div>Disconnect</>,
       onClick: disconnect
     }]
 
-    // if (isOwner) {
-    //   options.unshift({
-    //     text: <><div className='flex h-4 w-4 mr-2'><Image fill='true' alt='' src={iconEdit} /></div>Edit My Link</>,
-    //     onClick: () => window.open(`/edit`, '_blank')
-    //   })
-    // }
+    if (!isOwner) {
+      options.unshift({
+        text: <><div className='flex h-4 w-4 mr-2'><Icon type='open'/></div>Open My Link</>,
+        onClick: () => router.push(`/${currentAddress}`)
+      })
+    }
     return options
-  }, [disconnect])
+  }, [disconnect, isOwner, router, currentAddress])
 
   return (
     <DropdownMenu
-      btn={<ConnectedButton icon={browserExt?.ext?.icon} address={currentAddress} />}
+      btn={<ConnectedButton icon={browserExt?.ext?.icon} addr={currentAddress} />}
       options={options}
     />
   )

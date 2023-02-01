@@ -11,7 +11,7 @@ import Icon from 'components/icons'
 const BUCKET = process.env.NEXT_PUBLIC_AWS_BUCKET
 const REGION = process.env.NEXT_PUBLIC_AWS_REGION
 
-export default function AvatarUploader({ address, onUploaded, accountToken, children }) {
+export default function AvatarUploader({ addr, onUploaded, accountToken, children }) {
   const {
     getRootProps,
     getInputProps,
@@ -43,7 +43,7 @@ export default function AvatarUploader({ address, onUploaded, accountToken, chil
     const toastId = refs.toast.current?.show({ title: 'Uploading...', sticky: true, type: 'info' })
     const folder = 'avatars'
     const ext = /[^.]+$/.exec(file.name)
-    const key = `${folder}/${address}-${utils.id(file.name)}.${ext}`
+    const key = `${folder}/${addr}-${utils.id(file.name)}.${ext}`
     const url = await api.getAWSPresignUrlByFileKey(accountToken, key)
 
     const res = await window.fetch(url, {

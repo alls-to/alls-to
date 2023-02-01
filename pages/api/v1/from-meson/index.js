@@ -1,6 +1,6 @@
 import { getAddressFormat } from '@mesonfi/web3-jwt/lib'
 
-import { Recipients } from 'lib/db'
+import { AllsTo } from 'lib/db'
 
 export default async function handler (req, res) {
   const { address, networkId, token } = req.body
@@ -12,13 +12,14 @@ export default async function handler (req, res) {
       return
     }
 
-    const doc = await Recipients.findByIdAndUpdate(address, {
-      _id: address,
-      networkId,
-      tokens: [token]
-    }, { upsert: true, new: true }).select('uid networkId tokens')
+    // TODO
+    // const doc = await AllsTo.findByIdAndUpdate(address, {
+    //   _id: address,
+    //   networkId,
+    //   tokens: [token]
+    // }, { upsert: true, new: true }).select('uid networkId tokens')
 
-    res.json({ result: { link: doc.uid || address.substring(0, 12), address, ...doc.toJSON() } })
+    // res.json({ result: { link: doc.uid || address.substring(0, 12), address, ...doc.toJSON() } })
   } else {
     res.end()
   }

@@ -20,8 +20,8 @@ const MesonToEmbedded = dynamic(
 )
 
 export default function CardBodyTransfer ({ to }) {
-  const uid = to.uid || to.address
-  const name = to.name || uid
+  const handle = to.handle || to.addr
+  const name = to.name || handle
 
   const network = mesonPresets.getNetwork(to.networkId)
   const token = network.tokens.find(t => t.symbol.toLowerCase().includes(to.tokens[0]))
@@ -29,13 +29,13 @@ export default function CardBodyTransfer ({ to }) {
   return (
     <>
       <div className='mt-5 self-center'>
-        <AvatarWrapper badge={{ type: to.did, href: `https://link3.to/${to.uid}` }}>
-          <Avatar address={to.address} url={to.avatar}/>
+        <AvatarWrapper badge={{ type: to.did, href: `https://link3.to/${to.handle}` }}>
+          <Avatar addr={to.addr} url={to.avatar}/>
         </AvatarWrapper>
       </div>
       
       <div className='mt-3 flex flex-col items-center'>
-        <div className={classnames('break-all text-center', (to.name || to.uid) ? 'font-bold text-lg' : 'font-medium text-sm')}>
+        <div className={classnames('break-all text-center', (to.name || to.handle) ? 'font-bold text-lg' : 'font-medium text-sm')}>
           {name}
         </div>
         <div className='text-sm mt-1'>{to.bio}</div>
@@ -58,7 +58,7 @@ export default function CardBodyTransfer ({ to }) {
       <div className='mt-4 -mx-2 -mb-4'>
         <MesonToEmbedded
           appId='alls-to'
-          to={{ addr: to.address, chain: to.networkId, tokens: to.tokens }}
+          to={{ addr: to.addr, chain: to.networkId, tokens: to.tokens }}
           SuccessInfo={SuccessInfo}
         />
       </div>

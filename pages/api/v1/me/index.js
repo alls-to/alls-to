@@ -1,5 +1,5 @@
-import { getRecipientWithProfile, postRecipient } from 'lib/alls.to'
-import { Recipients } from 'lib/db'
+import { createToForAddr } from 'lib/alls.to'
+import { AllsTo } from 'lib/db'
 import verifyJwt from 'lib/verifyJwt'
 
 const reservedWords = process.env.RESERVED_WORDS.split(',')
@@ -13,28 +13,28 @@ export default async function handler (req, res) {
   const addr = encoded.sub
   
   if (req.method === 'GET') {
-    const result = await getRecipientWithProfile(addr)
+    const result = await AllsTo.find({ addr })
     res.json({ result })
   } else if (req.method === 'POST') {
-    const result = await postRecipient(addr)
+    const result = await createToForAddr(addr)
     if (!result) {
       res.status(404).end()
       return
     }
     res.json({ result })
   } else if (req.method === 'PUT') {
-    const { uid, name, bio, networkId, tokens, avatar } = req.body
-    if (reservedWords.includes(uid)) {
-      res.status(400).end()
-      return
-    }
+    const { name, avatar, bio, networkId, tokens } = req.body
+    // if (reservedWords.includes(uid)) {
+    //   res.status(400).end()
+    //   return
+    // }
     try {
-      const doc = await Recipients.findByIdAndUpdate(
-        addr,
-        { uid, name, bio, networkId, tokens, avatar },
+      const doc = await AllsTo.findOneAndUpdate(
+        { addr },
+        { name, avatar, bio, networkId, tokens },
         { upsert: true, new: true }
       )
-      res.json({ result: { address: doc._id, ...doc.toJSON() } })
+      res.json({ result: doc })
     } catch (e) {
       const code = e.codeName === 'DuplicateKey' ? 409 : 400
       res.status(code).json({
