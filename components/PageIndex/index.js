@@ -3,7 +3,6 @@ import classnames from 'classnames'
 import { useRouter } from 'next/router'
 import groupBy from 'lodash/groupBy'
 import mapValues from 'lodash/mapValues'
-
 import { useExtensions } from '@mesonfi/extensions/react'
 import { useWeb3Login } from '@mesonfi/web3-jwt/react'
 
@@ -15,7 +14,7 @@ import Header from 'components/common/Header'
 import Card from 'components/common/Card'
 import Button from 'components/common/Button'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
-
+import custodial from 'lib/custodialService'
 import styles from './styles.module.css'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
@@ -25,12 +24,19 @@ const icons = 'eth|polygon|bnb|arb|opt|avax|zksync|aurora|tron|aptos|ftm|cronos|
 export default function PageIndex() {
   const router = useRouter()
   const { extensions } = useExtensions()
+  const [loading, setLoading] = React.useState(false)
+
   const { login } = useWeb3Login(extensions, signingMessage, {
     duration: 86400 * 7,
     onInfo: showInfoToast,
     onError: showErrorToast
   })
-  const [loading, setLoading] = React.useState(false)
+
+  const { login: custodialLogin } = useWeb3Login(custodial, signingMessage, {
+    duration: 86400 * 7,
+    onInfo: showInfoToast,
+    onError: showErrorToast
+  })
 
   const onConnect = React.useCallback(async ext => {
     const account = await login(ext)
@@ -48,6 +54,11 @@ export default function PageIndex() {
         .catch(() => setLoading(false))
     }
   }, [router, login])
+
+  const onCustodialConnect = React.useCallback(async (service) => {
+    const token = await custodialLogin(service)
+    console.log(token)
+  }, [router])
 
   return (
     <AppContainer className='sm:overflow-y-hidden'>
@@ -70,11 +81,11 @@ export default function PageIndex() {
               Receive fund with certain network & stablecoins. Make transfers with any network & stablecoin you like, and let ALLsTo take care of cross-chain.
             </div>
             <div className='w-fit grid grid-cols-8 md:gap-x-6 gap-x-4 gap-y-4'>
-            {icons.map(id => (
-              <div key={`icon-${id}`} className='w-7 h-7 border-[2px] border-white rounded-full'>
-                <NetworkIcon size={28} id={id} />
-              </div>
-            ))}
+              {icons.map(id => (
+                <div key={`icon-${id}`} className='w-7 h-7 border-[2px] border-white rounded-full'>
+                  <NetworkIcon size={28} id={id} />
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -82,7 +93,7 @@ export default function PageIndex() {
           <Card className='p-6 md:p-8'>
             <div className='text-2xl font-bold mb-2'>Create My Link</div>
             <div className='mb-5 font-light'>Choose the wallet you want to connect and customize your link.</div>
-            <LoginWallets loading={loading} extensions={extensions} onConnect={onConnect} />
+            <LoginWallets loading={loading} extensions={extensions} onConnect={onConnect} onCustodialConnect={onCustodialConnect} />
           </Card>
         </div>
       </div>
@@ -90,8 +101,14 @@ export default function PageIndex() {
   )
 }
 
-function LoginWallets ({ loading, extensions, onConnect }) {
+function LoginWallets({ loading, extensions, onConnect, onCustodialConnect }) {
   const [extList, setExtList] = React.useState([])
+
+  // TODO: just for testing, should move to mypage,
+  const onLogout = async () => {
+    await custodial.disconnect()
+    console.log('logged out...')
+  }
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -122,8 +139,8 @@ function LoginWallets ({ loading, extensions, onConnect }) {
         >
           {
             ext.notInstalled
-            ? <div className='opacity-50'>Get {ext.name}</div>
-            : <div>{ext.name}</div>
+              ? <div className='opacity-50'>Get {ext.name}</div>
+              : <div>{ext.name}</div>
           }
           <div className={classnames(
             'flex w-8 h-8 bg-white items-center justify-center rounded-md',
@@ -133,6 +150,12 @@ function LoginWallets ({ loading, extensions, onConnect }) {
           </div>
         </Button>
       ))}
+      <Button size='lg' type='glass' onClick={onLogout}>Logout</Button>
+      {
+        custodial.services.map(item => (
+          <Button size='lg' key={item.id} type='glass' onClick={() => onCustodialConnect(item)}>{item.name}</Button>
+        ))
+      }
     </div>
   )
 }
