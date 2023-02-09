@@ -22,11 +22,10 @@ function Dropdown({
     <Menu as='div' className={className}>
       <Float
         portal
-        // show={show}
         placement={placement}
         offset={4}
-        // shift={{ padding: 8 }}
-        flip
+        shift={{ padding: 32 }}
+        // flip
         zIndex={20}
         enter='transition ease-out duration-100'
         enterFrom='opacity-0 scale-90'
@@ -56,17 +55,14 @@ function Dropdown({
 <div className='w-full h-[calc(100%+1px)]' />
 </div> */}
 
-export function DropdownMenu ({ className, btn, placement, options = [] }) {
+export function DropdownMenu ({ className, btn, placement, options = [], children }) {
   return (
     <Dropdown className={className} btn={btn} placement={placement}>
-      <div className='flex flex-col min-w-[200px] gap-1 p-2 bg-white rounded-xl focus:outline-none shadow-xl'>
-      {
-        options.map((props, i) => (
-          <DropdownItem key={`item-${i}`} {...props}>
-            <span className='opacity-75'>Invite a friend (coming soon!)</span>
-          </DropdownItem>
-        ))
-      }
+      <div className='flex flex-col min-w-[200px] p-2 bg-white rounded-xl focus:outline-none shadow-xl'>
+        {children}
+        <div className='flex flex-col gap-1'>
+          {options.map((props, i) => <DropdownItem key={`item-${i}`} {...props} />)}
+        </div>
       </div>
     </Dropdown>
   )

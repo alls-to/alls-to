@@ -15,6 +15,7 @@ import iconLink2 from './link2.svg'
 import iconOpen from './open.svg'
 import iconShare from './share.svg'
 import iconUnsync from './unsync.svg'
+import iconWallet from './wallet.svg'
 import iconWarning from './warning.svg'
 
 import iconLink3 from './did/link3.svg'
@@ -43,6 +44,7 @@ const ICONS = {
   open: iconOpen,
   share: iconShare,
   unsync: iconUnsync,
+  wallet: iconWallet,
   warning: iconWarning,
   twitter_gray: iconTwitterGray,
   telegram_gray: iconTelegramGray,

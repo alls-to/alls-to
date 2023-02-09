@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import AppContainer from 'components/AppContainer'
 import Header from 'components/common/Header'
 
-import MesonToSyncedWallet from './MesonToSyncedWallet'
+import WalletButtons from './WalletButtons'
 import CardTransfer from './CardTransfer'
 
 export default function PageTo ({ to }) {
@@ -22,7 +22,7 @@ export default function PageTo ({ to }) {
   return (
     <AppContainer>
       <Header logoSrc='/'>
-        <MesonToSyncedWallet to={to} browserExt={browserExt} setBrowserExt={setBrowserExt} />
+        <WalletButtons to={to} browserExt={browserExt} setBrowserExt={setBrowserExt} />
       </Header>
       <CardTransfer key={to.handle} to={to} currentAddress={browserExt?.currentAccount?.address} />
     </AppContainer>

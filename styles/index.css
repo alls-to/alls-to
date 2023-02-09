@@ -16,6 +16,9 @@
   font-size: 36px;
   line-height: 48px;
 }
+.filter-gray {
+  filter: grayscale(0.6) contrast(0.15) brightness(150%) contrast(1.35)
+}
 
 @screen xs {
   .main-padding {
