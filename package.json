@@ -23,6 +23,7 @@
     "@tailwindcss/forms": "^0.5.3",
     "autoprefixer": "^10.4.12",
     "classnames": "^2.3.2",
+    "dotbit": "^0.4.14",
     "ethers": "^5.7.1",
     "file-saver": "^2.0.5",
     "graphql": "^16.6.0",
