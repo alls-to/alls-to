@@ -4,9 +4,9 @@ import { abbreviate } from 'lib'
 
 import Button from './Button'
 
-export default function ConnectedButton ({ hideAddress, icon, addr = '' }) {
+export default function ConnectedButton ({ hideAddress, icon, addr = '', className }) {
   return (
-    <Button size='sm' type='white' className='!px-2'>
+    <Button size='sm' type='white' className={classnames('!px-2', className)}>
       <div className={classnames('w-5 h-5', !addr && 'filter-gray')}>
         <img alt='' crossOrigin='anonymous' className='w-5 h-5' src={icon} />
       </div>

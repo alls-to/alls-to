@@ -3,7 +3,7 @@ import { useExtensions } from '@mesonfi/extensions/react'
 
 import ExtWalletButton from './ExtWalletButton'
 
-export default function WalletButtons ({ to, browserExt, setBrowserExt }) {
+export default function WalletButtons ({ toAddr, onExtAddress }) {
   const { extensions } = useExtensions()
   
   const [extList, setExtList] = React.useState([])
@@ -20,6 +20,12 @@ export default function WalletButtons ({ to, browserExt, setBrowserExt }) {
   const hideAddress = extList.length > 1
 
   return extList.map(ext => (
-    <ExtWalletButton key={ext.id} hideAddress={hideAddress} ext={ext} />
+    <ExtWalletButton
+      key={ext.id}
+      hideAddress={hideAddress}
+      ext={ext}
+      toAddr={toAddr}
+      onExtAddress={onExtAddress}
+    />
   ))
 }

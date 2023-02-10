@@ -5,14 +5,14 @@ import ConnectedButton from 'components/common/ConnectedButton'
 import { DropdownMenu } from 'components/common/Dropdown'
 import Icon from 'components/icons'
 
-export default function MesonToSyncedWallet ({ to, browserExt, setBrowserExt }) {
+export default function MesonToSyncedWallet ({ to, extStatus, setExtStatus }) {
   const router = useRouter()
 
   const onMeson2Event = React.useCallback(({ data }) => {
-    if (data.type === 'update-browser-ext') {
-      setBrowserExt(data.data)
+    if (data.type === 'update-ext-status') {
+      setExtStatus(data.data)
     }
-  }, [setBrowserExt])
+  }, [setExtStatus])
 
   React.useEffect(() => {
     window.addEventListener('meson2', onMeson2Event)
@@ -23,7 +23,7 @@ export default function MesonToSyncedWallet ({ to, browserExt, setBrowserExt }) 
     window.postMessage({ to: 'meson2', action: 'disconnect-extension' })
   }, [])
 
-  const currentAddress = browserExt?.currentAccount?.address
+  const currentAddress = extStatus?.currentAccount?.address
   const isOwner = currentAddress === to.addr
   const options = React.useMemo(() => {
     const options = [{
@@ -42,7 +42,7 @@ export default function MesonToSyncedWallet ({ to, browserExt, setBrowserExt }) 
 
   return (
     <DropdownMenu
-      btn={<ConnectedButton icon={browserExt?.ext?.icon} addr={currentAddress} />}
+      btn={<ConnectedButton icon={extStatus?.ext?.icon} addr={currentAddress} />}
       options={options}
     />
   )

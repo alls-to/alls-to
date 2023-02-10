@@ -9,7 +9,8 @@ import CardTransfer from './CardTransfer'
 
 export default function PageTo ({ to }) {
   const router = useRouter()
-  const [browserExt, setBrowserExt] = React.useState()
+  const [extStatus, setExtStatus] = React.useState()
+  const [extsAddress, setExtsAddress] = React.useState({})
 
   React.useEffect(() => {
     if (!to) {
@@ -19,12 +20,24 @@ export default function PageTo ({ to }) {
     }
   }, [router, to])
 
+  const onExtAddress = React.useCallback((extId, address) => {
+    setExtsAddress(prev => ({ ...prev, [extId]: address }))
+  }, [])
+
+  React.useEffect(() => {
+    console.log(extsAddress)
+  }, [extsAddress])
+
   return (
     <AppContainer>
       <Header logoSrc='/'>
-        <WalletButtons to={to} browserExt={browserExt} setBrowserExt={setBrowserExt} />
+        <WalletButtons toAddr={to.addr} onExtAddress={onExtAddress} />
       </Header>
-      <CardTransfer key={to.handle} to={to} currentAddress={browserExt?.currentAccount?.address} />
+      <CardTransfer
+        key={to.handle}
+        to={to}
+        currentAddress={extStatus?.currentAccount?.address}
+      />
     </AppContainer>
   )
 }
