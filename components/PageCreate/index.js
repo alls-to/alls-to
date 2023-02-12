@@ -39,7 +39,7 @@ const steps = [
 
 export default function PageCreate () {
   const router = useRouter()
-  const { extensions, browserExt } = useExtensions()
+  const { extensions, extStatus } = useExtensions()
   const { account, login, logout } = useWeb3Login(extensions, signingMessage, { duration: 86400 * 7 })
   const [to, setTo] = React.useState()
   const [extIcon, setExtIcon] = React.useState()
@@ -58,7 +58,7 @@ export default function PageCreate () {
       .catch(err => console.warn(err))
   }, [router, account])
 
-  const currentAddress = browserExt?.currentAccount?.address
+  const currentAddress = extStatus?.currentAccount?.address
   React.useEffect(() => {
     if (!account || !currentAddress) {
       return
@@ -69,7 +69,7 @@ export default function PageCreate () {
     }
   }, [account, currentAddress, login, logout])
 
-  const currentExtIcon = browserExt?.ext?.icon
+  const currentExtIcon = extStatus?.ext?.icon // FIXME
   React.useEffect(() => {
     if (currentExtIcon) {
       setExtIcon(currentExtIcon)

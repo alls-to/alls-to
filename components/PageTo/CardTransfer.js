@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { useExtensions } from '@mesonfi/extensions/react'
+
 import CentralCardWithSideInfo from 'components/common/Card/CentralCardWithSideInfo'
 import IntroRegion from 'components/common/Card/IntroRegion'
 import Card from 'components/common/Card'
@@ -9,9 +11,10 @@ import ShareButton from './ShareButton'
 import CardBodyTransfer from './CardBody/CardBodyTransfer'
 import CardBodyEdit from './CardBody/CardBodyEdit'
 
-export default function CardTransfer ({ to: initialTo, currentAddress }) {
+export default function CardTransfer ({ to: initialTo, matchExt }) {
+  const { extensions } = useExtensions()
+
   const [to, setTo] = React.useState(initialTo)
-  const isOwner = to.addr === currentAddress
   const [editing, setEditing] = React.useState(false)
   const [modified, setModified] = React.useState(false)
 
@@ -22,8 +25,17 @@ export default function CardTransfer ({ to: initialTo, currentAddress }) {
       }
       setModified(false)
     }
-    setEditing(value)
-  }, [editing, modified])
+    if (value) {
+      if (extensions.currentExt?.id === matchExt) {
+        setEditing(true)
+        return
+      }
+      extensions.connect(undefined, undefined, matchExt)
+        .then(() => setEditing(true))
+    } else {
+      setEditing(false)
+    }
+  }, [extensions, editing, modified, matchExt])
 
   const onSubmitted = React.useCallback(newTo => {
     if (newTo) {
@@ -47,7 +59,7 @@ export default function CardTransfer ({ to: initialTo, currentAddress }) {
       <Card bg='pos2' className='p-3 xs:p-4 md:p-6 text-primary'>
         <div className='flex flex-row justify-between px-1 xs:px-0'>
           <CardTransferTitle
-            isOwner={isOwner}
+            isOwner={!!matchExt}
             editing={editing}
             onUpdate={onUpdateEditing}
           />
