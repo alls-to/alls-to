@@ -53,7 +53,7 @@ export default function PageCreate () {
       return
     }
     setTo()
-    api.createRecipient(account.token)
+    api.postMyself(account.token)
       .then(setTo)
       .catch(err => console.warn(err))
   }, [router, account])
