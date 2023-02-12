@@ -4,8 +4,6 @@ import CentralCardWithSideInfo from 'components/common/Card/CentralCardWithSideI
 import IntroRegion from 'components/common/Card/IntroRegion'
 import Card from 'components/common/Card'
 
-import CardBodyEdit from '../PageTo/CardBody/CardBodyEdit'
-
 export default function CardCreate ({ to }) {
   return (
     <CentralCardWithSideInfo>
@@ -13,8 +11,6 @@ export default function CardCreate ({ to }) {
         <div className='flex flex-row justify-between'>
           <div className='font-semibold'>CREATE MY ALLS.TO LINK</div>
         </div>
-
-        <CardBodyEdit to={to} />
       </Card>
       <IntroRegion />
     </CentralCardWithSideInfo>
