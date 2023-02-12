@@ -2589,10 +2589,10 @@
   resolved "https://npm.pkg.github.com/download/@MesonFi/contract-types/1.0.0/126882e1ada69af9e1d9087b23dad51c054e5dc6#126882e1ada69af9e1d9087b23dad51c054e5dc6"
   integrity sha512-1/I4PA/HTn0fGdlXUa+It/EYj4IM2ayz+hjIb4v0HosytymaF+EGv4mDr4EYxoJdsqHLO6SochqJsDxEPhQubA==
 
-"@mesonfi/extensions@^0.1.1-rc.3":
-  version "0.1.1-rc.3"
-  resolved "https://npm.pkg.github.com/download/@mesonfi/extensions/0.1.1-rc.3/0b15831467900399cf10a60b60839e6a1630ed3c#0b15831467900399cf10a60b60839e6a1630ed3c"
-  integrity sha512-6+7dqaMtM03VW92KUYtlSivkC9qn9XcIs/LsmkTHaef++CTbNFkTfb11JZdws01zrlaUe5yF8ZGFXRSq1nz4gg==
+"@mesonfi/extensions@^0.1.1-rc.4":
+  version "0.1.1-rc.4"
+  resolved "https://npm.pkg.github.com/download/@mesonfi/extensions/0.1.1-rc.4/350f2ab31c839561f1c821a5beebaf63f99d0f9c#350f2ab31c839561f1c821a5beebaf63f99d0f9c"
+  integrity sha512-sJ42JlBqR9xRRYojZbLyIXhMPXkEnr3neDQUnpcGapz7wUBVYTFyvLQCNQ8E3LoZ6yw2XC5Z3kGUzJC5Li0Psw==
   dependencies:
     "@mesonfi/aptos-wallet-adapter" "^1.0.2-rc.1"
     "@walletconnect/client" "1.7.1"
@@ -2629,10 +2629,10 @@
   resolved "https://npm.pkg.github.com/download/@mesonfi/to/0.1.5-rc.12/06b699029711fe6c99d92843ad6d2adcb25996de#06b699029711fe6c99d92843ad6d2adcb25996de"
   integrity sha512-2YBvkWYLPCQkx0+BB8wCjayyS5W+JiopEjlhmRoLDST7gs2YHIwXX0CLfmgbJBpDnpSndJ69vMrUuslL4Ay13A==
 
-"@mesonfi/web3-jwt@^0.1.0-rc.14":
-  version "0.1.0-rc.16"
-  resolved "https://npm.pkg.github.com/download/@mesonfi/web3-jwt/0.1.0-rc.16/34c5c7368d6feb35fc970f22e5fe7491ed038e3f#34c5c7368d6feb35fc970f22e5fe7491ed038e3f"
-  integrity sha512-6Vq9PGAuguHTDLK/iI/2F/Exp248RWFgGgHCLCaflsC1ixePXfwf4Q+paQ/Z/vIJOaxHDg67dvFBMqm7InVbeA==
+"@mesonfi/web3-jwt@^0.1.0-rc.17":
+  version "0.1.0-rc.17"
+  resolved "https://npm.pkg.github.com/download/@mesonfi/web3-jwt/0.1.0-rc.17/b55417541ca34c0b394abedb3f30188533764284#b55417541ca34c0b394abedb3f30188533764284"
+  integrity sha512-7Y8xU2chysyyP66dpZkzpqnhLj6msvEJvC0HuH6LmxSTPqJk8jq2aeiPptwcHUVCB7jQ0yZQ/qZrG69Kd9O+wg==
   dependencies:
     jws "^4.0.0"
 

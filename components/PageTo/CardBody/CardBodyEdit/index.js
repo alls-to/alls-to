@@ -14,7 +14,7 @@ import BodyPartReceive from './BodyPartReceive'
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 
 export default function CardBodyEdit({ to, setTo, setModified, onSubmitted }) {
-  const { extensions } = useExtensions()
+  const { extensions, extStatus } = useExtensions()
   const { account, login } = useWeb3Login(extensions, signingMessage, {
     duration: 86400 * 7,
     onInfo: showInfoToast,
@@ -22,21 +22,25 @@ export default function CardBodyEdit({ to, setTo, setModified, onSubmitted }) {
   })
 
   React.useEffect(() => {
+    if (!extStatus || extStatus.currentAccount?.address !== to.addr) {
+      // Go back to my page on disconnect or changing address
+      onSubmitted()
+    }
+  }, [extStatus, to.addr, onSubmitted])
+
+  React.useEffect(() => {
     if (!account) {
       return
-    } else if (!account.token) {
-      extensions.connect()
-        .then(() => login(extensions.currentExt))
-        .catch(e => {
-          onSubmitted()
-        })
-      return
+    } else if (account.sub !== to.addr) {
+      login(extensions.currentExt).catch(e => {
+        onSubmitted()
+      })
     }
-  }, [account, login, extensions, onSubmitted])
+  }, [account, to.addr, login, extensions, onSubmitted])
 
   if (!account) {
     return <CardBodyLoading />
-  } else if (!account?.sub) {
+  } else if (account.sub !== to.addr) {
     return <CardBodyLoading notice='Signing with wallet...' />
   }
 
