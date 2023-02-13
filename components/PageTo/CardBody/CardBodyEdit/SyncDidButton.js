@@ -9,7 +9,7 @@ import Icon from 'components/icons'
 import { DIDs, getNameById } from 'lib/did'
 
 export default function SyncDidButton ({ to, onSynced, accountToken }) {
-  const toDidName = getNameById(to.did)
+  const didName = getNameById(to.did)
 
   const sync = React.useCallback(async didItem => {
     try {
@@ -36,7 +36,7 @@ export default function SyncDidButton ({ to, onSynced, accountToken }) {
       <Button size='xs' type='pure' className='!text-sm !font-normal !py-1.5'>
         Synced with
         <div className='w-4 h-4 mx-1'><Icon type={to.did} /></div>
-        <div className='font-semibold'>{toDidName}</div>
+        <div className='font-semibold'>{didName}</div>
       </Button>
     )
     options = [{

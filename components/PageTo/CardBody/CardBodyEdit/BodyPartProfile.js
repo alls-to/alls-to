@@ -55,7 +55,7 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
 
   const labelIcon = to.did && <div className='ml-1 w-4 h-4'><Icon type={to.did} /></div>
   const validDid = DIDs.find(item => item.id === to.did)
-  const didProfileUrl = validDid?.link ? `${validDid.link}/${to.handle}` : ''
+  const didProfileUrl = validDid ? `${validDid.link}/${to.handle}` : ''
 
   return (
     <>
