@@ -55,8 +55,7 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
 
   const labelIcon = to.did && <div className='ml-1 w-4 h-4'><Icon type={to.did} /></div>
   const validDid = DIDs.find(item => item.id === to.did)
-  const didProfileUrl = validDid?.explorer ? `${validDid.explorer}/${to.handle}` : ''
-  const didDomain = validDid?.domain ? validDid.domain : ''
+  const didProfileUrl = validDid?.link ? `${validDid.link}/${to.handle}` : ''
 
   return (
     <>
@@ -75,7 +74,7 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
             target='_blank'
             rel='noreferrer'
           >
-            {didDomain}
+            {validDid?.domain}
           </a>
         </div>
       }

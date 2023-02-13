@@ -6,26 +6,26 @@ import { showSuccessToast, showInfoToast, showErrorToast } from 'lib/refs'
 import { DropdownMenu } from 'components/common/Dropdown'
 import Button from 'components/common/Button'
 import Icon from 'components/icons'
-import { DIDs, getAliasById } from '/lib/did'
+import { DIDs, getNameById } from 'lib/did'
 
 export default function SyncDidButton ({ to, onSynced, accountToken }) {
-  const toDidAlias = getAliasById(to.did)
+  const toDidName = getNameById(to.did)
 
   const sync = React.useCallback(async didItem => {
     try {
       const synced = await api.syncDid(to.key, didItem.id, accountToken)
-      showSuccessToast({ message: `Synced with ${didItem.alias} Profile!` })
+      showSuccessToast({ message: `Synced with ${didItem.name} Profile!` })
       onSynced(synced)
     } catch (e) {
       console.warn(e)
-      showErrorToast(new Error(`No ${didItem.alias} profile found for the current address. Please go to ${didItem.domain} to create one.`))
+      showErrorToast(new Error(`No ${didItem.name} profile found for the current address. Please go to ${didItem.domain} to create one.`))
     }
   }, [to.key, onSynced, accountToken])
 
   const unsync = React.useCallback(async () => {
-    const alias = getAliasById(to.did)
+    const name = getNameById(to.did)
     await api.unsyncDid(to.key, accountToken)
-    showInfoToast({ message: `Unsynced with ${alias}.` })
+    showInfoToast({ message: `Unsynced with ${name}.` })
     onSynced()
   }, [to.key, onSynced, accountToken])
 
@@ -36,7 +36,7 @@ export default function SyncDidButton ({ to, onSynced, accountToken }) {
       <Button size='xs' type='pure' className='!text-sm !font-normal !py-1.5'>
         Synced with
         <div className='w-4 h-4 mx-1'><Icon type={to.did} /></div>
-        <div className='font-semibold'>{toDidAlias}</div>
+        <div className='font-semibold'>{toDidName}</div>
       </Button>
     )
     options = [{
@@ -50,7 +50,7 @@ export default function SyncDidButton ({ to, onSynced, accountToken }) {
       </Button>
     )
     options = DIDs.map(item => ({
-      text: <><div className='flex h-4 w-4 mr-2'><Icon type={item.id} /></div>{item.name}</>,
+      text: <><div className='flex h-4 w-4 mr-2'><Icon type={item.id} /></div>{item.fullName}</>,
       onClick: () => sync(item)
     }))
   }

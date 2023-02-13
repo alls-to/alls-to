@@ -25,8 +25,8 @@ export default function CardBodyTransfer ({ to }) {
 
   const network = mesonPresets.getNetwork(to.networkId)
   const token = network.tokens.find(t => t.symbol.toLowerCase().includes(to.tokens[0]))
-  const explorerUrl = DIDs.find(item => item.id === to.did)?.explorer
-  const didProfileUrl = explorerUrl ? `${explorerUrl}/${to.handle}`: ''
+  const didLink = DIDs.find(item => item.id === to.did)?.link
+  const didProfileUrl = didLink ? `${didLink}/${to.handle}`: ''
 
   return (
     <>
