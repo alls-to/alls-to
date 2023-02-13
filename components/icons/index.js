@@ -19,6 +19,7 @@ import iconWallet from './wallet.svg'
 import iconWarning from './warning.svg'
 
 import iconLink3 from './did/link3.svg'
+import iconDotbit from './did/dotbit.svg'
 
 import iconTelegramGray from './socials/telegram_gray.svg'
 import iconTwitterGray from './socials/twitter_gray.svg'
@@ -55,6 +56,7 @@ const ICONS = {
   linkedin: iconLinkedin,
   medium: iconMedium,
   link3: iconLink3,
+  dotbit: iconDotbit
 }
 
 export default function Icon({ className, type = '' }) {

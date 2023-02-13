@@ -9,6 +9,7 @@ import AvatarUploader from '../Avatar/AvatarUploader'
 import SocialButtons from '../SocialButtons'
 import SyncDidButton from './SyncDidButton'
 import LinkInput from './LinkInput'
+import { DIDs } from 'lib/did'
 
 export default React.forwardRef(BodyPartProfile)
 
@@ -53,6 +54,9 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
   }, [onModified])
 
   const labelIcon = to.did && <div className='ml-1 w-4 h-4'><Icon type={to.did} /></div>
+  const validDid = DIDs.find(item => item.id === to.did)
+  const didProfileUrl = validDid?.explorer ? `${validDid.explorer}/${to.handle}` : ''
+  const didDomain = validDid?.domain ? validDid.domain : ''
 
   return (
     <>
@@ -67,17 +71,17 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
           Edit on{' '}
           <a
             className='underline cursor-pointer hover:text-primary/50'
-            href={`https://link3.to/${to.handle}`}
+            href={didProfileUrl}
             target='_blank'
             rel='noreferrer'
           >
-            link3.to
+            {didDomain}
           </a>
         </div>
       }
 
       <div className='mt-2 self-center'>
-        <AvatarWrapper badge={{ type: to.did, href: `https://link3.to/${to.handle}` }}>
+        <AvatarWrapper badge={{ type: to.did, href: didProfileUrl }}>
         {
           to.did
           ? <Avatar url={avatar} addr={to.addr} />
