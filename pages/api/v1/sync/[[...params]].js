@@ -11,15 +11,22 @@ export default async function handler (req, res) {
   const addr = encoded.sub
 
   if (req.method === 'POST') {
-    const profile = await getProfileFromAddress(addr)
+    const did = req.body?.did
+
+    if (!did) {
+      res.status(400).end()
+      return
+    }
+
+    const profile = await getProfileFromAddress(addr, did)
     if (!profile) {
       res.status(400).end()
       return
     }
     const key = req.query.params?.[0] || { $exists: false }
     const doc = await AllsTo.findOneAndUpdate({ addr, key }, {
-      key: `${profile.handle}#link3`,
-      did: 'link3',
+      key: `${profile.handle}#${did}`,
+      did,
       ...profile
     }, { new: true })
     if (!doc) {

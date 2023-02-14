@@ -13,6 +13,7 @@ import Icon from 'components/icons'
 import Avatar from './Avatar'
 import AvatarWrapper from './Avatar/AvatarWrapper'
 import SocialButtons from './SocialButtons'
+import { DIDs } from 'lib/did'
 
 const MesonToEmbedded = dynamic(
   import('@mesonfi/to').then(t => t.MesonToEmbedded),
@@ -24,11 +25,13 @@ export default function CardBodyTransfer ({ to }) {
 
   const network = mesonPresets.getNetwork(to.networkId)
   const token = network.tokens.find(t => t.symbol.toLowerCase().includes(to.tokens[0]))
+  const didLink = DIDs.find(item => item.id === to.did)?.link
+  const didProfileUrl = didLink ? `${didLink}/${to.handle}`: ''
 
   return (
     <>
       <div className='mt-5 self-center'>
-        <AvatarWrapper badge={{ type: to.did, href: `https://link3.to/${to.handle}` }}>
+        <AvatarWrapper badge={{ type: to.did, href: didProfileUrl }}>
           <Avatar addr={to.addr} url={to.avatar}/>
         </AvatarWrapper>
       </div>
