@@ -31,11 +31,16 @@ export default function SyncDidButton ({ to, onSynced, accountToken }) {
 
   let btn
   let options
+  let iconType = to.did
+  if(to.did === 'dotbit') {
+    iconType = 'dotbit-badge'
+  }
+
   if (to.did) {
     btn = (
       <Button size='xs' type='pure' className='!text-sm !font-normal !py-1.5'>
         Synced with
-        <div className='w-4 h-4 mx-1'><Icon type={to.did} /></div>
+        <div className='w-4 h-4 mx-1'><Icon type={iconType} /></div>
         <div className='font-semibold'>{didName}</div>
       </Button>
     )
