@@ -15,13 +15,12 @@ export default function AvatarWrapper ({ children, badge }) {
     <div className='relative'>
       {avatar}
       <a
-        className='block absolute bottom-px right-px w-5 h-5 flex items-center justify-center hover:contrast-75'
+        className='block absolute bottom-px right-px w-5 h-5 flex items-center justify-center group'
         href={badge.href}
         target='_blank'
         rel='noreferrer'
       >
-        <div className='absolute w-3 h-3 bg-white rounded-full' />
-        <Icon type={badge.type} className='absolute w-5 h-5' />
+        <Icon type={badge.type} className='absolute w-5 h-5 group-hover:contrast-75' />
       </a>
     </div>
   )
