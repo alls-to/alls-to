@@ -53,7 +53,13 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
     onModified()
   }, [onModified])
 
-  const labelIcon = to.did && <div className='ml-1 w-4 h-4'><Icon type={to.did} /></div>
+  let iconType = to.did
+
+  if (iconType === 'dotbit') {
+    iconType = 'dotbit-badge'
+  }
+  
+  const labelIcon = to.did && <div className='ml-1 w-4 h-4'><Icon type={iconType} /></div>
   const validDid = DIDs.find(item => item.id === to.did)
   const didProfileUrl = validDid ? `${validDid.link}/${to.handle}` : ''
 
