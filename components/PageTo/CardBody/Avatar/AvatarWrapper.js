@@ -11,6 +11,12 @@ export default function AvatarWrapper ({ children, badge }) {
     return avatar
   }
 
+  let iconType = badge.type
+
+  if (iconType === 'dotbit') {
+    iconType = 'dotbit-badge'
+  }
+
   return (
     <div className='relative'>
       {avatar}
@@ -20,7 +26,7 @@ export default function AvatarWrapper ({ children, badge }) {
         target='_blank'
         rel='noreferrer'
       >
-        <Icon type={badge.type} className='absolute w-5 h-5 group-hover:contrast-75' />
+        <Icon type={iconType} className='absolute w-5 h-5 group-hover:contrast-75' />
       </a>
     </div>
   )
