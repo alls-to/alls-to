@@ -14,11 +14,11 @@ export default function SyncDidButton ({ to, onSynced, accountToken }) {
   const sync = React.useCallback(async didItem => {
     try {
       const synced = await api.syncDid(to.key, didItem.id, accountToken)
-      showSuccessToast({ message: `Synced with ${didItem.name} Profile!` })
+      showSuccessToast({ message: `Synced with ${didItem.name} profile!` })
       onSynced(synced)
     } catch (e) {
       console.warn(e)
-      showErrorToast(new Error(`No ${didItem.name} profile found for the current address. Please go to ${didItem.domain} to create one.`))
+      showErrorToast(new Error(`Failed to sync with ${didItem.name} profile.`))
     }
   }, [to.key, onSynced, accountToken])
 
