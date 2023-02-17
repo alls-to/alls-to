@@ -8,12 +8,18 @@ import Button from 'components/common/Button'
 import Icon from 'components/icons'
 import { DIDs, getNameById } from 'lib/did'
 
-export default function SyncDidButton ({ to, onSynced, accountToken }) {
+export default function SyncDidButton({ to, onSynced, accountToken }) {
   const didName = getNameById(to.did)
 
   const sync = React.useCallback(async didItem => {
     try {
       const synced = await api.syncDid(to.key, didItem.id, accountToken)
+
+      if (!synced) {
+        showErrorToast(new Error(`No ${didItem.name} profile found for the current address. Please go to ${didItem.name} to create one.`))
+        return
+      }
+
       showSuccessToast({ message: `Synced with ${didItem.name} profile!` })
       onSynced(synced)
     } catch (e) {
@@ -32,7 +38,7 @@ export default function SyncDidButton ({ to, onSynced, accountToken }) {
   let btn
   let options
   let iconType = to.did
-  if(to.did === 'dotbit') {
+  if (to.did === 'dotbit') {
     iconType = 'dotbit-badge'
   }
 
