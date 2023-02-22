@@ -19,8 +19,14 @@ export default async function handler (req, res) {
     }
 
     const profile = await getProfileFromAddress(addr, did)
-    if (!profile) {
+    if (profile === false) {
       res.status(400).end()
+      return
+    }
+    
+    // if not found will return undefined
+    if (!profile) {
+      res.status(404).end()
       return
     }
     const key = req.query.params?.[0] || { $exists: false }
