@@ -10,21 +10,44 @@ import { DropdownMenu } from 'components/common/Dropdown'
 import Icon from 'components/icons'
 
 import Avatar from '../CardBody/Avatar'
+import { showErrorToast } from 'lib/refs'
+import { getProfileByAddr } from 'lib/api'
 
-export default function ExtWalletButton ({ hideAddress, ext, toAddr, onExtAddress }) {
+export default function ExtWalletButton ({ hideAddress, ext, toAddr, onExtAddress, onActive }) {
   const router = useRouter()
   const extStatus = useExtStatus(ext.id)
-  const [accounts, setAccounts] = React.useState([])
+  // const [accounts, setAccounts] = React.useState([])
+  const [avatar, setAvatar] = React.useState(null)
 
-  const connect = React.useCallback(() => ext.enable(), [ext])
-  const disconnect = React.useCallback(() => ext.dispose(), [ext])
-
-  React.useEffect(() => {
-    ext.glimpse().then(setAccounts)
+  const connect = React.useCallback(() => {
+    if (ext.notInstalled) {
+      showErrorToast(new Error(`Please install ${ext.name}.`))
+      return
+    }
+    ext.enable()
   }, [ext])
 
+  const disconnect = React.useCallback(() => ext.dispose(), [ext])
+
+  // React.useEffect(() => {
+  //   ext.glimpse().then(setAccounts)
+  // }, [ext])
+
   const currentAddress = extStatus?.currentAccount?.address
-  const matchTo = toAddr === currentAddress
+  // const matchTo = toAddr === currentAddress
+
+  const openMyPage = React.useCallback((address) => {
+    router.push(`/${address}`)
+    onActive(ext)
+  }, [ext, currentAddress])
+
+  React.useEffect(() => {
+    currentAddress && (async () => {
+      const profile = await getProfileByAddr(currentAddress)
+      setAvatar(profile?.avatar)
+    })()
+  }, [currentAddress])
+
 
   React.useEffect(() => {
     onExtAddress(ext.id, currentAddress)
@@ -34,19 +57,19 @@ export default function ExtWalletButton ({ hideAddress, ext, toAddr, onExtAddres
     const options = []
     if (currentAddress) {
       options.push({
-        text: <><div className='flex h-4 w-4 mr-2'><Icon type='open'/></div>Open My Link</>,
-        onClick: () => router.push(`/${currentAddress}`)
+        text: <><div className='flex h-4 w-4 mr-2'><Icon type='open' /></div>Open My Page</>,
+        onClick: () => openMyPage(currentAddress)
       })
       options.push({
         text: <>
-          <div className='flex h-4 w-4 mr-2'><Icon type='disconnect'/></div>Disconnect
+          <div className='flex h-4 w-4 mr-2'><Icon type='disconnect' /></div>Disconnect
         </>,
         onClick: disconnect
       })
     } else {
       options.push({
         text: <>
-          <div className='flex h-4 w-4 mr-2'><Icon type='wallet'/></div>Connect
+          <div className='flex h-4 w-4 mr-2'><Icon type='wallet' /></div>Connect
         </>,
         onClick: connect
       })
@@ -60,18 +83,18 @@ export default function ExtWalletButton ({ hideAddress, ext, toAddr, onExtAddres
       btn={<ConnectedButton hideAddress={hideAddress} icon={ext.icon} addr={currentAddress} />}
       options={options}
     >
-      <ExtStatus ext={ext} extStatus={extStatus} />
+      <ExtStatus avatar={avatar} ext={ext} extStatus={extStatus} />
     </DropdownMenu>
   )
 }
 
-function ExtStatus ({ ext, extStatus }) {
+function ExtStatus ({ avatar, ext, extStatus }) {
   let content
   if (extStatus?.currentAccount) {
     content = (
       <div className='flex flex-row items-center py-1.5'>
-        <div className='w-8 h-8 rounded-full mr-2'>
-          <Avatar diameter={32} addr={extStatus.currentAccount.hex} />
+        <div className='w-8 h-8 rounded-full overflow-hidden mr-2'>
+          <Avatar url={avatar} diameter={32} addr={extStatus.currentAccount.hex} />
         </div>
         <div className='flex flex-col'>
           <div className='text-xs font-semibold mb-0.5'>{ext.name}</div>

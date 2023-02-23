@@ -15,7 +15,7 @@ export default function Header ({ logoSrc, children }) {
         <Image alt='logo' width={28} height={28} src='/logo.svg' />
         <div className='ml-2 text-[20px] font-light text-primary'>ALLsTo</div>
       </a>
-      <div className='flex flex-row items-center gap-2'>
+      <div>
         {children}
       </div>
     </div>

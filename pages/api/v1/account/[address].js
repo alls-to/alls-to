@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
   if (req.method === 'GET') {
     const exist = await AllsTo.findOne({ addr: address.toLowerCase() })
-    res.json({ result: !!exist })
+    res.json({ result: exist })
   } else {
     res.end()
   }
