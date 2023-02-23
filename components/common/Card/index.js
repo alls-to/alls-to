@@ -36,7 +36,7 @@ const backgrounds = {
 
 export default function Card ({ className, children, bg = 'pos1' }) {
   return (
-    <div className='relative w-full'>
+    <div className='w-full'>
       {backgrounds[bg]?.()}
       <dialog className={classnames(
         'relative flex flex-col w-full border-[1.5px] border-white/60 bg-white/60 rounded-2xl backdrop-blur-3xl shadow-lg',
