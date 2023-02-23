@@ -6,19 +6,16 @@ import { showSuccessToast, showInfoToast, showErrorToast } from 'lib/refs'
 import { DropdownMenu } from 'components/common/Dropdown'
 import Button from 'components/common/Button'
 import Icon from 'components/icons'
-import { DIDs, getNameById } from 'lib/did'
 
 export default function SyncDidButton ({ to, onSynced, accountToken }) {
-  const didName = getNameById(to.did)
-
-  const sync = React.useCallback(async didItem => {
+  const sync = React.useCallback(async did => {
     try {
-      const synced = await api.syncDid(to.key, didItem.id, accountToken)
-      showSuccessToast({ message: `Synced with ${didItem.name} Profile!` })
+      const synced = await api.syncDid(to.key, did, accountToken)
+      showSuccessToast({ message: 'Synced with Link3 Profile!' })
       onSynced(synced)
     } catch (e) {
       console.warn(e)
-      showErrorToast(new Error(`No ${didItem.name} profile found for the current address. Please go to ${didItem.domain} to create one.`))
+      showErrorToast(new Error('No Link3 profile found for the current address. Please go to link3.to to create one.'))
     }
   }, [to.key, onSynced, accountToken])
 
@@ -31,11 +28,6 @@ export default function SyncDidButton ({ to, onSynced, accountToken }) {
 
   let btn
   let options
-  let iconType = to.did
-  if(to.did === 'dotbit') {
-    iconType = 'dotbit-badge'
-  }
-
   if (to.did) {
     btn = (
       <Button size='xs' type='pure' className='!text-sm !font-normal !py-1.5'>
