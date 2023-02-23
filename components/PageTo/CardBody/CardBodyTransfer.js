@@ -2,7 +2,7 @@ import React from 'react'
 import classnames from 'classnames'
 import dynamic from 'next/dynamic'
 import { utils } from 'ethers'
-
+import { saveAs } from 'file-saver'
 import mesonPresets from '@mesonfi/presets'
 
 import Button from 'components/common/Button'
@@ -69,6 +69,12 @@ export default function CardBodyTransfer ({ to }) {
 }
 
 function SuccessInfo ({ data, onNewTransfer }) {
+  const addr = data.initiator
+  const swapId = data.swapId
+  const onSaveReceipt = React.useCallback(async () => {
+      await saveAs(`https://img.meson.fi/to/${addr}/receipt/${swapId}`, `AllsTo_${swapId}.png`)
+    }, [swapId])
+
   return (
     <div className='flex flex-col justify-between w-full h-full px-2 pb-4'>
       <div className='mt-6 flex flex-col items-center'>
@@ -101,16 +107,13 @@ function SuccessInfo ({ data, onNewTransfer }) {
       </div>
 
       <div className='flex w-full gap-2'>
-        <Button className='flex-1 !text-sm' type='primary' onClick={onNewTransfer}>
-          ANOTHER TRANSFER
+        <Button className='flex-1 !text-sm' type='primary' onClick={onSaveReceipt}>
+          SAVE RECEIPT
         </Button>
         <Button
           className='flex-1 !text-sm'
-          as='a'
-          href='https://alls.to'
-          target='_blank'
-          rel='noreferrer'
-        >CREATE MY LINK</Button>
+          onClick={onNewTransfer}
+        >ANOTHER TRANSFER</Button>
       </div>
     </div>
   )
