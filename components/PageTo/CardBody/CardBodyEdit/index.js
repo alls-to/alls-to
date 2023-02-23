@@ -101,7 +101,6 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
 
   return (
     <>
-      <div className='mt-6' />
       <BodyPartProfile ref={refProfile} to={to} onModified={onModified} accountToken={account.token} />
       
       <div className='my-4' />

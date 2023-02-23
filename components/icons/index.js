@@ -17,6 +17,7 @@ import iconShare from './share.svg'
 import iconUnsync from './unsync.svg'
 import iconWallet from './wallet.svg'
 import iconWarning from './warning.svg'
+import iconLeftArrow from './left-arrow.svg'
 
 import iconLink3 from './did/link3.svg'
 import iconDotbit from './did/dotbit.svg'
@@ -41,6 +42,7 @@ const ICONS = {
   edit: iconEdit,
   error: iconError,
   info: iconInfo,
+  'left-arrow': iconLeftArrow,
   link: iconLink,
   link2: iconLink2,
   open: iconOpen,
