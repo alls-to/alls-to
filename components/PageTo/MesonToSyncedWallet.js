@@ -9,18 +9,18 @@ export default function MesonToSyncedWallet ({ to, browserExt, setBrowserExt }) 
   const router = useRouter()
 
   const onMeson2Event = React.useCallback(({ data }) => {
-    if (data.type === 'update-browser-ext') {
+    if (data.type === 'update-ext-status') {
       setBrowserExt(data.data)
     }
   }, [setBrowserExt])
 
   React.useEffect(() => {
-    window.addEventListener('meson2', onMeson2Event)
-    return () => window.removeEventListener('meson2', onMeson2Event)
+    window.addEventListener('meson.to', onMeson2Event)
+    return () => window.removeEventListener('meson.to', onMeson2Event)
   }, [onMeson2Event])
 
   const disconnect = React.useCallback(() => {
-    window.postMessage({ to: 'meson2', action: 'disconnect-extension' })
+    window.postMessage({ to: 'meson.to', event: 'disconnect-extension' })
   }, [])
 
   const currentAddress = browserExt?.currentAccount?.address
