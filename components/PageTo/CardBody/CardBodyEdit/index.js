@@ -23,8 +23,9 @@ export default function CardBodyEdit({ to, setTo, setModified, onSubmitted }) {
 
   React.useEffect(() => {
     if (!extStatus || extStatus.currentAccount?.address !== to.addr) {
+      // TODO
       // Go back to my page on disconnect or changing address
-      onSubmitted()
+      // onSubmitted()
     }
   }, [extStatus, to.addr, onSubmitted])
 

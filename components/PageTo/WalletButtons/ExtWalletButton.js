@@ -13,10 +13,10 @@ import Avatar from '../CardBody/Avatar'
 import { showErrorToast } from 'lib/refs'
 import { getProfileByAddr } from 'lib/api'
 
-export default function ExtWalletButton ({ hideAddress, ext, toAddr, onExtAddress, onActive }) {
+export default function ExtWalletButton ({ hideAddress, ext, toAddr, active, onActive, onExtAddress }) {
   const router = useRouter()
   const extStatus = useExtStatus(ext.id)
-  // const [accounts, setAccounts] = React.useState([])
+  const [accounts, setAccounts] = React.useState([])
   const [avatar, setAvatar] = React.useState(null)
 
   const connect = React.useCallback(() => {
@@ -29,17 +29,22 @@ export default function ExtWalletButton ({ hideAddress, ext, toAddr, onExtAddres
 
   const disconnect = React.useCallback(() => ext.dispose(), [ext])
 
-  // React.useEffect(() => {
-  //   ext.glimpse().then(setAccounts)
-  // }, [ext])
+  React.useEffect(() => {
+    ext.glimpse().then(setAccounts)
+  }, [ext])
 
   const currentAddress = extStatus?.currentAccount?.address
-  // const matchTo = toAddr === currentAddress
+  const matchTo = toAddr === currentAddress
+  React.useEffect(() => {
+    if (matchTo) {
+      onActive(ext)
+    }
+  }, [ext, matchTo, onActive])
 
-  const openMyPage = React.useCallback((address) => {
+  const openMyPage = React.useCallback(address => {
     router.push(`/${address}`)
     onActive(ext)
-  }, [ext, currentAddress])
+  }, [router, ext, onActive])
 
   React.useEffect(() => {
     currentAddress && (async () => {
@@ -75,10 +80,11 @@ export default function ExtWalletButton ({ hideAddress, ext, toAddr, onExtAddres
       })
     }
     return options
-  }, [router, currentAddress, connect, disconnect])
+  }, [currentAddress, openMyPage, connect, disconnect])
 
   return (
     <DropdownMenu
+      className={active && 'order-last z-10'}
       placement='bottom-start'
       btn={<ConnectedButton hideAddress={hideAddress} icon={ext.icon} addr={currentAddress} />}
       options={options}

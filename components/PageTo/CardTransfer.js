@@ -59,22 +59,22 @@ export default function CardTransfer ({ to: initialTo, matchExt }) {
   return (
     <CentralCardWithSideInfo>
       <div className='relative'>
-        <div className='relative'>
-          <CardTransferTitle
-            isOwner={!!matchExt}
-            ext={matchExt}
-            editing={editing}
-            addr={to.addr}
-            onUpdate={onUpdateEditing}
-          />
-        </div>
+        <CardTransferTitle
+          isOwner={!!matchExt}
+          extId={matchExt}
+          editing={editing}
+          addr={to.addr}
+          onUpdate={onUpdateEditing}
+        />
         <Card bg='pos2' className='p-3 xs:p-4 md:p-6 text-primary'>
           <div className='flex flex-row justify-between px-1 xs:px-0'>
-            {!editing &&
-              <>
-                <div className='font-semibold'>Transfer To</div>
-                <ShareButton to={to} />
-              </>}
+          {
+            !editing &&
+            <>
+              <div className='font-semibold'>Transfer To</div>
+              <ShareButton to={to} />
+            </>
+          }
           </div>
           {body}
         </Card>
@@ -99,45 +99,50 @@ export default function CardTransfer ({ to: initialTo, matchExt }) {
   )
 }
 
-function CardTransferTitle ({ ext, addr, isOwner, editing, onUpdate }) {
-  const [walletIcon, setWalletIcon] = React.useState('')
+function CardTransferTitle ({ extId, addr, isOwner, editing, onUpdate }) {
+  const [extIcon, setExtIcon] = React.useState('')
   const { extensions } = useExtensions()
 
   React.useEffect(() => {
-    const exts = extensions.detectAllExtensions().filter(ext => ext.type !== 'walletconnect')
-    const icon = exts.find(item => item.id === ext)?.icon
-    setWalletIcon(icon)
-  }, [ext])
+    const ext = extensions._cache.get(extId)
+    if (ext) {
+      setExtIcon(ext.icon)
+    }
+  }, [extensions, extId])
 
   if (isOwner) {
     return (
       <div className={classnames('relative z-10 flex text-primary items-center mb-2', !editing && 'justify-between')}>
-        {
-          editing ? (
-            <div className='font-semibold'><span className='cursor-pointer inline-block w-7 h-7 rounded-full p-[7px] mr-3 bg-primary/20 hover:bg-primary/30' onClick={() => onUpdate(false)}><Icon type='left-arrow' /></span>Edit My Page</div>
-          ) : (
-            <>
-              <div className='flex flex-col'>
-                <span className='text-base font-semibold' onClick={() => onUpdate(false)}>
-                  My Page
+      {
+        editing
+        ? <div className='font-semibold'>
+            <span className='cursor-pointer inline-block w-7 h-7 rounded-full p-[7px] mr-3 bg-primary/20 hover:bg-primary/30' onClick={() => onUpdate(false)}>
+              <Icon type='left-arrow' />
+            </span>Edit My Page
+          </div>
+        : <>
+            <div className='flex flex-col'>
+              <span className='text-base font-semibold' onClick={() => onUpdate(false)}>
+                My Page
+              </span>
+              <div className='flex'>
+                <span className='inline-block mr-1 box-sizing w-4 h-4 p-[2px] rounded-full bg-white'>
+                  <img className='w-full h-full' src={extIcon} />
                 </span>
-                <div className='flex'>
-                  <span className='inline-block mr-1 box-sizing w-4 h-4 p-[2px] rounded-full bg-white'><img className='w-full h-full' src={walletIcon} /></span>
-                  <span className='text-sm'>{abbreviate(addr, 9)}</span>
-                </div>
+                <span className='text-sm'>{abbreviate(addr, 9)}</span>
               </div>
-              <Button
-                size='xs'
-                type='primary'
-                className='text-white !py-0 !px-2'
-                onClick={() => onUpdate(true)}
-              >
-                <span className='h-4 w-4 mr-2'><Icon type='edit' /></span>
-                Edit
-              </Button>
-            </>
-          )
-        }
+            </div>
+            <Button
+              size='xs'
+              type='primary'
+              className='text-white !py-0 !px-2'
+              onClick={() => onUpdate(true)}
+            >
+              <span className='h-4 w-4 mr-2'><Icon type='edit' /></span>
+              Edit
+            </Button>
+          </>
+      }
       </div>
     )
   } else {
