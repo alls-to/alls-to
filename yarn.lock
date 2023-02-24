@@ -2696,15 +2696,15 @@
     tronweb "^4.3.0"
     zksync-web3 "^0.9.0"
 
-"@mesonfi/to@^0.1.5-rc.15":
-  version "0.1.5-rc.15"
-  resolved "https://npm.pkg.github.com/download/@mesonfi/to/0.1.5-rc.15/2a9ebf9bfa6c398da41d8a203d8de20b6cf46818#2a9ebf9bfa6c398da41d8a203d8de20b6cf46818"
-  integrity sha512-K/gRI3Q/73aTaHuNvKnGG1Ch6CZNWVzRv4p0v21EpzUbDyxx7Q0q5UTt67tN7my2CfZXM4mxk329GHovp2ZY6w==
+"@mesonfi/to@^0.1.5-rc.16":
+  version "0.1.5-rc.16"
+  resolved "https://npm.pkg.github.com/download/@mesonfi/to/0.1.5-rc.16/bf8650d93d602c09a5e2ef6dd132e3f0b6c49b95#bf8650d93d602c09a5e2ef6dd132e3f0b6c49b95"
+  integrity sha512-fUZRrcI9ckyyPtQIXvfSEi6gbAjoqaBrwArfk+3P2lstz2uHsHsF00Tp9MZFu1n+MmID8WX83tFryM0JZlDRHg==
 
-"@mesonfi/web3-jwt@^0.1.0-rc.14":
-  version "0.1.0-rc.16"
-  resolved "https://npm.pkg.github.com/download/@mesonfi/web3-jwt/0.1.0-rc.16/34c5c7368d6feb35fc970f22e5fe7491ed038e3f#34c5c7368d6feb35fc970f22e5fe7491ed038e3f"
-  integrity sha512-6Vq9PGAuguHTDLK/iI/2F/Exp248RWFgGgHCLCaflsC1ixePXfwf4Q+paQ/Z/vIJOaxHDg67dvFBMqm7InVbeA==
+"@mesonfi/web3-jwt@^0.1.0-rc.17":
+  version "0.1.0-rc.17"
+  resolved "https://npm.pkg.github.com/download/@mesonfi/web3-jwt/0.1.0-rc.17/b55417541ca34c0b394abedb3f30188533764284#b55417541ca34c0b394abedb3f30188533764284"
+  integrity sha512-7Y8xU2chysyyP66dpZkzpqnhLj6msvEJvC0HuH6LmxSTPqJk8jq2aeiPptwcHUVCB7jQ0yZQ/qZrG69Kd9O+wg==
   dependencies:
     jws "^4.0.0"
 
