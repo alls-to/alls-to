@@ -69,10 +69,9 @@ export default function CardBodyTransfer ({ to }) {
 }
 
 function SuccessInfo ({ data, onNewTransfer }) {
-  const addr = data.initiator
   const swapId = data.swapId
   const onSaveReceipt = React.useCallback(async () => {
-      await saveAs(`https://img.meson.fi/to/${addr}/receipt/${swapId}`, `AllsTo_${swapId}.png`)
+      await saveAs(`https://img.meson.fi/to/receipt/${swapId}`, `AllsTo_${swapId}.png`)
     }, [swapId])
 
   return (
