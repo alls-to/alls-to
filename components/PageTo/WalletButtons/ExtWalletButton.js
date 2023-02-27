@@ -14,38 +14,50 @@ import Avatar from '../CardBody/Avatar'
 import { showErrorToast } from 'lib/refs'
 import { getProfileByAddr } from 'lib/api'
 
-export default function ExtWalletButton ({ hideAddress, ext, toAddr, active, onActive, onExtAddress }) {
+export default function ExtWalletButton ({ hideAddress, ext, m2Ext, onExtAddress }) {
   const router = useRouter()
-  const extStatus = useExtStatus(ext.id)
+  const _extStatus = useExtStatus(ext.id)
   const [accounts, setAccounts] = React.useState([])
   const [avatar, setAvatar] = React.useState(null)
 
-  const connect = React.useCallback(() => {
-    if (ext.notInstalled) {
-      showErrorToast(new Error(`Please install ${ext.name}.`))
-      return
-    }
-    ext.enable()
-  }, [ext])
+  const m2Connected = (m2Ext.extId === ext.id) || m2Ext.supportedExts?.includes(ext.type)
+  const extStatus = m2Connected ? m2Ext.extStatus : _extStatus
 
-  const disconnect = React.useCallback(() => ext.dispose(), [ext])
+  const connect = React.useCallback(() => {
+    if (m2Connected) {
+      m2Ext.connect(ext.id)
+    } else if (ext.notInstalled) {
+      showErrorToast(new Error(`Please install ${ext.name}.`))
+    } else {
+      ext.enable()
+    }
+  }, [m2Connected, m2Ext, ext])
+
+  const disconnect = React.useCallback(() => {
+    if (m2Connected) {
+      m2Ext.disconnect()
+    } else {
+      ext.dispose()
+    }
+  }, [m2Connected, m2Ext, ext])
 
   React.useEffect(() => {
     ext.glimpse().then(setAccounts)
   }, [ext])
 
   const currentAddress = extStatus?.currentAccount?.address
-  const matchTo = toAddr === currentAddress
-  React.useEffect(() => {
-    if (matchTo) {
-      onActive(ext)
-    }
-  }, [ext, matchTo, onActive])
+  // const matchTo = toAddr === currentAddress
+  // React.useEffect(() => {
+  //   if (matchTo) {
+  //     onActive(ext)
+  //   }
+  // }, [ext, matchTo, onActive])
 
   const openMyPage = React.useCallback(address => {
     router.push(`/${address}`)
-    onActive(ext)
-  }, [router, ext, onActive])
+  //   onActive(ext)
+  // }, [router, ext, onActive])
+  }, [router])
 
   React.useEffect(() => {
     currentAddress && (async () => {
@@ -91,7 +103,7 @@ export default function ExtWalletButton ({ hideAddress, ext, toAddr, active, onA
   return (
     <DropdownMenu
       portal={false}
-      className={active && 'order-last z-10'}
+      className={m2Connected && 'order-last z-10'}
       placement='bottom-start'
       btn={
         <ConnectedButton
