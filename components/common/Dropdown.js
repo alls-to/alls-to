@@ -5,6 +5,7 @@ import { Float } from '@headlessui-float/react'
 
 function Dropdown({
   className,
+  portal = true,
   btn,
   placement = 'bottom-end',
   disabled,
@@ -21,7 +22,7 @@ function Dropdown({
   return (
     <Menu as='div' className={className}>
       <Float
-        portal
+        portal={portal}
         placement={placement}
         offset={4}
         shift={{ padding: 32 }}
@@ -55,9 +56,9 @@ function Dropdown({
 <div className='w-full h-[calc(100%+1px)]' />
 </div> */}
 
-export function DropdownMenu ({ className, btn, placement, options = [], children }) {
+export function DropdownMenu ({ className, portal, btn, placement, options = [], children }) {
   return (
-    <Dropdown className={className} btn={btn} placement={placement}>
+    <Dropdown portal={portal} className={className} btn={btn} placement={placement}>
       <div className='flex flex-col min-w-[200px] p-2 bg-white rounded-xl focus:outline-none shadow-xl'>
         {children}
         <div className='flex flex-col gap-1'>

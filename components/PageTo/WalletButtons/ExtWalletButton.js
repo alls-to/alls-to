@@ -1,4 +1,5 @@
 import React from 'react'
+import classnames from 'classnames'
 import { useRouter } from 'next/router'
 
 import { useExtStatus } from '@mesonfi/extensions/react'
@@ -82,11 +83,24 @@ export default function ExtWalletButton ({ hideAddress, ext, toAddr, active, onA
     return options
   }, [currentAddress, openMyPage, connect, disconnect])
 
+  const btnClassName = classnames(
+    'relative duration-300 ease-out',
+    !hideAddress && currentAddress ? '!px-3' : 'group-hover:ml-0 -ml-6'
+  )
+
   return (
     <DropdownMenu
+      portal={false}
       className={active && 'order-last z-10'}
       placement='bottom-start'
-      btn={<ConnectedButton hideAddress={hideAddress} icon={ext.icon} addr={currentAddress} />}
+      btn={
+        <ConnectedButton
+          hideAddress={hideAddress}
+          icon={ext.icon}
+          addr={currentAddress}
+          className={btnClassName}
+        />
+      }
       options={options}
     >
       <ExtStatus avatar={avatar} ext={ext} extStatus={extStatus} />
