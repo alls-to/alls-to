@@ -71,7 +71,7 @@ export default function CardTransfer ({ to: initialTo, matchExt }) {
           {
             !editing &&
             <>
-              <div className='font-semibold'>Transfer To</div>
+              <div className='font-semibold'>Transfer to</div>
               <ShareButton to={to} />
             </>
           }
