@@ -68,11 +68,37 @@ export default function CardBodyTransfer ({ to }) {
   )
 }
 
-function SuccessInfo ({ data, onNewTransfer }) {
-  const swapId = data.swapId
+function SuccessInfo({ data, onNewTransfer }) {
+  let imgUrl
+  let fileName
+  const swapId = data?.swapId
+  const hash = data?.hash
+
+  if (swapId) {
+    imgUrl = `https://img.meson.fi/to/receipt/${swapId}`
+    fileName = `AllsTo_${swapId}.png`
+  } else if (hash) {
+    const inChain = mesonPresets.getNetwork(data.from.chain)?.shortSlip44
+    const outChain = mesonPresets.getNetwork(data.to.chain)?.shortSlip44
+    // TODO: use rpc method to replace the query.
+    const queryData = {
+      amount: data.amount,
+      hash,
+      created: new Date().toISOString(),
+      from: data.fromAddress,
+      to: data.initiator,
+      inChain: inChain,
+      outChain: outChain,
+      inToken: data.from.token,
+      outToken: data.to.token
+    }
+    imgUrl = `https://img.meson.fi/to/receipt/by-hash?${new URLSearchParams(queryData).toString()}`
+    fileName = `AllsTo_${hash}.png`
+  }
+
   const onSaveReceipt = React.useCallback(async () => {
-      await saveAs(`https://img.meson.fi/to/receipt/${swapId}`, `AllsTo_${swapId}.png`)
-    }, [swapId])
+    await saveAs(imgUrl, fileName)
+  }, [imgUrl, fileName])
 
   return (
     <div className='flex flex-col justify-between w-full h-full px-2 pb-4'>
