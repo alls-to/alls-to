@@ -98,7 +98,7 @@ function SuccessInfo({ data, onNewTransfer }) {
 
   const onSaveReceipt = React.useCallback(async () => {
     await saveAs(imgUrl, fileName)
-  }, [swapId, hash])
+  }, [imgUrl, fileName])
 
   return (
     <div className='flex flex-col justify-between w-full h-full px-2 pb-4'>
