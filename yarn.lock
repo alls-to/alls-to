@@ -2682,8 +2682,8 @@
 
 "@mesonfi/extensions@^0.5.0":
   version "0.5.0"
-  resolved "https://npm.pkg.github.com/download/@mesonfi/extensions/0.5.0/763a66aa950d886e9bf6157461aadf5e6669980e#763a66aa950d886e9bf6157461aadf5e6669980e"
-  integrity sha512-cL6JItF/R/eCBsJAWDWJ+GdCLOauRHCf+FP/ki1lpIxhjTAGipGtUBuhzeEKmoLMZBy+syP+9GwXuxkjt7vTeQ==
+  resolved "https://npm.pkg.github.com/download/@mesonfi/extensions/0.5.0/90bd9ffffd9108c429899b260fc660ece9ab9ce7#90bd9ffffd9108c429899b260fc660ece9ab9ce7"
+  integrity sha512-3uqEGURru6fBvdvjxQquiElGf7OO3o4Ql7pJpQaUKUGlprMN48A9SdDhQNJtsw6sOT5wDeKn4XRTB2ZtOzo5dQ==
   dependencies:
     "@mesonfi/aptos-wallet-adapter" "^1.0.2-rc.1"
     "@walletconnect/web3-provider" "1.8.0"
