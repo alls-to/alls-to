@@ -18,7 +18,7 @@ export default function ShareButton ({ to }) {
   }, [keyOrAddr, name])
 
   const shareTwitter = React.useCallback(async () => {
-    const text = `Make stablecoin transfers to me\n\n${link}`
+    const text = `@alls_to - The Future of Web3 Payment Gateway. Making transfers in #stablecoin easier than ever for #web3 payment solutions.\n\nUse my payment link to transfer stablecoin today at: ${link}`
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank')
   }, [link])
 
