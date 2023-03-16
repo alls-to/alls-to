@@ -9,12 +9,16 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "files": [
-    "src"
+    "src",
+    "react"
   ],
   "dependencies": {
     "@magic-ext/connect": "^6.2.0",
     "@particle-network/auth": "^0.10.4",
     "@particle-network/provider": "^0.10.4",
     "magic-sdk": "^13.1.0"
+  },
+  "peerDependencies": {
+    "react": "*"
   }
 }
