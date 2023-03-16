@@ -17,22 +17,25 @@ const main = async () => {
 
     if (oldKey.endsWith('#link3')) {
       const handle = oldKey.substring(0, oldKey.lastIndexOf('#'))
-      console.log('handle', handle)
-      newKey = `${handle}.cyber`
+      if (!handle.endsWith('.cyber')) {
+        newKey = `${handle}.cyber`
+      } else {
+        newKey = handle
+      }
     } else if (oldKey.endsWith('#dotbit')) {
       const handle = oldKey.substring(0, oldKey.lastIndexOf('#'))
-      console.log('handle', handle)
       if (!handle.endsWith('.bit')) {
         newKey = `${handle}.bit`
+      } else {
+        newKey = handle
       }
-      newKey = `${handle}`
     }
-    console.log('newKey', newKey)
-    await AllsTo.findOneAndUpdate({
-      addr: item.addr
-    }, {
-      key: newKey
-    })
+    console.log(item.did, oldKey, `->`, newKey)
+    // await AllsTo.findOneAndUpdate({
+    //   addr: item.addr
+    // }, {
+    //   key: newKey
+    // })
   }
   mongoose.disconnect()
 }
