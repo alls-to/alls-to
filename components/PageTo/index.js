@@ -15,7 +15,7 @@ export default function PageTo ({ to }) {
   React.useEffect(() => {
     if (!to) {
       router.replace(`/`)
-    } else {
+    } else if (!location.pathname.endsWith(`/${to.key}`)) {
       router.replace(`/${to.key}`)
     }
   }, [router, to])
