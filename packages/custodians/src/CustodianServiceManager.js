@@ -10,7 +10,7 @@ export default class CustodianServiceManager {
   constructor () {
     this._cache = new Map()
     // TODO: update index method
-    this.currentExt = null
+    this.currentCustodian = null
   }
 
   get services () {
@@ -29,18 +29,18 @@ export default class CustodianServiceManager {
     return this._cache.get(type)
   }
 
-  async connect (_, extType, extId) {
+  async connect (_, type, custodianId) {
     await this.disconnect()
-    this.currentExt = this.getService(extId)
-    return await this.currentExt.connect()
+    this.currentCustodian = this.getService(custodianId)
+    return await this.currentCustodian.connect()
   }
 
   async disconnect () {
-    await this.currentExt?.disconnect()
-    this.currentExt = null
+    await this.currentCustodian?.disconnect()
+    this.currentCustodian = null
   }
 
   async signMessage (message) {
-    return await this.currentExt?.signMessage(message)
+    return await this.currentCustodian?.signMessage(message)
   }
 }
