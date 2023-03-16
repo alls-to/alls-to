@@ -11,6 +11,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "dependencies": {
     "@aws-sdk/client-s3": "^3.245.0",
     "@aws-sdk/s3-request-presigner": "^3.245.0",
@@ -20,9 +23,6 @@
     "@mesonfi/presets": "^1.5.0",
     "@mesonfi/to": "^0.2.1",
     "@mesonfi/web3-jwt": "^0.5.0",
-    "@magic-ext/connect": "^6.2.0",
-    "@particle-network/auth": "^0.10.4",
-    "@particle-network/provider": "^0.10.4",
     "@tailwindcss/forms": "^0.5.3",
     "autoprefixer": "^10.4.12",
     "classnames": "^2.3.2",
@@ -32,7 +32,6 @@
     "file-saver": "^2.0.5",
     "graphql": "^16.6.0",
     "graphql-request": "^5.1.0",
-    "magic-sdk": "^13.1.0",
     "mongoose": "^6.6.5",
     "next": "12.3.1",
     "next-seo": "^5.5.0",
