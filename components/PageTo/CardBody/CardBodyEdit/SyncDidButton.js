@@ -28,12 +28,12 @@ export default function SyncDidButton ({ to, onSynced, accountToken }) {
     }
   }, [to.key, onSynced, accountToken])
 
-  const unsync = React.useCallback(async (curretDid) => {
-    const name = getNameById(curretDid.did)
-    await api.unsyncDid(curretDid.key, accountToken)
+  const unsync = React.useCallback(async () => {
+    const name = getNameById(to.did)
+    await api.unsyncDid(to.key, accountToken)
     showInfoToast({ message: `Unsynced with ${name}.` })
     onSynced()
-  }, [to.key, onSynced, accountToken])
+  }, [to.did, to.key, onSynced, accountToken])
 
   let btn
   let options
@@ -51,7 +51,7 @@ export default function SyncDidButton ({ to, onSynced, accountToken }) {
     )
     options = [{
       text: <><div className='flex h-4 w-4 mr-2'><Icon type='unsync' /></div>Unsync</>,
-      onClick:() => unsync(to)
+      onClick: unsync
     }]
   } else {
     btn = (
