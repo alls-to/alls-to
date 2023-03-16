@@ -6,10 +6,10 @@ import { showSuccessToast, showInfoToast, showErrorToast } from 'lib/refs'
 import { DropdownMenu } from 'components/common/Dropdown'
 import Button from 'components/common/Button'
 import Icon from 'components/icons'
-import { DIDs, getNameById } from 'lib/did'
+import { DIDs, getDid } from 'lib/did'
 
 export default function SyncDidButton ({ to, onSynced, accountToken }) {
-  const didName = getNameById(to.did)
+  const didName = getDid(to.did)?.name
 
   const sync = React.useCallback(async didItem => {
     try {
@@ -29,7 +29,7 @@ export default function SyncDidButton ({ to, onSynced, accountToken }) {
   }, [to.key, onSynced, accountToken])
 
   const unsync = React.useCallback(async () => {
-    const name = getNameById(to.did)
+    const name = getDid(to.did)?.name
     await api.unsyncDid(to.key, accountToken)
     showInfoToast({ message: `Unsynced with ${name}.` })
     onSynced()
