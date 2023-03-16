@@ -1,3 +1,5 @@
-import ServiceManager from './serviceManager'
+import CustodianServiceManager from './CustodianServiceManager'
 
-export default new ServiceManager()
+const custodians = new CustodianServiceManager()
+
+export default custodians

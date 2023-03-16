@@ -1,12 +1,12 @@
-import MagicLink from './services/magicLink'
-import Particle from './services/particle'
+import MagicLink from './services/MagicLink'
+import Particle from './services/Particle'
 
 const ServicesDict = {
   magiclink: MagicLink,
   particle: Particle
 }
 
-export default class ServiceManager {
+export default class CustodianServiceManager {
   constructor () {
     this._cache = new Map()
     // TODO: update index method

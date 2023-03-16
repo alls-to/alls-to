@@ -2,9 +2,11 @@ import { Magic } from 'magic-sdk'
 import { ConnectExtension } from '@magic-ext/connect'
 import { ethers } from 'ethers'
 
+import BaseCustodianService from '../BaseCustodianService'
+
 const MAGIC_LINK_PUBLIC_KEY = process.env.NEXT_PUBLIC_MAGIC_LINK_PUBLIC_KEY
 
-export default class MagicLinkService {
+export default class MagicLink extends BaseCustodianService {
   constructor () {
     this.currentAccount = undefined
     this.service = undefined
@@ -12,7 +14,7 @@ export default class MagicLinkService {
   }
 
   get id () {
-    return 'magicLink'
+    return 'magiclink'
   }
 
   get name () {

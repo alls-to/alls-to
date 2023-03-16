@@ -2,11 +2,13 @@ import { ParticleNetwork, WalletEntryPosition } from '@particle-network/auth'
 import { ParticleProvider } from '@particle-network/provider'
 import { ethers } from 'ethers'
 
+import BaseCustodianService from '../BaseCustodianService'
+
 const PARTICLE_PROJECT_ID = process.env.NEXT_PUBLIC_PARTICLE_PROJECT_ID
 const PARTICLE_CLIENT_ID = process.env.NEXT_PUBLIC_PARTICLE_CLIENT_ID
 const PARTICLE_APP_ID = process.env.NEXT_PUBLIC_PARTICLE_APP_ID
 
-export default class ParticleService {
+export default class Particle extends BaseCustodianService {
   constructor () {
     this.currentAccount = undefined
     this.service = undefined
