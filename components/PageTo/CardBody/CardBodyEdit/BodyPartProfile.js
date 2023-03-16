@@ -29,7 +29,7 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
       onModified(to => ({ ...to, did: '', socials: [] }))
     } else {
       if (synced.key) { // TODO
-        refLink.current?.updateHandle(synced.key)
+        refLink.current?.updateKey(synced.key)
       }
       setAvatar(synced.avatar)
       setName(synced.name)

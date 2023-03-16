@@ -13,33 +13,33 @@ export default React.forwardRef(LinkInput)
 function LinkInput({ to, labelIcon, accountToken }, ref) {
   const router = useRouter()
 
-  const [handle, setHandle] = React.useState(to.handle)
+  const [key, setKey] = React.useState(to.handle)
   const [value, setValue] = React.useState(to.key ? to.handle : '')
   const [claimed, setClaimed] = React.useState(true) // !!to.key
   const [showClaim, setShowClaim] = React.useState(false)
 
   React.useImperativeHandle(ref, () => ({
-    updateHandle: handle => {
-      setHandle(handle)
-      setValue(handle)
+    updateKey: key => {
+      setKey(key)
+      setValue(key)
       setClaimed(true)
-      router.replace(`/${handle}`)
+      router.replace(`/${key}`)
     }
   }))
 
-  const validator = React.useCallback(async handle => {
-    if (!handle) {
+  const validator = React.useCallback(async key => {
+    if (!key) {
       setShowClaim(false)
       return
     }
     setShowClaim(false)
-    if (handle.length < 4) {
+    if (key.length < 4) {
       throw new Error('Length needs to be at least 4')
     }
-    if (!/^[a-zA-Z0-9._-]{4,12}$/.exec(handle)) {
-      throw new Error('Only letters, numbers, and "." "-" "_" are accepted')
+    if (!/^[a-zA-Z0-9_-]{4,12}$/.exec(key)) {
+      throw new Error('Only letters, numbers, "-" and "_" are accepted')
     }
-    const result = await api.checkHandle(handle, accountToken)
+    const result = await api.checkKey(key, accountToken)
     if (result) {
       throw new Error('Already exists')
     }
@@ -56,15 +56,15 @@ function LinkInput({ to, labelIcon, accountToken }, ref) {
   }, [claimed, value])
 
   const copyLink = React.useCallback(() => {
-    const link = `https://alls.to/${handle}`
+    const link = `https://alls.to/${key}`
     navigator.clipboard.writeText(link)
     refs.toast.current?.show({ title: 'Link Copied!' })
-  }, [handle])
+  }, [key])
 
   const claim = React.useCallback(async () => {
     if (value) {
-      await api.claimHandle(value, accountToken)
-      setHandle(value)
+      await api.claimKey(value, accountToken)
+      setKey(value)
       setClaimed(true)
       refs.toast.current?.show({ title: 'Link Claimed!' })
       router.replace(`/${value}`)

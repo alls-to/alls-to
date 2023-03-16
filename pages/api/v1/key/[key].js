@@ -4,15 +4,15 @@ import verifyJwt from 'lib/verifyJwt'
 const reservedWords = process.env.RESERVED_WORDS.split(',')
 
 export default async function handler (req, res) {
-  const { handle } = req.query
+  const { key } = req.query
 
   if (req.method === 'GET') {
-    if (reservedWords.includes(handle)) {
+    if (reservedWords.includes(key)) {
       res.json({ result: true })
       return
     }
     // TODO
-    const exist = await AllsTo.findOne({ key: handle })
+    const exist = await AllsTo.findOne({ key })
     res.json({ result: !!exist })
   } else if (req.method === 'POST') {
     const encoded = verifyJwt(req.headers.authorization)
@@ -21,12 +21,12 @@ export default async function handler (req, res) {
       return
     }
 
-    if (reservedWords.includes(handle)) {
+    if (reservedWords.includes(key)) {
       res.status(400).end()
       return
     }
     // TODO
-    await AllsTo.findByIdAndUpdate(handle, { key: handle })
+    await AllsTo.findByIdAndUpdate(key, { key })
     res.json({ result: true })
   } else {
     res.end()
