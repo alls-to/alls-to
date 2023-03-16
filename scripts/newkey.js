@@ -31,11 +31,11 @@ const main = async () => {
       }
     }
     console.log(item.did, oldKey, `->`, newKey)
-    // await AllsTo.findOneAndUpdate({
-    //   addr: item.addr
-    // }, {
-    //   key: newKey
-    // })
+    await AllsTo.findOneAndUpdate({
+      key: oldKey
+    }, {
+      key: newKey
+    })
   }
   mongoose.disconnect()
 }
