@@ -26,10 +26,10 @@ function BodyPartProfile({ to, onModified, accountToken }, ref) {
 
   const onSynced = React.useCallback(synced => {
     if (!synced) {
-      onModified(to => ({ ...to, key: to.key.split('#')[0], did: '', socials: [] }))
+      onModified(to => ({ ...to, did: '', socials: [] }))
     } else {
-      if (synced.handle) { // TODO
-        refLink.current?.updateHandle(synced.handle)
+      if (synced.key) { // TODO
+        refLink.current?.updateKey(synced.key)
       }
       setAvatar(synced.avatar)
       setName(synced.name)

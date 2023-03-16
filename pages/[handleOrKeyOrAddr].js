@@ -37,7 +37,7 @@ export default function Subpage ({ toList = [] }) {
 
 export async function getServerSideProps ({ query, res }) {
   const { queryPage } = require('lib/alls.to')
-  const toList = await queryPage(query.handle, isProd)
+  const toList = await queryPage(query.handleOrKeyOrAddr, isProd)
 
   if (!toList.length) {
     return { redirect: { destination: '/' } }

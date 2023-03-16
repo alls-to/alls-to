@@ -31,7 +31,7 @@ export default async function handler (req, res) {
     }
     const key = req.query.params?.[0] || { $exists: false }
     const doc = await AllsTo.findOneAndUpdate({ addr, key }, {
-      key: `${profile.handle}#${did}`,
+      key: profile.key,
       did,
       ...profile
     }, { new: true })
@@ -43,7 +43,7 @@ export default async function handler (req, res) {
   } else if (req.method === 'DELETE') {
     const key = req.query.params[0]
     const doc = await AllsTo.findOneAndUpdate({ addr, key }, {
-      key: key.split('#')[0], // TODO: should we keep existing key?
+      // key: '', // TODO: should we keep existing key?
       did: '',
       socials: []
     }, { new: true })
