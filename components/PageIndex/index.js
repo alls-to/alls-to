@@ -39,7 +39,7 @@ export default function PageIndex() {
         .then(async toList => {
           if (toList.length) {
             const to = toList[0]
-            router.push(`/${to.key}`)
+            router.push(`/${to.key || to.handle}`)
           } else {
             setLoading(false)
           }
