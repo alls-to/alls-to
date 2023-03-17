@@ -9,7 +9,7 @@ import Button from 'components/common/Button'
 import Icon from 'components/icons'
 
 export default function ShareButton ({ to }) {
-  const link = `https://alls.to/${to.handle}`
+  const link = `https://alls.to/${to.key}`
 
   const keyOrAddr = to.key || to.addr
   const name = to.name || keyOrAddr

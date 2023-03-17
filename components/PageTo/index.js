@@ -37,7 +37,7 @@ export default function PageTo ({ to }) {
       <Header logoSrc='/'>
         <WalletButtons toAddr={to.addr} onExtAddress={onExtAddress} />
       </Header>
-      <CardTransfer key={to.handle} to={to} matchExt={matchExt} />
+      <CardTransfer key={to.key} to={to} matchExt={matchExt} />
     </AppContainer>
   )
 }
