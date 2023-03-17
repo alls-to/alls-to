@@ -16,7 +16,10 @@ export default function PageTo ({ to }) {
     if (!to) {
       router.replace(`/`)
     } else {
-      router.replace(`/${to.key || to.handle}`)
+      const link = to.key || to.handle
+      if (!location.pathname.endsWith(`/${link}`)) {
+        router.replace(`/${link}`)
+      }
     }
   }, [router, to])
 
