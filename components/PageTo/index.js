@@ -11,14 +11,13 @@ import CardTransfer from './CardTransfer'
 export default function PageTo ({ to }) {
   const router = useRouter()
   const [extsAddress, setExtsAddress] = React.useState({})
-
   React.useEffect(() => {
     if (!to) {
       router.replace(`/`)
     } else {
-      router.replace(`/${to.key || to.handle}`)
+      router.replace(`/${to.handle}`)
     }
-  }, [router, to])
+  }, [router, to.handle])
 
   const onExtAddress = React.useMemo(() => debounce((extId, address) => {
     setExtsAddress(prev => ({ ...prev, [extId]: address }))
