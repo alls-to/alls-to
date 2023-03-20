@@ -1,43 +1,43 @@
 import { ParticleNetwork, WalletEntryPosition } from '@particle-network/auth'
 import { ParticleProvider } from '@particle-network/provider'
 import { ethers } from 'ethers'
-
-import BaseCustodianService from '../BaseCustodianService'
-
-const PARTICLE_PROJECT_ID = process.env.NEXT_PUBLIC_PARTICLE_PROJECT_ID
-const PARTICLE_CLIENT_ID = process.env.NEXT_PUBLIC_PARTICLE_CLIENT_ID
-const PARTICLE_APP_ID = process.env.NEXT_PUBLIC_PARTICLE_APP_ID
+import BaseCustodianService from '../BaseCustodianWallet'
+import icon from './icons/particle-network.png'
 
 export default class Particle extends BaseCustodianService {
-  constructor () {
+  constructor (props, config) {
+    super(props)
     this.currentAccount = undefined
-    this.service = undefined
-    this.provider = undefined
+    this.config = config
+    this._init()
   }
 
-  get id () {
+  get isCustodian() {
+    return true
+  }
+
+  get id() {
     return 'particle'
   }
 
-  get name () {
+  get name() {
     return 'Particle Network'
   }
 
-  get type () {
+  get type() {
     return 'metamask'
   }
 
-  // TODO: return base64 or svg file name
-  get icon () {
-    return ''
+  get icon() {
+    return icon.src
   }
 
-  _init () {
+  _init() {
     if (typeof window !== 'undefined') {
       const instance = new ParticleNetwork({
-        projectId: PARTICLE_PROJECT_ID,
-        clientKey: PARTICLE_CLIENT_ID,
-        appId: PARTICLE_APP_ID,
+        projectId: this.config.PARTICLE_PROJECT_ID,
+        clientKey: this.config.PARTICLE_CLIENT_ID,
+        appId: this.config.PARTICLE_APP_ID,
         chainName: 'Ethereum',
         chainId: 1,
         wallet: {
@@ -53,16 +53,13 @@ export default class Particle extends BaseCustodianService {
     }
   }
 
-  async disconnect () {
-    await this.service.auth?.logout()
-    this.service = undefined
-    this.provider = undefined
+  async disconnect() {
+    console.log('disconnect')
+    await this.service.auth.logout()
     this.currentAccount = undefined
   }
 
-  async connect () {
-    this._init()
-
+  async connect() {
     const accounts = await this.provider.listAccounts()
     const currentAddr = accounts[0].toLowerCase()
     this.currentAccount = {
@@ -74,7 +71,19 @@ export default class Particle extends BaseCustodianService {
     }
   }
 
-  async signMessage (message) {
+  async glimpse() {
+    if (this.service.auth.isLogin()) {
+      const accounts = await this.provider.listAccounts()
+      const currentAddr = accounts[0].toLowerCase()
+      this.currentAccount = {
+        address: currentAddr,
+        hex: currentAddr
+      }
+      return this.currentAccount
+    }
+  }
+
+  async signMessage(message) {
     const signature = await this.provider.send('personal_sign', [
       message, this.currentAccount.address
     ])

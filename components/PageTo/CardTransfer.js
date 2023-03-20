@@ -1,5 +1,6 @@
 import React from 'react'
 import { useExtensions } from '@mesonfi/extensions/react'
+import { useCustodians } from '@mesonfi/custodians/react'
 
 import CentralCardWithSideInfo from 'components/common/Card/CentralCardWithSideInfo'
 import IntroRegion from 'components/common/Card/IntroRegion'
@@ -102,9 +103,15 @@ export default function CardTransfer ({ to: initialTo, matchExt }) {
 function CardTransferTitle ({ extId, addr, isOwner, editing, onUpdate }) {
   const [extIcon, setExtIcon] = React.useState('')
   const { extensions } = useExtensions()
+  const { custodians } = useCustodians()
 
   React.useEffect(() => {
-    const ext = extensions._cache.get(extId)
+    let ext = extensions._cache.get(extId)
+
+    if (!ext) {
+      ext = custodians?.getService(extId)
+    }
+
     if (ext) {
       setExtIcon(ext.icon)
     }
@@ -127,7 +134,9 @@ function CardTransferTitle ({ extId, addr, isOwner, editing, onUpdate }) {
               </span>
               <div className='flex'>
                 <span className='inline-block mr-1 box-sizing w-4 h-4 p-[2px] rounded-full bg-white'>
-                  <img className='w-full h-full' src={extIcon} />
+                  {
+                    extIcon && <img className='w-full h-full' src={extIcon} />
+                  }
                 </span>
                 <span className='text-sm'>{abbreviate(addr, 9)}</span>
               </div>

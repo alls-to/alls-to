@@ -1,20 +1,23 @@
 import { Magic } from 'magic-sdk'
 import { ConnectExtension } from '@magic-ext/connect'
 import { ethers } from 'ethers'
-
-import BaseCustodianService from '../BaseCustodianService'
-
-const MAGIC_LINK_PUBLIC_KEY = process.env.NEXT_PUBLIC_MAGIC_LINK_PUBLIC_KEY
+import BaseCustodianService from '../BaseCustodianWallet'
+import icon from './icons/magic-link.png'
 
 export default class MagicLink extends BaseCustodianService {
-  constructor () {
+  constructor (props, config) {
+    super(props)
     this.currentAccount = undefined
-    this.service = undefined
-    this.provider = undefined
+    this.config = config
+    this._init()
+  }
+
+  get isCustodian () {
+    return true
   }
 
   get id () {
-    return 'magiclink'
+    return 'magicLink'
   }
 
   get name () {
@@ -25,14 +28,13 @@ export default class MagicLink extends BaseCustodianService {
     return 'metamask'
   }
 
-  // TODO: return base64 or svg file name
-  get icon () {
-    return ''
+  get icon() {
+    return icon.src
   }
 
   _init () {
     if (typeof window !== 'undefined') {
-      const instance = new Magic(MAGIC_LINK_PUBLIC_KEY, {
+      const instance = new Magic(this.config.MAGIC_LINK_PUBLIC_KEY, {
         extensions: [new ConnectExtension()]
       })
       this.service = instance
@@ -48,8 +50,6 @@ export default class MagicLink extends BaseCustodianService {
   }
 
   async connect () {
-    this._init()
-
     const accounts = await this.provider.listAccounts()
     this.currentAccount = {
       address: accounts[0],
@@ -60,7 +60,12 @@ export default class MagicLink extends BaseCustodianService {
     }
   }
 
-  async signMessage (message) {
+  async glimpse () {
+    // TODO: handle auth
+    return this.currentAccount
+  }
+
+  async signMessage(message) {
     const params = [message, this.currentAccount.address]
     const method = 'personal_sign'
     const signature = await this.provider.send(method, params)

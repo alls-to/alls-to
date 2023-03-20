@@ -2,10 +2,11 @@ import React from 'react'
 import classnames from 'classnames'
 import groupBy from 'lodash/groupBy'
 import mapValues from 'lodash/mapValues'
-
 import Button from 'components/common/Button'
 
-export default function LoginWallets ({ loading, extensions, onConnect }) {
+const DISABLE_WALLETS = process.env.NEXT_PUBLIC_DISABLE_WALLETS.split(',')
+
+export default function LoginWallets ({ loading, extensions, custodians, onConnect }) {
   const [extList, setExtList] = React.useState([])
 
   React.useEffect(() => {
@@ -17,6 +18,9 @@ export default function LoginWallets ({ loading, extensions, onConnect }) {
         ),
         grouped => grouped.every(ext => ext.notInstalled) ? grouped[0] : grouped.filter(ext => !ext.notInstalled)
       )).flat()
+      const metamaskIndex = exts.findIndex(item => item.type === 'metamask')
+      const filteredCustodians = custodians.filter(item => !DISABLE_WALLETS.includes(item.id))
+      exts.splice(metamaskIndex + 1, 0, ... filteredCustodians)
       setExtList(exts)
     }, 100)
   }, [extensions])

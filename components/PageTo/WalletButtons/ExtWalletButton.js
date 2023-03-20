@@ -14,14 +14,26 @@ import Avatar from '../CardBody/Avatar'
 import { showErrorToast } from 'lib/refs'
 import { getProfileByAddr } from 'lib/api'
 
-export default function ExtWalletButton ({ hideAddress, ext, m2Ext, onExtAddress }) {
+export default function ExtWalletButton({ hideAddress, ext, m2Ext, onExtAddress }) {
   const router = useRouter()
   const _extStatus = useExtStatus(ext.id)
   const [accounts, setAccounts] = React.useState([])
   const [avatar, setAvatar] = React.useState(null)
-
   const m2Connected = (m2Ext.extId === ext.id) || m2Ext.supportedExts?.includes(ext.type)
-  const extStatus = m2Connected ? m2Ext.extStatus : _extStatus
+
+  let extStatus
+
+  if (ext?.isCustodian) {
+    extStatus = {
+      currentAccount: ext?.currentAccount
+    }
+  } else {
+    if (m2Connected) {
+      extStatus = m2Ext.extStatus
+    } else {
+      extStatus = _extStatus
+    }
+  }
 
   const connect = React.useCallback(() => {
     if (m2Connected) {
@@ -103,7 +115,7 @@ export default function ExtWalletButton ({ hideAddress, ext, m2Ext, onExtAddress
   return (
     <DropdownMenu
       portal={false}
-      className={m2Connected && 'order-last z-10'}
+      className={classnames(m2Connected && 'order-last z-10', ext?.isCustodian && 'hidden')}
       placement='bottom-start'
       btn={
         <ConnectedButton
@@ -139,7 +151,7 @@ function ExtStatus ({ avatar, ext, extStatus }) {
   } else {
     content = <div className='py-1 text-xs font-semibold'>{ext.name}</div>
   }
-  
+
   return (
     <div className='w-full px-2'>
       {content}

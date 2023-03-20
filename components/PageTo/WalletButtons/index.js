@@ -1,17 +1,18 @@
 import React from 'react'
 import classnames from 'classnames'
 import { useExtensions } from '@mesonfi/extensions/react'
-
 import useMesonToSyncedExt from './useMesonToSyncedExt'
 
 import ExtWalletButton from './ExtWalletButton'
+import { useCustodians } from '@mesonfi/custodians/react'
 
-const DEFAULT_EXTS = ['metamask', 'tronlink', 'martian']
+const DISABLE_WALLETS = process.env.NEXT_PUBLIC_DISABLE_WALLETS.split(',')
 
 export default function WalletButtons ({ toAddr, onExtAddress }) {
   const { extensions } = useExtensions()
+  const { custodians } = useCustodians()
+  const filterdCustodians = custodians.services.filter(item => !DISABLE_WALLETS.includes(item.id))
   const m2Ext = useMesonToSyncedExt()
-
   const [extList, setExtList] = React.useState([])
 
   React.useEffect(() => {
@@ -21,7 +22,7 @@ export default function WalletButtons ({ toAddr, onExtAddress }) {
         .reverse()
       // const defaultExts = extensions.detectAllExtensions()
       //   .filter(ext => DEFAULT_EXTS.includes(ext.id) && ext.type !== 'walletconnect')
-      setExtList(allExts)
+      setExtList(allExts.concat(filterdCustodians))
     }, 200)
   }, [extensions])
 

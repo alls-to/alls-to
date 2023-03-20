@@ -1,46 +1,53 @@
 import MagicLink from './services/MagicLink'
 import Particle from './services/Particle'
 
-const ServicesDict = {
-  magiclink: MagicLink,
+export const ServicesDict = {
+  magicLink: MagicLink,
   particle: Particle
 }
 
 export default class CustodianServiceManager {
-  constructor () {
+  constructor (options) {
     this._cache = new Map()
-    // TODO: update index method
-    this.currentCustodian = null
+    // use `currentExt` as variable temporarily, in many other places used it.
+    this.currentExt = null
+    this.options = options
   }
 
   get services () {
-    return Object.keys(ServicesDict).map(item => {
-      return this.createService(item)
-    })
+    return Object.keys(ServicesDict).map( id => this.createService(id))
   }
 
-  getService (type) {
-    return this._cache.get(type) || this.createService(type)
+  getService (custodianId) {
+    return this._cache.get(custodianId) || this.createService(custodianId)
   }
 
-  createService (type) {
-    const Service = ServicesDict[type]
-    this._cache.set(type, new Service(this))
-    return this._cache.get(type)
+  createService (custodianId) {
+    // custodianId might be the non-custodial waller.
+    const Service = ServicesDict[custodianId]
+    if (Service) {
+      const config = this.options?.[custodianId]
+      if (!config) {
+        console.warn(`${custodianId} does not have any config.`)
+      }
+      this._cache.set(custodianId, new Service(this, config))
+      return this._cache.get(custodianId)
+    }
   }
 
   async connect (_, type, custodianId) {
-    await this.disconnect()
-    this.currentCustodian = this.getService(custodianId)
-    return await this.currentCustodian.connect()
+    this.currentExt = this.getService(custodianId)
+    const addr = await this.currentExt.connect()
+    this._cache.set(custodianId, this.currentExt)
+    return addr
   }
 
   async disconnect () {
-    await this.currentCustodian?.disconnect()
-    this.currentCustodian = null
+    await this.currentExt?.disconnect()
+    this.currentExt = null
   }
 
   async signMessage (message) {
-    return await this.currentCustodian?.signMessage(message)
+    return await this.currentExt?.signMessage(message)
   }
 }

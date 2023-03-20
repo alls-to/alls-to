@@ -1,5 +1,2 @@
-import CustodianServiceManager from './CustodianServiceManager'
-
-const custodians = new CustodianServiceManager()
-
-export default custodians
+export { default } from './CustodianServiceManager'
+export { ServicesDict } from './CustodianServiceManager'
