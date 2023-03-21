@@ -11,6 +11,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "dependencies": {
     "@aws-sdk/client-s3": "^3.245.0",
     "@aws-sdk/s3-request-presigner": "^3.245.0",

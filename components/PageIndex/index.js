@@ -3,6 +3,7 @@ import classnames from 'classnames'
 import { useRouter } from 'next/router'
 
 import { useExtensions } from '@mesonfi/extensions/react'
+import { useCustodians } from '@mesonfi/custodians/react'
 import { useWeb3Login } from '@mesonfi/web3-jwt/react'
 
 import { showInfoToast, showErrorToast } from 'lib/refs'
@@ -21,18 +22,22 @@ const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 
 const icons = 'eth|polygon|bnb|arb|opt|avax|zksync|aurora|tron|aptos|ftm|cronos|movr|beam|cfx'.split('|')
 
-export default function PageIndex() {
+const loginOptions = {
+  duration: 86400 * 7,
+  onInfo: showInfoToast,
+  onError: showErrorToast
+}
+
+export default function PageIndex () {
   const router = useRouter()
   const { extensions } = useExtensions()
-  const { login } = useWeb3Login(extensions, signingMessage, {
-    duration: 86400 * 7,
-    onInfo: showInfoToast,
-    onError: showErrorToast
-  })
+  const { custodians } = useCustodians()
+  const { login } = useWeb3Login(extensions, signingMessage, loginOptions)
+  const { login: custodianLogin } = useWeb3Login(custodians, signingMessage, loginOptions)
   const [loading, setLoading] = React.useState(false)
 
   const onConnect = React.useCallback(async ext => {
-    const account = await login(ext)
+    const account = ext?.isCustodian ? await custodianLogin(ext) : await login(ext)
     if (account?.token) {
       setLoading(true)
       api.postMyself(account.token)
@@ -46,7 +51,7 @@ export default function PageIndex() {
         })
         .catch(() => setLoading(false))
     }
-  }, [router, login])
+  }, [router, custodianLogin, login])
 
   return (
     <AppContainer className='sm:overflow-y-hidden'>
@@ -81,7 +86,7 @@ export default function PageIndex() {
           <Card className='p-6 md:p-8'>
             <div className='text-2xl font-bold mb-2'>Create My Link</div>
             <div className='mb-5 font-light'>Choose the wallet you want to connect and customize your link.</div>
-            <LoginWallets loading={loading} extensions={extensions} onConnect={onConnect} />
+            <LoginWallets loading={loading} extensions={extensions} custodians={custodians} onConnect={onConnect} />
           </Card>
         </div>
       </div>
