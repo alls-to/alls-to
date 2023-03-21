@@ -11,7 +11,7 @@ const DISABLE_WALLETS = process.env.NEXT_PUBLIC_DISABLE_WALLETS.split(',')
 export default function WalletButtons ({ toAddr, onExtAddress }) {
   const { extensions } = useExtensions()
   const { custodians } = useCustodians()
-  const filterdCustodians = custodians.services.filter(item => !DISABLE_WALLETS.includes(item.id))
+  const filteredCustodians = custodians.services.filter(item => !DISABLE_WALLETS.includes(item.id))
   const m2Ext = useMesonToSyncedExt()
   const [extList, setExtList] = React.useState([])
 
@@ -22,7 +22,7 @@ export default function WalletButtons ({ toAddr, onExtAddress }) {
         .reverse()
       // const defaultExts = extensions.detectAllExtensions()
       //   .filter(ext => DEFAULT_EXTS.includes(ext.id) && ext.type !== 'walletconnect')
-      setExtList(allExts.concat(filterdCustodians))
+      setExtList(allExts.concat(filteredCustodians))
     }, 200)
   }, [extensions])
 
