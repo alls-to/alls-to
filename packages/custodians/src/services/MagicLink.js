@@ -28,7 +28,7 @@ export default class MagicLink extends BaseCustodianService {
     return 'metamask'
   }
 
-  get icon() {
+  get icon () {
     return icon.src
   }
 
@@ -65,7 +65,7 @@ export default class MagicLink extends BaseCustodianService {
     return this.currentAccount
   }
 
-  async signMessage(message) {
+  async signMessage (message) {
     const params = [message, this.currentAccount.address]
     const method = 'personal_sign'
     const signature = await this.provider.send(method, params)

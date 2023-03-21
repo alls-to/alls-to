@@ -28,7 +28,7 @@ const loginOptions = {
   onError: showErrorToast
 }
 
-export default function PageIndex() {
+export default function PageIndex () {
   const router = useRouter()
   const { extensions } = useExtensions()
   const { custodians } = useCustodians()

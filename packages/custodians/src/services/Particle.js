@@ -12,27 +12,27 @@ export default class Particle extends BaseCustodianService {
     this._init()
   }
 
-  get isCustodian() {
+  get isCustodian () {
     return true
   }
 
-  get id() {
+  get id () {
     return 'particle'
   }
 
-  get name() {
+  get name () {
     return 'Particle Network'
   }
 
-  get type() {
+  get type () {
     return 'metamask'
   }
 
-  get icon() {
+  get icon () {
     return icon.src
   }
 
-  _init() {
+  _init () {
     if (typeof window !== 'undefined') {
       const instance = new ParticleNetwork({
         projectId: this.config.PARTICLE_PROJECT_ID,
@@ -53,13 +53,13 @@ export default class Particle extends BaseCustodianService {
     }
   }
 
-  async disconnect() {
+  async disconnect () {
     console.log('disconnect')
     await this.service.auth.logout()
     this.currentAccount = undefined
   }
 
-  async connect() {
+  async connect () {
     const accounts = await this.provider.listAccounts()
     const currentAddr = accounts[0].toLowerCase()
     this.currentAccount = {
@@ -71,7 +71,7 @@ export default class Particle extends BaseCustodianService {
     }
   }
 
-  async glimpse() {
+  async glimpse () {
     if (this.service.auth.isLogin()) {
       const accounts = await this.provider.listAccounts()
       const currentAddr = accounts[0].toLowerCase()
@@ -83,7 +83,7 @@ export default class Particle extends BaseCustodianService {
     }
   }
 
-  async signMessage(message) {
+  async signMessage (message) {
     const signature = await this.provider.send('personal_sign', [
       message, this.currentAccount.address
     ])

@@ -14,7 +14,7 @@ import Avatar from '../CardBody/Avatar'
 import { showErrorToast } from 'lib/refs'
 import { getProfileByAddr } from 'lib/api'
 
-export default function ExtWalletButton({ hideAddress, ext, m2Ext, onExtAddress }) {
+export default function ExtWalletButton ({ hideAddress, ext, m2Ext, onExtAddress }) {
   const router = useRouter()
   const _extStatus = useExtStatus(ext.id)
   const [accounts, setAccounts] = React.useState([])
