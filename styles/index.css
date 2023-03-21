@@ -70,3 +70,7 @@
     line-height: 88px;
   }
 }
+
+.particle-wallet-entry-container {
+  display: none;
+}
