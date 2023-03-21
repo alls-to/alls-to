@@ -36,6 +36,10 @@ export default class CustodianServiceManager {
   }
 
   async connect (_, type, custodianId) {
+    // TODO: check the custodianId, need to filter the extension id
+    if (!Object.keys(ServicesDict).includes(custodianId)) {
+      return
+    }
     this.currentExt = this.getService(custodianId)
     const addr = await this.currentExt.connect()
     this._cache.set(custodianId, this.currentExt)
