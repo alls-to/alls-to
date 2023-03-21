@@ -51,7 +51,7 @@ export default function PageIndex () {
         })
         .catch(() => setLoading(false))
     }
-  }, [router, login])
+  }, [router, custodianLogin, login])
 
   return (
     <AppContainer className='sm:overflow-y-hidden'>
