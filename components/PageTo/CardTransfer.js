@@ -115,7 +115,7 @@ function CardTransferTitle ({ extId, addr, isOwner, editing, onUpdate }) {
     if (ext) {
       setExtIcon(ext.icon)
     }
-  }, [extensions, extId])
+  }, [extensions, custodians, extId])
 
   if (isOwner) {
     return (

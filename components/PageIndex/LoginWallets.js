@@ -19,7 +19,7 @@ export default function LoginWallets ({ loading, extensions, custodians, onConne
         grouped => grouped.every(ext => ext.notInstalled) ? grouped[0] : grouped.filter(ext => !ext.notInstalled)
       )).flat()
       const metamaskIndex = exts.findIndex(item => item.type === 'metamask')
-      const filteredCustodians = custodians.filter(item => !DISABLE_WALLETS.includes(item.id))
+      const filteredCustodians = custodians.services.filter(item => !DISABLE_WALLETS.includes(item.id))
       exts.splice(metamaskIndex + 1, 0, ... filteredCustodians)
       setExtList(exts)
     }, 100)

@@ -20,20 +20,7 @@ export default function ExtWalletButton({ hideAddress, ext, m2Ext, onExtAddress 
   const [accounts, setAccounts] = React.useState([])
   const [avatar, setAvatar] = React.useState(null)
   const m2Connected = (m2Ext.extId === ext.id) || m2Ext.supportedExts?.includes(ext.type)
-
-  let extStatus
-
-  if (ext?.isCustodian) {
-    extStatus = {
-      currentAccount: ext?.currentAccount
-    }
-  } else {
-    if (m2Connected) {
-      extStatus = m2Ext.extStatus
-    } else {
-      extStatus = _extStatus
-    }
-  }
+  const extStatus = m2Connected ? m2Ext.extStatus : _extStatus
 
   const connect = React.useCallback(() => {
     if (m2Connected) {
