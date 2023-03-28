@@ -60,6 +60,10 @@ export default function PageIndex () {
     }
   }, [router, custodianLogin, login])
 
+  React.useEffect(() => {
+    custodians.disconnect()
+  }, [custodians])
+
   return (
     <AppContainer className='sm:overflow-y-hidden'>
       <Header />
