@@ -15,7 +15,7 @@ export default class CustodianServiceManager {
   }
 
   get services () {
-    return Object.keys(ServicesDict).map( id => this.createService(id))
+    return this.options.map(config => this.createService(config.id))
   }
 
   getService (custodianId) {
@@ -26,7 +26,7 @@ export default class CustodianServiceManager {
     // custodianId might be the non-custodial waller.
     const Service = ServicesDict[custodianId]
     if (Service) {
-      const config = this.options?.[custodianId]
+      const config = this.options?.find(item => item.id === custodianId)?.config
       if (!config) {
         console.warn(`${custodianId} does not have any config.`)
       }
