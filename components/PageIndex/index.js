@@ -17,6 +17,7 @@ import NetworkIcon from 'components/common/Icon/NetworkIcon'
 import LoginWallets from './LoginWallets'
 
 import styles from './styles.module.css'
+import Icon from 'components/icons'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 
@@ -35,8 +36,14 @@ export default function PageIndex () {
   const { login } = useWeb3Login(extensions, signingMessage, loginOptions)
   const { login: custodianLogin } = useWeb3Login(custodians, signingMessage, loginOptions)
   const [loading, setLoading] = React.useState(false)
+  const currentCustodian = custodians.services[0]
 
-  const onConnect = React.useCallback(async ext => {
+  const onConnect = React.useCallback(async (ext, custodianAuthType) => {
+
+    if (ext?.isCustodian) {
+      ext.preferredAuthType = custodianAuthType
+    }
+
     const account = ext?.isCustodian ? await custodianLogin(ext) : await login(ext)
     if (account?.token) {
       setLoading(true)
@@ -84,8 +91,31 @@ export default function PageIndex () {
         </div>
         <div className='relative self-center sm:self-start max-w-full w-[360px] sm:w-[300px] md:w-[360px] mb-12'>
           <Card className='p-6 md:p-8'>
-            <div className='text-2xl font-bold mb-2'>Create My Link</div>
-            <div className='mb-5 font-light'>Choose the wallet you want to connect and customize your link.</div>
+            <div className='text-2xl font-bold mb-3'>Create My Link</div>
+            <div className='mb-2 font-light leading-6'>Connect with Social Accounts</div>
+            <div className='flex gap-5 mb-3'>
+              <button onClick={() => onConnect(currentCustodian, 'google')} className={classnames(
+                'flex w-8 h-8 p-1 bg-white items-center justify-center rounded-md',
+              )}>
+                <Icon type='google' />
+              </button>
+              <button onClick={() => onConnect(currentCustodian, 'facebook')} className={classnames(
+                'flex w-8 h-8 p-1 bg-white items-center justify-center rounded-md',
+              )}>
+                <Icon type='facebook' />
+              </button>
+              <button onClick={() => onConnect(currentCustodian, 'apple')} className={classnames(
+                'flex w-8 h-8 p-1 bg-white items-center justify-center rounded-md',
+              )}>
+                <Icon type='apple' />
+              </button>
+              <button onClick={() => onConnect(currentCustodian, 'email')} className={classnames(
+                'flex w-8 h-8 p-1 bg-white items-center justify-center rounded-md',
+              )}>
+                <Icon type='email' />
+              </button>
+            </div>
+            <div className='mb-2 font-light leading-6'>or Connect with wallets</div>
             <LoginWallets loading={loading} extensions={extensions} custodians={custodians} onConnect={onConnect} />
           </Card>
         </div>

@@ -32,6 +32,10 @@ import iconTwitter from './socials/twitter.svg'
 import iconGithub from './socials/github.svg'
 import iconLinkedin from './socials/linkedin.svg'
 import iconMedium from './socials/medium.svg'
+import iconGoogle from './socials/google.svg'
+import iconFacebook from './socials/facebook.svg'
+import iconApple from './socials/apple.svg'
+import iconEmail from './socials/email.svg'
 
 const ICONS = {
   camera: iconCamera,
@@ -58,6 +62,10 @@ const ICONS = {
   github: iconGithub,
   linkedin: iconLinkedin,
   medium: iconMedium,
+  google: iconGoogle,
+  facebook: iconFacebook,
+  apple: iconApple,
+  email: iconEmail,
   link3: iconLink3,
   dotbit: iconDotbit,
   'dotbit-badge': iconDotbitBadge
