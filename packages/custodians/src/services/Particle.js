@@ -61,11 +61,16 @@ export default class Particle extends BaseCustodianService {
   }
 
   async connect () {
+    if (!this.preferredAuthType) {
+      return
+    }
     const isLogin = this.service.auth.isLogin()
     const userInfo = isLogin ? this.service.auth.userInfo() : await this.service.auth.login({
       preferredAuthType: this.preferredAuthType,
-      socialLoginPrompt: 'none',
+      socialLoginPrompt: 'consent'
     })
+    window.localStorage.setItem('isPersonalSign', '0')
+
     const currentAddr = userInfo.wallets.find(item => item.chain_name === 'evm_chain').public_address.toLowerCase()
     this.currentAccount = {
       address: currentAddr,
