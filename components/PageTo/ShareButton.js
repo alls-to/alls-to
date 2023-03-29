@@ -9,10 +9,11 @@ import Button from 'components/common/Button'
 import Icon from 'components/icons'
 
 export default function ShareButton ({ to }) {
-  const link = `https://alls.to/${to.key}`
-
   const keyOrAddr = to.key || to.addr
+  const shareKey = to.key || to.handle
   const name = to.name || keyOrAddr
+  const link = `https://alls.to/${shareKey}`
+
   const saveImage = React.useCallback(async () => {
     await saveAs(`https://img.meson.fi/to/${encodeURIComponent(keyOrAddr)}/share`, `AllsTo_${name}.png`)
   }, [keyOrAddr, name])
