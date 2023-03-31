@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Button from 'components/common/Button'
 
-const ValidatorModal = React.forwardRef(({ to, onNext }, ref) => {
+const ValidatorModal = ({ to, onNext }, ref) => {
   let [isOpen, setIsOpen] = React.useState(false)
   const [value, setValue] = React.useState('')
   const answer = to.key?.slice(0, 1)
@@ -85,6 +85,6 @@ const ValidatorModal = React.forwardRef(({ to, onNext }, ref) => {
       </Dialog>
     </Transition>
   )
-})
+}
 
-export default ValidatorModal
+export default React.forwardRef(ValidatorModal)
