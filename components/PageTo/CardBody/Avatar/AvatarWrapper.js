@@ -1,8 +1,14 @@
 import Icon from 'components/icons'
+import classnames from 'classnames'
 
-export default function AvatarWrapper ({ children, badge }) {
+const avatarSizes = {
+  lg: 'w-16 h-16',
+  sm: 'w-4 w-4'
+}
+
+export default function AvatarWrapper({ children, size = 'lg', badge, hiddenBadge = false }) {
   const avatar = (
-    <div className='bg-primary/10 w-16 h-16 rounded-full border-2 border-white box-content overflow-hidden'>
+    <div className={classnames('bg-primary/10 rounded-full border-2 border-white box-content overflow-hidden', avatarSizes[size])}>
       {children}
     </div>
   )
@@ -20,14 +26,16 @@ export default function AvatarWrapper ({ children, badge }) {
   return (
     <div className='relative'>
       {avatar}
-      <a
-        className='block absolute bottom-px right-px w-5 h-5 flex items-center justify-center group'
-        href={badge.href}
-        target='_blank'
-        rel='noreferrer'
-      >
-        <Icon type={iconType} className='absolute w-5 h-5 group-hover:contrast-75' />
-      </a>
+      {
+        !hiddenBadge && <a
+          className='block absolute bottom-px right-px w-5 h-5 flex items-center justify-center group'
+          href={badge.href}
+          target='_blank'
+          rel='noreferrer'
+        >
+          <Icon type={iconType} className='absolute w-5 h-5 group-hover:contrast-75' />
+        </a>
+      }
     </div>
   )
 }
