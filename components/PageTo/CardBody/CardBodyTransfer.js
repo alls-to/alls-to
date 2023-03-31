@@ -4,7 +4,8 @@ import dynamic from 'next/dynamic'
 import { utils } from 'ethers'
 import { saveAs } from 'file-saver'
 import mesonPresets from '@mesonfi/presets'
-
+import { Popover, Transition } from '@headlessui/react'
+import { Fragment } from 'react'
 import Button from 'components/common/Button'
 import NetworkIcon from 'components/common/Icon/NetworkIcon'
 import TokenIcon from 'components/common/Icon/TokenIcon'
@@ -14,34 +15,98 @@ import Avatar from './Avatar'
 import AvatarWrapper from './Avatar/AvatarWrapper'
 import SocialButtons from './SocialButtons'
 import { DIDs } from 'lib/did'
+import ValidatorModal from './ValidatorModal'
 
 const MesonToEmbedded = dynamic(
   import('@mesonfi/to').then(t => t.MesonToEmbedded),
   { ssr: false }
 )
 
+const DotBitInfoSection = ({ to, didProfileUrl }) => {
+  const [openAliasPop, setOpenAliasPop] = React.useState(false)
+
+  return (
+    <>
+      <div className={classnames('break-all text-center max-w-[254px]', (to.name || to.key) ? 'font-bold' : 'font-medium text-sm')}>
+        {to.addr}
+      </div>
+      <Popover className='relative'>
+        {() => (
+          <>
+            <Popover.Button className='mt-1 mb-3 outline-0'>
+              <div onMouseOver={() => setOpenAliasPop(true)} onMouseLeave={() => setOpenAliasPop(false)} className='bg-primary hover:bg-primary/80 py-[2px] px-1 rounded-[6px] text-[14px] text-white flex items-center cursor-pointer'>
+                <Icon type='dotbit-badge' className='w-4 h-4 group-hover:contrast-75 mr-1' /> {to.key}
+              </div>
+            </Popover.Button>
+            <Transition
+              as={Fragment}
+              show={openAliasPop}
+              enter='transition ease-out duration-200'
+              enterFrom='opacity-0 translate-y-1'
+              enterTo='opacity-100 translate-y-0'
+              leave='transition ease-in duration-150'
+              leaveFrom='opacity-100 translate-y-0'
+              leaveTo='opacity-0 translate-y-1'
+            >
+              <Popover.Panel className='absolute left-1/2 z-10 -translate-x-1/2 px-3'>
+                <div className='relative shadow-lg p-3 rounded-lg bg-white flex flex-no-wrap items-center text-[14px] leading-[18px] whitespace-nowrap font-light'>
+                  This address alias:
+                  <div className='flex items-center ml-16 font-medium'>
+                    <AvatarWrapper hiddenBadge size='sm' badge={{ type: to.did, href: didProfileUrl }}>
+                      <Avatar addr={to.addr} url={to.avatar} />
+                    </AvatarWrapper>
+                    <span className='ml-1'>{to.key}</span>
+                  </div>
+                  <div class='absolute -top-4 left-1/2 -translate-x-1/2 w-0 h-0 border-8 border-solid border-transparent border-b-white'></div>
+                </div>
+              </Popover.Panel>
+            </Transition>
+          </>
+        )}
+      </Popover>
+    </>
+  )
+}
+
+const DefaultInfoSection = ({ to, title }) => {
+  return (
+    <div className={classnames('break-all text-center max-w-[254px]', (to.name || to.key) ? 'font-bold text-lg' : 'font-medium text-sm')}>
+      {title}
+    </div>
+  )
+}
+
 export default function CardBodyTransfer ({ to }) {
   const title = to.name || (to.key ? to.handle : to.addr)
-
+  const validatorModalRef = React.useRef(null)
   const network = mesonPresets.getNetwork(to.networkId)
   const token = network.tokens.find(t => t.symbol.toLowerCase().includes(to.tokens[0]))
   const didLink = DIDs.find(item => item.id === to.did)?.link
-  const didProfileUrl = didLink ? `${didLink}/${to.handle}`: ''
+  const didProfileUrl = didLink ? `${didLink}/${to.handle}` : ''
+
+  const openValidator = () => {
+    validatorModalRef.current.open()
+  }
+
+  const onSubmmit = () => {
+    validatorModalRef.current.close()
+    // TODO: invoke meson.to to submit transaction.
+  }
 
   return (
     <>
       <div className='mt-5 self-center'>
         <AvatarWrapper badge={{ type: to.did, href: didProfileUrl }}>
-          <Avatar addr={to.addr} url={to.avatar}/>
+          <Avatar addr={to.addr} url={to.avatar} />
         </AvatarWrapper>
       </div>
-      
-      <div className='mt-3 flex flex-col items-center'>
-        <div className={classnames('break-all text-center', (to.name || to.key) ? 'font-bold text-lg' : 'font-medium text-sm')}>
-          {title}
-        </div>
-        <div className='text-sm mt-1'>{to.bio}</div>
-        <SocialButtons socials={to.socials} size='sm' className='mt-2' />
+
+      <div className='mt-4 flex flex-col items-center'>
+        {
+          to.did === 'dotbit' ? <DotBitInfoSection to={to} didProfileUrl={didProfileUrl} /> : <DefaultInfoSection to={to} />
+        }
+        <div className='text-sm'>{to.bio}</div>
+        <SocialButtons socials={to.socials} size='sm' className='mt-3' />
       </div>
 
       <div className='mt-5 flex flex-row flex-wrap items-center justify-center bg-primary bg-opacity-5 rounded-xl p-4 text-sm'>
@@ -64,6 +129,7 @@ export default function CardBodyTransfer ({ to }) {
           SuccessInfo={SuccessInfo}
         />
       </div>
+      <ValidatorModal to={to} onNext={onSubmmit} ref={validatorModalRef} />
     </>
   )
 }
