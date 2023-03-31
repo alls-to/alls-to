@@ -21,7 +21,7 @@ import Icon from 'components/icons'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 
-const icons = 'eth|polygon|bnb|arb|opt|avax|zksync|aurora|tron|aptos|ftm|cronos|movr|beam|cfx'.split('|')
+const icons = 'eth|polygon|bnb|arb|opt|avax|zksync|aurora|cfx|tron|aptos|ftm|cronos|movr|beam'.split('|')
 
 const loginOptions = {
   duration: 86400 * 7,

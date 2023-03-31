@@ -6,7 +6,7 @@ import useMesonToSyncedExt from './useMesonToSyncedExt'
 import ExtWalletButton from './ExtWalletButton'
 import { useCustodians } from '@mesonfi/custodians/react'
 
-const DISABLE_WALLETS = process.env.NEXT_PUBLIC_DISABLE_WALLETS.split(',')
+const DISABLE_WALLETS = (process.env.NEXT_PUBLIC_DISABLE_WALLETS || '').split(',')
 
 export default function WalletButtons ({ toAddr, onExtAddress }) {
   const { extensions } = useExtensions()
