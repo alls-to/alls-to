@@ -53,7 +53,7 @@ const DotBitInfoSection = ({ to, didProfileUrl }) => {
                   This address alias:
                   <div className='flex items-center ml-16 font-medium'>
                     <AvatarWrapper hiddenBadge size='sm' badge={{ type: to.did, href: didProfileUrl }}>
-                      <Avatar addr={to.addr} url={to.avatar} />
+                      <Avatar diameter={16} addr={to.addr} url={to.avatar} />
                     </AvatarWrapper>
                     <span className='ml-1'>{to.key}</span>
                   </div>
@@ -103,7 +103,7 @@ export default function CardBodyTransfer ({ to }) {
 
       <div className='mt-4 flex flex-col items-center'>
         {
-          to.did === 'dotbit' ? <DotBitInfoSection to={to} didProfileUrl={didProfileUrl} /> : <DefaultInfoSection to={to} />
+          to?.key?.endsWith('.bit') ? <DotBitInfoSection to={to} didProfileUrl={didProfileUrl} /> : <DefaultInfoSection to={to} title={title} />
         }
         <div className='text-sm'>{to.bio}</div>
         <SocialButtons socials={to.socials} size='sm' className='mt-3' />

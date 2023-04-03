@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import Button from 'components/common/Button'
 
 const ValidatorModal = ({ to, onNext }, ref) => {
-  let [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(false)
   const [value, setValue] = React.useState('')
   const answer = to.key?.slice(0, 1)
   const restKeyStr = to.key?.slice(1, to.key.length)
