@@ -125,6 +125,13 @@ export default function CardBodyTransfer ({ to }) {
       <div className='mt-4 -mx-2 -mb-4'>
         <MesonToEmbedded
           appId='alls-to'
+          onSwapAttempted={async data => {
+            if (utils.parseUnits('1', 6).lte(data.swapData.value)) {
+              window.alert('need to verify')
+              return false
+            }
+            return true
+          }}
           to={{ addr: to.addr, chain: to.networkId, tokens: to.tokens }}
           SuccessInfo={SuccessInfo}
         />
