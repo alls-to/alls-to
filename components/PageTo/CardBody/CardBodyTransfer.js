@@ -57,7 +57,7 @@ const DotBitInfoSection = ({ to, didProfileUrl }) => {
                     </AvatarWrapper>
                     <span className='ml-1'>{to.key}</span>
                   </div>
-                  <div class='absolute -top-4 left-1/2 -translate-x-1/2 w-0 h-0 border-8 border-solid border-transparent border-b-white'></div>
+                  <div className='absolute -top-4 left-1/2 -translate-x-1/2 w-0 h-0 border-8 border-solid border-transparent border-b-white'></div>
                 </div>
               </Popover.Panel>
             </Transition>
