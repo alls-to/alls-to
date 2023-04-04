@@ -99,7 +99,7 @@ export default function Input ({
         getEl(type),
         {
           id, name: id, type,
-          className: classnames(getDefaultClassNames(type), validInfo?.className, inputClassName, disabled ? 'text-gray-400' : ''),
+          className: classnames(getDefaultClassNames(type), validInfo?.className, inputClassName),
           value, onChange: onInputChange,
           disabled, placeholder, maxLength,
         },
