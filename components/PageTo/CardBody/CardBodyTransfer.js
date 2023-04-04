@@ -76,7 +76,7 @@ const DefaultInfoSection = ({ to, title }) => {
   )
 }
 
-export default function CardBodyTransfer ({ to }) {
+export default function CardBodyTransfer({ to }) {
   const title = to.name || (to.key ? to.handle : to.addr)
   const validatorModalRef = React.useRef(null)
   const network = mesonPresets.getNetwork(to.networkId)
@@ -84,13 +84,11 @@ export default function CardBodyTransfer ({ to }) {
   const didLink = DIDs.find(item => item.id === to.did)?.link
   const didProfileUrl = didLink ? `${didLink}/${to.handle}` : ''
 
-  const openValidator = () => {
-    validatorModalRef.current.open()
-  }
-
-  const onSubmmit = () => {
-    validatorModalRef.current.close()
-    // TODO: invoke meson.to to submit transaction.
+  const onSwapAttempted = async data => {
+    if (utils.parseUnits('1', 6).lte(data.swapData.value)) {
+      return await validatorModalRef.current.openAndWaitCheck()
+    }
+    return true
   }
 
   return (
@@ -125,18 +123,12 @@ export default function CardBodyTransfer ({ to }) {
       <div className='mt-4 -mx-2 -mb-4'>
         <MesonToEmbedded
           appId='alls-to'
-          onSwapAttempted={async data => {
-            if (utils.parseUnits('1', 6).lte(data.swapData.value)) {
-              window.alert('need to verify')
-              return false
-            }
-            return true
-          }}
+          onSwapAttempted={onSwapAttempted}
           to={{ addr: to.addr, chain: to.networkId, tokens: to.tokens }}
           SuccessInfo={SuccessInfo}
         />
       </div>
-      <ValidatorModal to={to} onNext={onSubmmit} ref={validatorModalRef} />
+      <ValidatorModal to={to} ref={validatorModalRef} />
     </>
   )
 }

@@ -2,9 +2,11 @@ import React, { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Button from 'components/common/Button'
 
-const ValidatorModal = ({ to, onNext }, ref) => {
+const ValidatorModal = ({ to }, ref) => {
   const [isOpen, setIsOpen] = React.useState(false)
   const [value, setValue] = React.useState('')
+  const [invalid, setInvalid] = React.useState(false)
+  const promiseRef = React.useRef()
   const answer = to.key?.slice(0, 1)
   const restKeyStr = to.key?.slice(1, to.key.length)
 
@@ -13,19 +15,31 @@ const ValidatorModal = ({ to, onNext }, ref) => {
   }
 
   const handleConfirm = () => {
-    if (value === answer) {
-      onNext()
+    setInvalid(value !== '' && answer !== value)
+    if (answer === value) {
+      setIsOpen(false)
+      setValue('')
+      setInvalid(false)
     }
+    promiseRef.current.resolve(answer === value)
+  }
+
+  const handleCancel = () => {
+    setIsOpen(false)
+    setValue('')
+    setInvalid(false)
+    promiseRef.current.resolve()
   }
 
   React.useImperativeHandle(ref, () => {
     return {
-      open() {
+      openAndWaitCheck: async () => new Promise((resolve, reject) => {
+        promiseRef.current = {
+          resolve,
+          reject
+        }
         setIsOpen(true)
-      },
-      close() {
-        setIsOpen(false)
-      },
+      })
     }
   }, [])
 
@@ -67,11 +81,17 @@ const ValidatorModal = ({ to, onNext }, ref) => {
                     Please complete payee’s full .bit account to ensure transfer is correct.
                   </p>
                 </div>
-                <div className='my-10 flex justify-center items-center font-bold text-primary text-xl'>
-                  <input onChange={handleChange} value={value} autoCapitalize='off' className='w-8 h-8 border text-center border-primary/40 rounded-lg mr-1' /> { restKeyStr }
+                <div className='my-10'>
+                  <div className='flex justify-center items-center font-bold text-primary text-xl'>
+                    <input onChange={handleChange} value={value} autoCapitalize='off' className='inline-block w-8 h-8 border p-1 text-center border-primary/40 rounded-lg mr-1' />
+                    {restKeyStr}
+                  </div>
+                  {
+                    invalid && <div className='text-center text-sm text-red'>Input incorrect</div>
+                  }
                 </div>
                 <div className='flex flex-1 w-full mt-4 gap-4'>
-                  <Button type='transparent' className='w-1/2 h-12' onClick={() => setIsOpen(false)}>
+                  <Button type='transparent' className='w-1/2 h-12' onClick={handleCancel}>
                     CANCEL
                   </Button>
                   <Button type='primary' className='w-1/2 h-12' onClick={handleConfirm}>
