@@ -8,7 +8,7 @@ const avatarSizes = {
 
 export default function AvatarWrapper({ children, size = 'lg', badge, hiddenBadge = false }) {
   const avatar = (
-    <div className={classnames('bg-primary/10 rounded-full border-2 border-white box-content overflow-hidden', avatarSizes[size])}>
+    <div className={classnames('bg-primary/10 flex rounded-full border-2 border-white box-content overflow-hidden', avatarSizes[size])}>
       {children}
     </div>
   )
@@ -28,7 +28,7 @@ export default function AvatarWrapper({ children, size = 'lg', badge, hiddenBadg
       {avatar}
       {
         !hiddenBadge && <a
-          className='block absolute bottom-px right-px w-5 h-5 flex items-center justify-center group'
+          className='absolute bottom-px right-px w-5 h-5 flex items-center justify-center group'
           href={badge.href}
           target='_blank'
           rel='noreferrer'
