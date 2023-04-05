@@ -21,7 +21,7 @@
     "@headlessui/react": "^1.7.7",
     "@mesonfi/extensions": "^0.7.0",
     "@mesonfi/presets": "^1.7.2",
-    "@mesonfi/to": "^0.3.0",
+    "@mesonfi/to": "^0.3.1",
     "@mesonfi/web3-jwt": "^0.5.0",
     "@tailwindcss/forms": "^0.5.3",
     "autoprefixer": "^10.4.12",
