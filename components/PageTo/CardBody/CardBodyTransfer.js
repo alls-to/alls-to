@@ -16,6 +16,9 @@ import AvatarWrapper from './Avatar/AvatarWrapper'
 import SocialButtons from './SocialButtons'
 import { DIDs } from 'lib/did'
 import ValidatorModal from './ValidatorModal'
+import { createInstance } from 'dotbit'
+
+const dotbit = createInstance()
 
 const MesonToEmbedded = dynamic(
   import('@mesonfi/to').then(t => t.MesonToEmbedded),
@@ -84,9 +87,22 @@ export default function CardBodyTransfer({ to }) {
   const didLink = DIDs.find(item => item.id === to.did)?.link
   const didProfileUrl = didLink ? `${didLink}/${to.handle}` : ''
 
-  const onSwapAttempted = async data => {
-    if (utils.parseUnits('10', 6).lt(data.swapData.value)) {
-      return await validatorModalRef.current.openAndWaitCheck()
+  const onSwapAttempted = async ({ swapData }) =>  {
+    let handle
+
+    const recipient = swapData.recipient
+    try {
+      const dotbitAccount = await dotbit.reverse({
+        key: recipient,
+        coin_type: '60'
+      })
+      handle = dotbitAccount.account
+    } catch (e) {
+      console.warn(e)
+    }
+
+    if (handle) {
+      return await validatorModalRef.current.openAndWaitCheck(handle)
     }
     return true
   }

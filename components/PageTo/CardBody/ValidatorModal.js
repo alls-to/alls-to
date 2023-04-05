@@ -6,9 +6,9 @@ const ValidatorModal = ({ to }, ref) => {
   const [isOpen, setIsOpen] = React.useState(false)
   const [value, setValue] = React.useState('')
   const [invalid, setInvalid] = React.useState(false)
+  const [restHandleStr, setRestHandleStr] = React.useState('')
+  const [answer, setAnswer] = React.useState('')
   const promiseRef = React.useRef()
-  const answer = to.key?.slice(0, 1)
-  const restKeyStr = to.key?.slice(1, to.key.length)
 
   const handleChange = (event) => {
     setValue(event.target.value.toLowerCase())
@@ -20,20 +20,21 @@ const ValidatorModal = ({ to }, ref) => {
       setIsOpen(false)
       setValue('')
       setInvalid(false)
+      promiseRef.current.resolve(true)
     }
-    promiseRef.current.resolve(answer === value)
   }
 
   const handleCancel = () => {
     setIsOpen(false)
     setValue('')
     setInvalid(false)
-    promiseRef.current.resolve()
   }
 
   React.useImperativeHandle(ref, () => {
     return {
-      openAndWaitCheck: async () => new Promise((resolve, reject) => {
+      openAndWaitCheck: async (handle) => new Promise((resolve, reject) => {
+        setRestHandleStr(handle.slice(1, handle.length))
+        setAnswer(handle.slice(0, 1))
         promiseRef.current = {
           resolve,
           reject
@@ -83,8 +84,8 @@ const ValidatorModal = ({ to }, ref) => {
                 </div>
                 <div className='my-10'>
                   <div className='flex justify-center items-center font-bold text-primary text-xl'>
-                    <input onChange={handleChange} value={value} autoCapitalize='off' className='inline-block w-8 h-8 border p-1 text-center border-primary/40 rounded-lg mr-1' />
-                    {restKeyStr}
+                    <input onChange={handleChange} value={value} autoCapitalize='off' className='inline-block w-8 h-8 border text-center border-primary/40 rounded-lg mr-1' />
+                    {restHandleStr}
                   </div>
                   {
                     invalid && <div className='text-center text-sm text-red'>Input incorrect</div>
