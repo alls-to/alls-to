@@ -85,7 +85,7 @@ export default function CardBodyTransfer({ to }) {
   const didProfileUrl = didLink ? `${didLink}/${to.handle}` : ''
 
   const onSwapAttempted = async data => {
-    if (utils.parseUnits('1', 6).lte(data.swapData.value)) {
+    if (utils.parseUnits('10', 6).lt(data.swapData.value)) {
       return await validatorModalRef.current.openAndWaitCheck()
     }
     return true
