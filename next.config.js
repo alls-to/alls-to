@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  publicRuntimeConfig: {
+    DISCORD_LINK: 'https://discord.gg/allsto'
+  },
   async headers() {
     return [
       {
