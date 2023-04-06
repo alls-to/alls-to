@@ -13,6 +13,11 @@ input:disabled {
   opacity: 1 !important; /* 2. correct opacity on iOS */
 }
 
+img {
+  pointer-events: none;
+  user-select: none;
+}
+
 .main-padding {
   padding-left: 24px;
   padding-right: 24px;
