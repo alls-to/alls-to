@@ -96,7 +96,7 @@ export default function PageIndex () {
         <div className='relative self-center sm:self-start max-w-full w-[360px] sm:w-[300px] md:w-[360px] mb-12'>
           <Card className='p-6 md:p-8'>
             <div className='text-2xl font-bold mb-3'>Create My Link</div>
-            <div className='mb-2 font-light leading-6'>Connect with Social Accounts</div>
+            <div className='mb-2 font-light leading-6'>Connect with</div>
             <div className='flex gap-5 mb-3'>
               <button onClick={() => onConnect(currentCustodian, 'google')} className={classnames(
                 'flex w-8 h-8 p-1 bg-white items-center justify-center rounded-md',
@@ -119,7 +119,12 @@ export default function PageIndex () {
                 <Icon type='email' />
               </button>
             </div>
-            <div className='mb-2 font-light leading-6'>or Connect with wallets</div>
+            <div className='mb-2 flex items-center text-xs font-light leading-6 opacity-70'>Powered by <Icon type='particle' className='w-3 h-3 mx-1' />Partical Network</div>
+            <div className='flex items-center justify-between text-primary font-light text-xs leading-6 my-3'>
+              <span className='block bg-primary/30 h-[1px] w-[calc(50%_-_20px)]'></span>
+              OR
+              <span className='block bg-primary/30 h-[1px] w-[calc(50%_-_20px)]'></span>
+            </div>
             <LoginWallets loading={loading} extensions={extensions} custodians={custodians} onConnect={onConnect} />
           </Card>
         </div>
