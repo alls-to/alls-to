@@ -12,10 +12,10 @@ const RewardModal = (_, ref) => {
   React.useImperativeHandle(ref, () => {
     return {
       open: (data) => {
-        const status = localStorage.getItem('reward_modal_state')
+        const status = localStorage.getItem(data.addr)
         if (!status) {
           setRewardData(data)
-          localStorage.setItem('reward_modal_state', 'opened')
+          localStorage.setItem(data.addr, 'opened')
           setIsOpen(true)
         }
       }
@@ -59,12 +59,12 @@ const RewardModal = (_, ref) => {
                     rewardData?.mint_hash ?
                       <p className='text-sm text-left'>
                         You just created an ALLsTo link successfully, and got a reward
-                        of <b>500 $vALS</b>.
+                        of <b>500 $vALS</b> on BNB Chain.
                       </p> :
                       <div className='text-sm text-left'>
                         <p className='mb-2'>
                           You just created an ALLsTo link successfully.
-                          The reward of <b>500 $vALS</b> wil be sent to your address in 10 minutes.
+                          The reward of <b>500 $vALS</b> wil be sent to your address on BNB Chain in 10 minutes.
                         </p>
                         <p>
                           Go to <a rel='noreferrer' href={publicRuntimeConfig.DISCORD_LINK} target='_blank'><b>ALLsTo’s discord</b></a> for more info.
