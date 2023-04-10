@@ -83,8 +83,10 @@ const ValidatorModal = ({ to }, ref) => {
                   </p>
                 </div>
                 <div className='my-10'>
-                  <div className='flex justify-center items-center font-bold text-primary text-xl'>
-                    <input onChange={handleChange} value={value} autoCapitalize='off' className='inline-flex w-8 h-8 border text-center border-primary/40 rounded-lg mr-1' />
+                  <div className='flex justify-center items-center text-xl text-primary font-bold'>
+                    <div className='inline-flex border border-primary/40 rounded-lg mr-1 overflow-hidden'>
+                      <input onChange={handleChange} value={value} autoCapitalize='off' className='text-center w-9 h-9 focus:outline-0 box-sizing' />
+                    </div>
                     {restHandleStr}
                   </div>
                   {
