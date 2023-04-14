@@ -29,17 +29,21 @@ const loginOptions = {
   onError: showErrorToast
 }
 
+const custodianLoginOptions = {
+  ...loginOptions,
+  verifier: process.env.NEXT_PUBLIC_PARTICLE_VERIFIER_ADDR
+}
+
 export default function PageIndex () {
   const router = useRouter()
   const { extensions } = useExtensions()
   const { custodians } = useCustodians()
   const { login } = useWeb3Login(extensions, signingMessage, loginOptions)
-  const { login: custodianLogin } = useWeb3Login(custodians, signingMessage, loginOptions)
+  const { login: custodianLogin } = useWeb3Login(custodians, signingMessage, custodianLoginOptions)
   const [loading, setLoading] = React.useState(false)
   const currentCustodian = custodians.services[0]
 
   const onConnect = React.useCallback(async (ext, custodianAuthType) => {
-
     if (ext?.isCustodian) {
       ext.preferredAuthType = custodianAuthType
     }
@@ -119,7 +123,7 @@ export default function PageIndex () {
                 <Icon type='email' />
               </button>
             </div>
-            <div className='mb-2 flex items-center text-xs font-light leading-6 opacity-70'>Powered by <Icon type='particle' className='w-3 h-3 mx-1' />Partical Network</div>
+            <div className='mb-2 flex items-center text-xs font-light leading-6 opacity-70'>Powered by <span className='w-3 h-3 mx-1'><Icon type='particle'/></span>Partical Network</div>
             <div className='flex items-center justify-between text-primary font-light text-xs leading-6 my-3'>
               <span className='block bg-primary/30 h-[1px] w-[calc(50%_-_20px)]'></span>
               OR

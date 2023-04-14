@@ -3,6 +3,7 @@ import { NextSeo } from 'next-seo'
 
 import { abbreviate } from 'lib'
 import PageTo from 'components/PageTo'
+import { queryPage} from '../lib/alls.to'
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -36,7 +37,6 @@ export default function Subpage ({ toList = [] }) {
 }
 
 export async function getServerSideProps ({ query, res }) {
-  const { queryPage } = require('lib/alls.to')
   const toList = await queryPage(query.handleOrKeyOrAddr, isProd)
 
   if (!toList.length) {

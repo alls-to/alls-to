@@ -10,16 +10,28 @@ import Button from 'components/common/Button'
 
 import BodyPartProfile from './BodyPartProfile'
 import BodyPartReceive from './BodyPartReceive'
+import { useCustodians } from '@mesonfi/custodians/react'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 
-export default function CardBodyEdit({ to, setTo, setModified, onSubmitted }) {
+export default function CardBodyEdit({ to, setTo, matchExt, setModified, onSubmitted }) {
   const { extensions, extStatus } = useExtensions()
-  const { account, login } = useWeb3Login(extensions, signingMessage, {
+  const { custodians } = useCustodians()
+  const loginOptions = {
     duration: 86400 * 7,
     onInfo: showInfoToast,
     onError: showErrorToast
-  })
+  }
+
+  const custodianLoginOptions = {
+    ...loginOptions,
+    verifier: process.env.NEXT_PUBLIC_PARTICLE_VERIFIER_ADDR
+  }
+
+  let { account: extAccount, login } = useWeb3Login(extensions, signingMessage, loginOpt)
+  let { account: custodianAccount, login: custodianLogin} = useWeb3Login(custodians, signingMessage, custodianLoginOptions)
+
+  const account = extAccount || custodianAccount
 
   React.useEffect(() => {
     if (!extStatus || extStatus.currentAccount?.address !== to.addr) {
@@ -36,12 +48,16 @@ export default function CardBodyEdit({ to, setTo, setModified, onSubmitted }) {
       login(extensions.currentExt).catch(e => {
         onSubmitted()
       })
+    } else if (matchExt !== 'particle') {
+      (async () => {
+        await custodians.connect(undefined, undefined, 'particle')
+      })()
     }
-  }, [account, to.addr, login, extensions, onSubmitted])
+  }, [account, to.addr, login, matchExt, custodians, extensions, onSubmitted])
 
   if (!account) {
     return <CardBodyLoading />
-  } else if (account.sub !== to.addr) {
+  } else if (account.sub !== to.addr && matchExt !== 'particle') {
     return <CardBodyLoading notice='Signing with wallet...' />
   }
 
@@ -85,7 +101,6 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
     const profileData = refProfile.current?.getData()
     const receiveData = refReceive.current?.getData()
     const data = { ...profileData, ...receiveData }
-
     try {
       const newTo = await api.updateMyself(data, account.token)
       refs.toast.current?.show({ title: 'Saved!' })
@@ -103,7 +118,6 @@ function CardBodyEditWithAccount({ to, setTo, setModified, onSubmitted, account 
   return (
     <>
       <BodyPartProfile ref={refProfile} to={to} onModified={onModified} accountToken={account.token} />
-      
       <div className='my-4' />
       <BodyPartReceive ref={refReceive} to={to} onModified={onModified} account={account} />
 
