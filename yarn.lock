@@ -2758,7 +2758,7 @@
   resolved "https://npm.pkg.github.com/download/@mesonfi/to/0.3.1/de0e293d1c1cd10e67ba47397e8d3558e0b26746#de0e293d1c1cd10e67ba47397e8d3558e0b26746"
   integrity sha512-CCSF1jaQMd5xwkn7rs99QQyTM17CjH04vjUbvbJkzqXyBIJqu2hTKsGHpB4Wo0a01xWOuAuoqfDllp1gbs7Mwg==
 
-"@mesonfi/web3-jwt@^0.5.0":
+"@mesonfi/web3-jwt@^0.5.0-alpha.1":
   version "0.5.0"
   resolved "https://npm.pkg.github.com/download/@mesonfi/web3-jwt/0.5.0/8a3b6649539c0390b18c79e95c91835ca3c4e5fd#8a3b6649539c0390b18c79e95c91835ca3c4e5fd"
   integrity sha512-cK1PcgLESGIh5zh7kfGTqa+lgoolYD8S+CMzUesWfLZIs0acoeRV0px7S7rPcCevxfL/qZy9WZBrVdIdSuWowA==
