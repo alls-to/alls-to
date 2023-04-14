@@ -26,7 +26,7 @@ export default class Particle extends BaseCustodianService {
   }
 
   get type () {
-    return 'metamask'
+    return 'particle'
   }
 
   get icon () {
@@ -70,15 +70,18 @@ export default class Particle extends BaseCustodianService {
       socialLoginPrompt: 'consent'
     })
     window.localStorage.setItem('isPersonalSign', '0')
-
+    const { uuid, token } = userInfo
     const currentAddr = userInfo.wallets.find(item => item.chain_name === 'evm_chain').public_address.toLowerCase()
+
     this.currentAccount = {
       address: currentAddr,
-      hex: currentAddr
+      hex: currentAddr,
+      sub: currentAddr,
+      uuid,
+      token,
+      iss: `${this.type}:${this.id}`
     }
-    return {
-      address: currentAddr
-    }
+    return this.currentAccount
   }
 
   async glimpse () {
@@ -93,13 +96,12 @@ export default class Particle extends BaseCustodianService {
     }
   }
 
-  async signMessage (message) {
-    const signature = await this.provider.send('personal_sign', [
-      message, this.currentAccount.address
-    ])
 
-    return {
-      signature
+  async signMessage() {
+    if (this.config.signMessage) {
+      return await this.config.signMessage(this.currentAccount)
+    } else {
+      throw new Error('signMessage method not implement.')
     }
   }
 }

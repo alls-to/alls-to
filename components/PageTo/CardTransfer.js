@@ -16,10 +16,10 @@ import classnames from 'classnames'
 
 export default function CardTransfer ({ to: initialTo, matchExt }) {
   const { extensions } = useExtensions()
-
   const [to, setTo] = React.useState(initialTo)
   const [editing, setEditing] = React.useState(false)
   const [modified, setModified] = React.useState(false)
+  const { custodians } = useCustodians()
 
   const onUpdateEditing = React.useCallback(value => {
     if (editing && modified) {
@@ -33,12 +33,18 @@ export default function CardTransfer ({ to: initialTo, matchExt }) {
         setEditing(true)
         return
       }
-      extensions.connect(undefined, undefined, matchExt)
+
+      if (matchExt === 'particle') {
+        custodians.connect(undefined, undefined, matchExt)
+          .then(() => setEditing(true))
+      } else {
+        extensions.connect(undefined, undefined, matchExt)
         .then(() => setEditing(true))
+      }
     } else {
       setEditing(false)
     }
-  }, [extensions, editing, modified, matchExt])
+  }, [extensions, custodians, editing, modified, matchExt])
 
   const onSubmitted = React.useCallback(newTo => {
     if (newTo) {
@@ -54,6 +60,7 @@ export default function CardTransfer ({ to: initialTo, matchExt }) {
         setTo={setTo}
         setModified={setModified}
         onSubmitted={onSubmitted}
+        matchExt={matchExt}
       />
     : <CardBodyTransfer to={to} />
 
