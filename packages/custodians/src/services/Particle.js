@@ -55,22 +55,18 @@ export default class Particle extends BaseCustodianService {
   }
 
   async disconnect () {
-    console.log('disconnect')
     await this.service.auth.logout()
     this.currentAccount = undefined
   }
 
   async connect () {
-    if (!this.preferredAuthType) {
-      return
-    }
     const isLogin = this.service.auth.isLogin()
     const userInfo = isLogin ? this.service.auth.userInfo() : await this.service.auth.login({
       preferredAuthType: this.preferredAuthType,
       socialLoginPrompt: 'consent'
     })
     window.localStorage.setItem('isPersonalSign', '0')
-    const { uuid, token } = userInfo
+    const { uuid, token: utoken } = userInfo
     const currentAddr = userInfo.wallets.find(item => item.chain_name === 'evm_chain').public_address.toLowerCase()
 
     this.currentAccount = {
@@ -78,7 +74,7 @@ export default class Particle extends BaseCustodianService {
       hex: currentAddr,
       sub: currentAddr,
       uuid,
-      token,
+      utoken,
       iss: `${this.type}:${this.id}`
     }
     return this.currentAccount
@@ -96,10 +92,9 @@ export default class Particle extends BaseCustodianService {
     }
   }
 
-
-  async signMessage() {
-    if (this.config.signMessage) {
-      return await this.config.signMessage(this.currentAccount)
+  async signMessage (message) {
+    if (this.config.signMessage && this.currentAccount) {
+      return await this.config.signMessage(this.currentAccount, message)
     } else {
       throw new Error('signMessage method not implement.')
     }
