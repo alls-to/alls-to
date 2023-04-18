@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { useExtensions } from '@mesonfi/extensions/react'
+import { useCustodians } from '@mesonfi/custodians/react'
 import { useWeb3Login } from '@mesonfi/web3-jwt/react'
 
 import * as api from 'lib/api'
@@ -10,7 +11,6 @@ import Button from 'components/common/Button'
 
 import BodyPartProfile from './BodyPartProfile'
 import BodyPartReceive from './BodyPartReceive'
-import { useCustodians } from '@mesonfi/custodians/react'
 
 const signingMessage = process.env.NEXT_PUBLIC_SIGNING_MESSAGE
 
@@ -20,16 +20,12 @@ export default function CardBodyEdit({ to, setTo, matchExt, setModified, onSubmi
   const loginOptions = {
     duration: 86400 * 7,
     onInfo: showInfoToast,
-    onError: showErrorToast
-  }
-
-  const custodianLoginOptions = {
-    ...loginOptions,
+    onError: showErrorToast,
     verifier: process.env.NEXT_PUBLIC_PARTICLE_VERIFIER_ADDR
   }
 
   let { account: extAccount, login } = useWeb3Login(extensions, signingMessage, loginOptions)
-  let { account: custodianAccount, login: custodianLogin} = useWeb3Login(custodians, signingMessage, custodianLoginOptions)
+  let { account: custodianAccount, login: custodianLogin} = useWeb3Login(custodians, signingMessage, loginOptions)
 
   const account = matchExt === 'particle' ? custodianAccount : extAccount
 
