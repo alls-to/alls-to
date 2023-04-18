@@ -39,7 +39,7 @@ export default function PageIndex () {
   const { extensions } = useExtensions()
   const { custodians } = useCustodians()
   const { login } = useWeb3Login(extensions, signingMessage, loginOptions)
-  const { login: custodianLogin } = useWeb3Login(custodians, signingMessage, custodianLoginOptions)
+  const { login: custodianLogin, logout: custodianLogout } = useWeb3Login(custodians, signingMessage, custodianLoginOptions)
   const [loading, setLoading] = React.useState(false)
   const currentCustodian = custodians.services[0]
 
@@ -65,8 +65,8 @@ export default function PageIndex () {
   }, [router, custodianLogin, login])
 
   React.useEffect(() => {
-    custodians.disconnect()
-  }, [custodians])
+    custodianLogout()
+  }, [custodians, router])
 
   return (
     <AppContainer className='sm:overflow-y-hidden'>

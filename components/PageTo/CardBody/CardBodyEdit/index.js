@@ -28,10 +28,10 @@ export default function CardBodyEdit({ to, setTo, matchExt, setModified, onSubmi
     verifier: process.env.NEXT_PUBLIC_PARTICLE_VERIFIER_ADDR
   }
 
-  let { account: extAccount, login } = useWeb3Login(extensions, signingMessage, loginOpt)
+  let { account: extAccount, login } = useWeb3Login(extensions, signingMessage, loginOptions)
   let { account: custodianAccount, login: custodianLogin} = useWeb3Login(custodians, signingMessage, custodianLoginOptions)
 
-  const account = extAccount || custodianAccount
+  const account = matchExt === 'particle' ? custodianAccount : extAccount
 
   React.useEffect(() => {
     if (!extStatus || extStatus.currentAccount?.address !== to.addr) {
@@ -45,17 +45,19 @@ export default function CardBodyEdit({ to, setTo, matchExt, setModified, onSubmi
     if (!account) {
       return
     } else if (account.sub !== to.addr) {
-      login(extensions.currentExt).catch(e => {
-        onSubmitted()
-      })
-    } else if (matchExt !== 'particle') {
-      (async () => {
-        await custodians.connect(undefined, undefined, 'particle')
-      })()
+      if (matchExt === 'particle') {
+        custodianLogin(custodians.currentExt).catch(e => {
+          onSubmitted()
+        })
+      } else {
+        login(extensions.currentExt).catch(e => {
+          onSubmitted()
+        })
+      }
     }
-  }, [account, to.addr, login, matchExt, custodians, extensions, onSubmitted])
+  }, [account, to.addr, login, matchExt, custodianLogin, custodians, extensions, onSubmitted])
 
-  if (!account) {
+  if (!account?.sub) {
     return <CardBodyLoading />
   } else if (account.sub !== to.addr && matchExt !== 'particle') {
     return <CardBodyLoading notice='Signing with wallet...' />
