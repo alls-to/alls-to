@@ -7,12 +7,12 @@ import Header from 'components/common/Header'
 
 import WalletButtons from './WalletButtons'
 import CardTransfer from './CardTransfer'
-import RewardModal from './RewardModal'
+// import RewardModal from './RewardModal'
 import * as api from 'lib/api'
 
 export default function PageTo ({ to }) {
   const router = useRouter()
-  const rewardModalRef = React.useRef()
+  // const rewardModalRef = React.useRef()
   const [extsAddress, setExtsAddress] = React.useState({})
   const addr = to?.addr
   React.useEffect(() => {
@@ -26,16 +26,16 @@ export default function PageTo ({ to }) {
     }
   }, [router, to])
 
-  React.useEffect(() => {
-    if (addr) {
-      (async () => {
-        const result = await api.queryAndSendReward(to.addr)
-        if (result) {
-          rewardModalRef.current.open(result)
-        }
-      })()
-    }
-  }, [addr])
+  // React.useEffect(() => {
+  //   if (addr) {
+  //     (async () => {
+  //       const result = await api.queryAndSendReward(to.addr)
+  //       if (result) {
+  //         rewardModalRef.current.open(result)
+  //       }
+  //     })()
+  //   }
+  // }, [addr])
 
   const onExtAddress = React.useMemo(() => debounce((extId, address) => {
     setExtsAddress(prev => ({ ...prev, [extId]: address }))
@@ -52,7 +52,7 @@ export default function PageTo ({ to }) {
         <WalletButtons toAddr={to.addr} onExtAddress={onExtAddress} />
       </Header>
       <CardTransfer key={to.key} to={to} matchExt={matchExt} />
-      <RewardModal ref={rewardModalRef} />
+      {/* <RewardModal ref={rewardModalRef} /> */}
     </AppContainer>
   )
 }
