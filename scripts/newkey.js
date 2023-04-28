@@ -15,7 +15,7 @@ const main = async () => {
     const oldKey = item.key
     let newKey
 
-    if (oldKey.endsWith('#link3')) {
+    if (oldKey.endsWith('#cyber')) {
       const handle = oldKey.substring(0, oldKey.lastIndexOf('#'))
       if (!handle.endsWith('.cyber')) {
         newKey = `${handle}.cyber`

@@ -19,7 +19,7 @@ import iconWallet from './wallet.svg'
 import iconWarning from './warning.svg'
 import iconLeftArrow from './left-arrow.svg'
 
-import iconLink3 from './did/link3.svg'
+import iconCyber from './did/cyber.svg'
 import iconDotbit from './did/dotbit.svg'
 import iconDotbitBadge from './did/dotbit-badge.svg'
 
@@ -68,7 +68,7 @@ const ICONS = {
   facebook: iconFacebook,
   apple: iconApple,
   email: iconEmail,
-  link3: iconLink3,
+  cyber: iconCyber,
   dotbit: iconDotbit,
   'dotbit-badge': iconDotbitBadge,
   particle: iconParticle
