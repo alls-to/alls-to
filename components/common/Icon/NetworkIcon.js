@@ -16,8 +16,9 @@ import opt from './networks/opt.png'
 import polygon from './networks/polygon.png'
 import tron from './networks/tron.png'
 import zksync from './networks/zksync.png'
+import zkevm from './networks/zkevm.png'
 
-const ICONS = { aptos, arb, aurora, avax, bnb, cfx, cronos, eth, ftm, movr, beam, opt, polygon, tron, zksync }
+const ICONS = { aptos, arb, aurora, avax, bnb, cfx, cronos, eth, ftm, movr, beam, opt, polygon, tron, zksync, zkevm }
 
 export default function NetworkIcon ({ id, size = 16 }) { // 'md'
   return (

@@ -11,7 +11,7 @@ const getTokenOptions = networkId => {
   } else if (networkId === 'aptos') {
     return ['USDC', 'USDT']
   }
-  if (['avax', 'aurora'].includes(networkId)) {
+  if (['aurora'].includes(networkId)) {
     return ['USDC.e', 'USDT.e', 'BUSD.e']
   } else if (networkId === 'beam') {
     return ['xcUSDC', 'xcUSDT', 'BUSD']
