@@ -119,7 +119,9 @@ export default function PageIndex () {
                 <Icon type='email' />
               </button>
             </div>
-            <div className='mb-2 flex items-center text-xs font-light leading-6 opacity-70'>Powered by <span className='w-3 h-3 mx-1'><Icon type='particle'/></span>Partical Network</div>
+            <div className='mb-2 flex items-center text-xs font-light leading-6 opacity-70'>
+              Powered by <span className='w-3 h-3 mx-1'><Icon type='particle'/></span>Particle Network
+            </div>
             <div className='flex items-center justify-between text-primary font-light text-xs leading-6 my-3'>
               <span className='block bg-primary/30 h-[1px] w-[calc(50%_-_20px)]'></span>
               OR
