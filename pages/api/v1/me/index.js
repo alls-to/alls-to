@@ -8,7 +8,7 @@ export default async function handler (req, res) {
     res.status(401).end()
     return
   }
-  const addr = encoded.sub
+  const addr = encoded.iss.startsWith('sui') ? `sui:${encoded.sub}` : encoded.sub
 
   if (req.method === 'POST') {
     const result = await queryWithAddr(addr)

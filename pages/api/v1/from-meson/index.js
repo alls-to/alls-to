@@ -6,7 +6,7 @@ export default async function handler (req, res) {
   const { address, networkId, token } = req.body
   
   if (req.method === 'POST') {
-    const type = getAddressFormat(address)
+    const type = /^sui:0x[0-9a-f]{64}$/.test(address) ? 'sui' : getAddressFormat(address)
     if (!type || !['usdc', 'usdt', 'busd'].includes(token)) {
       res.status(404).end()
       return

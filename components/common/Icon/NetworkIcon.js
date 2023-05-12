@@ -14,11 +14,12 @@ import movr from './networks/movr.png'
 import beam from './networks/beam.png'
 import opt from './networks/opt.png'
 import polygon from './networks/polygon.png'
+import sui from './networks/sui.png'
 import tron from './networks/tron.png'
 import zksync from './networks/zksync.png'
 import zkevm from './networks/zkevm.png'
 
-const ICONS = { aptos, arb, aurora, avax, bnb, cfx, cronos, eth, ftm, movr, beam, opt, polygon, tron, zksync, zkevm }
+const ICONS = { aptos, arb, aurora, avax, bnb, cfx, cronos, eth, ftm, movr, beam, opt, polygon, sui, tron, zksync, zkevm }
 
 export default function NetworkIcon ({ id, size = 16 }) { // 'md'
   return (

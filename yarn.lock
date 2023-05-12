@@ -2709,47 +2709,48 @@
     js-sha3 "^0.8.0"
     msafe-iframe "^1.0.8"
 
-"@mesonfi/contract-abis@^1.7.0":
-  version "1.7.0"
-  resolved "https://npm.pkg.github.com/download/@MesonFi/contract-abis/1.7.0/c4255fb11517ad9b23e653d8f794ddbe528671d8#c4255fb11517ad9b23e653d8f794ddbe528671d8"
-  integrity sha512-L/EaEItIxF9UTEkjw8peJJQvgnsfaJ8AhEpEcWoEVw8QsFN2FMm/nq+p+KbEVS95AcGWg/OzD+LB96DVquNGNA==
+"@mesonfi/contract-abis@^1.9.0":
+  version "1.9.0"
+  resolved "https://npm.pkg.github.com/download/@MesonFi/contract-abis/1.9.0/575508fb6f775d08eb434eb82fb1c921e7b8280d#575508fb6f775d08eb434eb82fb1c921e7b8280d"
+  integrity sha512-fxSMJoYy0NDdnjIpVYfXXWLwW+pJ+QDkxsnpcghnK3xIKqVyNCXuHrjIxprk1DpuRtWFnnwEhAQR5ambv+s7Wg==
 
-"@mesonfi/contract-types@^1.7.0":
-  version "1.7.0"
-  resolved "https://npm.pkg.github.com/download/@MesonFi/contract-types/1.7.0/a901416c55dc930f6db8c4c832cca687d37fef33#a901416c55dc930f6db8c4c832cca687d37fef33"
-  integrity sha512-7kFzv55LsFLI2OCq8k2VlRBR99wfrh9gYkXEctLH+XNzOE+0hjfWCAOg8FVUIVWN66EtQH6Zw2RE7PgQENwXVQ==
+"@mesonfi/contract-types@^1.9.0":
+  version "1.9.0"
+  resolved "https://npm.pkg.github.com/download/@MesonFi/contract-types/1.9.0/4dd68332682977a372947c500c6a5453135c8de5#4dd68332682977a372947c500c6a5453135c8de5"
+  integrity sha512-P6o/n7PTwjy2fiF4vwsPUOxsIBuMwr4Y/60oYp+ge67CeZzBttCa2MfyA7xa/IynDA789umFMBvdGjsdsG2qOg==
 
-"@mesonfi/extensions@^0.8.0":
-  version "0.8.0"
-  resolved "https://npm.pkg.github.com/download/@mesonfi/extensions/0.8.0/c51bb350ed09981f41b34dc16b76ff27dd33598e#c51bb350ed09981f41b34dc16b76ff27dd33598e"
-  integrity sha512-wnSHcrygB1JgDrpUcgMq1wc/1eJPKgaxWfY7jfJ3EqImpmZ4DCFx6RqsrKrpOHdPqd+aBL6uubinsiagYBm4sQ==
+"@mesonfi/extensions@^0.9.0":
+  version "0.9.0"
+  resolved "https://npm.pkg.github.com/download/@mesonfi/extensions/0.9.0/ad8e5348bff93271fac2fa5bf6201fb2221b666b#ad8e5348bff93271fac2fa5bf6201fb2221b666b"
+  integrity sha512-Btn7hrFks7Fhhh32PSwlzHZWi0DKXOVGgX4R7A9XRnyBMcYT+pAAZ+2nEBQ5V2Dv88A8KobfCYI1VKd0G+Ea2g==
   dependencies:
     "@mesonfi/aptos-wallet-adapter" "^1.0.2-rc.3"
+    "@wallet-standard/core" "^1.0.3"
     "@walletconnect/web3-provider" "1.8.0"
     eventemitter3 "^4.0.7"
     lodash "^4.17.21"
 
-"@mesonfi/presets@^1.9.0-beta.1":
-  version "1.9.0-beta.1"
-  resolved "https://npm.pkg.github.com/download/@MesonFi/presets/1.9.0-beta.1/77be082d5ba1a11f8d3210639d72f116f944f893#77be082d5ba1a11f8d3210639d72f116f944f893"
-  integrity sha512-Q15dlHa83R+IOTtTGSGeN8qNRxD4xSH77pdN3/stqNLPzPQz9Mz2SbWShI8s1DDidMlhLIF6JkK8K65Sv6xoQg==
+"@mesonfi/presets@^1.9.0-rc.4":
+  version "1.9.0-rc.4"
+  resolved "https://npm.pkg.github.com/download/@MesonFi/presets/1.9.0-rc.4/d17de67360663fcb23bf16a0903baaae2b4cc079#d17de67360663fcb23bf16a0903baaae2b4cc079"
+  integrity sha512-Dy5eaVs/d9FY+tUKWUoErt6feDtJcACV2ADUoccmZhT2yubRcnYcKvmCMAoVFdpXXaMwh42O5mweCZcZGvsgrw==
   dependencies:
-    "@mesonfi/contract-abis" "^1.7.0"
-    "@mesonfi/sdk" "^1.9.0-beta.1"
-    "@mysten/sui.js" "^0.32.1"
+    "@mesonfi/contract-abis" "^1.9.0"
+    "@mesonfi/sdk" "^1.9.0-rc.4"
+    "@mysten/sui.js" "^0.33.0"
     aptos "^1.3.16"
     ethers "^5.7.1"
     lodash "^4.17.21"
     tronweb "^4.3.0"
 
-"@mesonfi/sdk@^1.9.0-beta.1":
-  version "1.9.0-beta.1"
-  resolved "https://npm.pkg.github.com/download/@MesonFi/sdk/1.9.0-beta.1/de82716ca874b2361ff788e2f94a2b24d4cc6303#de82716ca874b2361ff788e2f94a2b24d4cc6303"
-  integrity sha512-yqvS9i/PRk4DA2SQW4VY5ZL/AqAPHrNTFA3n7TVhbq7fg31M5udfzO9ckUCdu/JKsipOtm1Mr42/X9CWp1vVsw==
+"@mesonfi/sdk@^1.9.0-rc.4":
+  version "1.9.0-rc.4"
+  resolved "https://npm.pkg.github.com/download/@MesonFi/sdk/1.9.0-rc.4/32dfa1fdef58a9175912c27d5f67a48274bf67a7#32dfa1fdef58a9175912c27d5f67a48274bf67a7"
+  integrity sha512-1f9BNe/lYe2RW4qRS3X4S8k+LgADp6Hfmmsg7PRXMobJ6anv3whjGuhlEVvmh/4954F1U+3cHbKmvbwer/0LQA==
   dependencies:
-    "@mesonfi/contract-abis" "^1.7.0"
-    "@mesonfi/contract-types" "^1.7.0"
-    "@mysten/sui.js" "^0.32.1"
+    "@mesonfi/contract-abis" "^1.9.0"
+    "@mesonfi/contract-types" "^1.9.0"
+    "@mysten/sui.js" "^0.33.0"
     aptos "^1.3.16"
     cross-fetch "^3.1.5"
     ethers "^5.7.1"
@@ -2762,11 +2763,12 @@
   resolved "https://npm.pkg.github.com/download/@mesonfi/to/0.3.1/de0e293d1c1cd10e67ba47397e8d3558e0b26746#de0e293d1c1cd10e67ba47397e8d3558e0b26746"
   integrity sha512-CCSF1jaQMd5xwkn7rs99QQyTM17CjH04vjUbvbJkzqXyBIJqu2hTKsGHpB4Wo0a01xWOuAuoqfDllp1gbs7Mwg==
 
-"@mesonfi/web3-jwt@^0.5.0-alpha.1":
-  version "0.5.0-alpha.1"
-  resolved "https://npm.pkg.github.com/download/@mesonfi/web3-jwt/0.5.0-alpha.1/b7f96454a39512be5bc5715c060a11a917180075#b7f96454a39512be5bc5715c060a11a917180075"
-  integrity sha512-bqIg6wxQbSU8u8GZspFyMeVAaIxNMyt6iLIeHvwTqvWvawHwKCgfMCId3vfTWKhBUAHsa9ngSIY9PMC8BOd1Bw==
+"@mesonfi/web3-jwt@^0.6.0":
+  version "0.6.0"
+  resolved "https://npm.pkg.github.com/download/@mesonfi/web3-jwt/0.6.0/68084b6430b4452ac1ab310e1800f1ae40fe4ebe#68084b6430b4452ac1ab310e1800f1ae40fe4ebe"
+  integrity sha512-wAf9F4aq1ZllNeVSBq39uZLp/lUlaIBlPfe+QDn31nRc1WtMyyOIxJDTjQwRZUcU+DPl9sN/CiZeVgrWYdL6sg==
   dependencies:
+    "@noble/hashes" "^1.3.0"
     jws "^4.0.0"
 
 "@metamask/eth-sig-util@^5.0.2":
@@ -2793,10 +2795,10 @@
   dependencies:
     bs58 "^5.0.0"
 
-"@mysten/sui.js@^0.32.1":
-  version "0.32.2"
-  resolved "https://registry.yarnpkg.com/@mysten/sui.js/-/sui.js-0.32.2.tgz#dff953a336c787465af181d8158f34a65700a74f"
-  integrity sha512-/Hm4xkGolJhqj8FvQr7QSHDTlxIvL52mtbOao9f75YjrBh7y1Uh9kbJSY7xiTF1NY9sv6p5hUVlYRJuM0Hvn9A==
+"@mysten/sui.js@^0.33.0":
+  version "0.33.0"
+  resolved "https://registry.yarnpkg.com/@mysten/sui.js/-/sui.js-0.33.0.tgz#3ed0831d733fffb65430c3949fd00eaa7510e462"
+  integrity sha512-vPswzowPoxYmexN+jKrSQ5uKWv8AoX30c11t8VAODCCXeCziq7Y27TEcYFsQmWJBIMU/hYw75kGj9oorJyXyKw==
   dependencies:
     "@mysten/bcs" "0.7.1"
     "@noble/curves" "^1.0.0"
@@ -3382,6 +3384,42 @@
   dependencies:
     "@typescript-eslint/types" "5.48.2"
     eslint-visitor-keys "^3.3.0"
+
+"@wallet-standard/app@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@wallet-standard/app/-/app-1.0.1.tgz#f83c3ae887f7fb52497a7b259bba734ae10a2994"
+  integrity sha512-LnLYq2Vy2guTZ8GQKKSXQK3+FRGPil75XEdkZqE6fiLixJhZJoJa5hT7lXxwe0ykVTt9LEThdTbOpT7KadS26Q==
+  dependencies:
+    "@wallet-standard/base" "^1.0.1"
+
+"@wallet-standard/base@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@wallet-standard/base/-/base-1.0.1.tgz#860dd94d47c9e3c5c43b79d91c6afdbd7a36264e"
+  integrity sha512-1To3ekMfzhYxe0Yhkpri+Fedq0SYcfrOfJi3vbLjMwF2qiKPjTGLwZkf2C9ftdQmxES+hmxhBzTwF4KgcOwf8w==
+
+"@wallet-standard/core@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@wallet-standard/core/-/core-1.0.3.tgz#3b6743e207ca4e1e725ae20f1838b400fb0694ff"
+  integrity sha512-Jb33IIjC1wM1HoKkYD7xQ6d6PZ8EmMZvyc8R7dFgX66n/xkvksVTW04g9yLvQXrLFbcIjHrCxW6TXMhvpsAAzg==
+  dependencies:
+    "@wallet-standard/app" "^1.0.1"
+    "@wallet-standard/base" "^1.0.1"
+    "@wallet-standard/features" "^1.0.3"
+    "@wallet-standard/wallet" "^1.0.1"
+
+"@wallet-standard/features@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@wallet-standard/features/-/features-1.0.3.tgz#c992876c5e4f7a0672f8869c4146c87e0dfe48c8"
+  integrity sha512-m8475I6W5LTatTZuUz5JJNK42wFRgkJTB0I9tkruMwfqBF2UN2eomkYNVf9RbrsROelCRzSFmugqjKZBFaubsA==
+  dependencies:
+    "@wallet-standard/base" "^1.0.1"
+
+"@wallet-standard/wallet@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@wallet-standard/wallet/-/wallet-1.0.1.tgz#95438941a2a1ee12a794444357b59d53e19b374c"
+  integrity sha512-qkhJeuQU2afQTZ02yMZE5SFc91Fo3hyFjFkpQglHudENNyiSG0oUKcIjky8X32xVSaumgTZSQUAzpXnCTWHzKQ==
+  dependencies:
+    "@wallet-standard/base" "^1.0.1"
 
 "@walletconnect/browser-utils@^1.8.0":
   version "1.8.0"

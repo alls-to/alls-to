@@ -3,12 +3,15 @@ import { NextSeo } from 'next-seo'
 
 import { abbreviate } from 'lib'
 import PageTo from 'components/PageTo'
-import { queryPage} from '../lib/alls.to'
+import { queryPage } from '../lib/alls.to'
 
 const isProd = process.env.NODE_ENV === 'production'
 
 export default function Subpage ({ toList = [] }) {
-  const to = toList[0]
+  const to = { ...toList[0] }
+  if (to.addr.startsWith('sui')) {
+    to.addr = to.addr.replace('sui:', '')
+  }
 
   const metadata = {
     title: `Transfer → ${to.name || abbreviate(to.addr)}`,
