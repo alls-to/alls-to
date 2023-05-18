@@ -2719,10 +2719,10 @@
   resolved "https://npm.pkg.github.com/download/@MesonFi/contract-types/1.9.0/4dd68332682977a372947c500c6a5453135c8de5#4dd68332682977a372947c500c6a5453135c8de5"
   integrity sha512-P6o/n7PTwjy2fiF4vwsPUOxsIBuMwr4Y/60oYp+ge67CeZzBttCa2MfyA7xa/IynDA789umFMBvdGjsdsG2qOg==
 
-"@mesonfi/extensions@^0.9.0":
-  version "0.9.0"
-  resolved "https://npm.pkg.github.com/download/@mesonfi/extensions/0.9.0/ad8e5348bff93271fac2fa5bf6201fb2221b666b#ad8e5348bff93271fac2fa5bf6201fb2221b666b"
-  integrity sha512-Btn7hrFks7Fhhh32PSwlzHZWi0DKXOVGgX4R7A9XRnyBMcYT+pAAZ+2nEBQ5V2Dv88A8KobfCYI1VKd0G+Ea2g==
+"@mesonfi/extensions@^0.9.1":
+  version "0.9.1"
+  resolved "https://npm.pkg.github.com/download/@mesonfi/extensions/0.9.1/be101bc5ffd3bbb1a159d6da60caf9bb4318e04d#be101bc5ffd3bbb1a159d6da60caf9bb4318e04d"
+  integrity sha512-030Fxrak0PcUMVjLfeASAjN44W5Hp0+Puq8W5qAMPvilqM04S1aGFqHPSDizdVU3S+41HUyHYxeS5oFS5J6m8Q==
   dependencies:
     "@mesonfi/aptos-wallet-adapter" "^1.0.2-rc.3"
     "@wallet-standard/core" "^1.0.3"
