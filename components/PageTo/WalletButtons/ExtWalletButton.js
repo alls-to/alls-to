@@ -49,7 +49,7 @@ export default function ExtWalletButton ({ hideAddress, ext, m2Ext, onExtAddress
   }, [m2Connected, m2Ext, ext])
 
   React.useEffect(() => {
-    ext.glimpse().then(setAccounts)
+    // ext.glimpse().then(setAccounts)
   }, [ext])
 
   const currentAddress = extStatus?.currentAccount?.address
