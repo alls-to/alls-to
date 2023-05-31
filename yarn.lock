@@ -2758,10 +2758,14 @@
     tronweb "^4.3.0"
     zksync-web3 "^0.13.4"
 
-"@mesonfi/to@^0.3.1":
-  version "0.3.1"
-  resolved "https://npm.pkg.github.com/download/@mesonfi/to/0.3.1/de0e293d1c1cd10e67ba47397e8d3558e0b26746#de0e293d1c1cd10e67ba47397e8d3558e0b26746"
-  integrity sha512-CCSF1jaQMd5xwkn7rs99QQyTM17CjH04vjUbvbJkzqXyBIJqu2hTKsGHpB4Wo0a01xWOuAuoqfDllp1gbs7Mwg==
+"@mesonfi/to@^0.3.4":
+  version "0.3.4"
+  resolved "https://npm.pkg.github.com/download/@mesonfi/to/0.3.4/99f0fdf429cfe377a388e0cab4fd5dd746351bd0#99f0fdf429cfe377a388e0cab4fd5dd746351bd0"
+  integrity sha512-LCYppe9OBtMeURyzyCY3tgnx8FHAT+bkRXhd9StH4lRFQW+PutW4ZBhDY0k7aljV1IAbT6Zb/2UDj4zQyB98mA==
+  dependencies:
+    "@mysten/sui.js" "^0.34.1"
+    "@wallet-standard/core" "^1.0.3"
+    classnames "^2.3.2"
 
 "@mesonfi/web3-jwt@^0.6.0":
   version "0.6.0"
@@ -2799,6 +2803,22 @@
   version "0.33.0"
   resolved "https://registry.yarnpkg.com/@mysten/sui.js/-/sui.js-0.33.0.tgz#3ed0831d733fffb65430c3949fd00eaa7510e462"
   integrity sha512-vPswzowPoxYmexN+jKrSQ5uKWv8AoX30c11t8VAODCCXeCziq7Y27TEcYFsQmWJBIMU/hYw75kGj9oorJyXyKw==
+  dependencies:
+    "@mysten/bcs" "0.7.1"
+    "@noble/curves" "^1.0.0"
+    "@noble/hashes" "^1.3.0"
+    "@scure/bip32" "^1.3.0"
+    "@scure/bip39" "^1.2.0"
+    "@suchipi/femver" "^1.0.0"
+    jayson "^4.0.0"
+    rpc-websockets "^7.5.1"
+    superstruct "^1.0.3"
+    tweetnacl "^1.0.3"
+
+"@mysten/sui.js@^0.34.1":
+  version "0.34.1"
+  resolved "https://registry.yarnpkg.com/@mysten/sui.js/-/sui.js-0.34.1.tgz#2a274ab0c7ee2f7d3826097e3f2ed2ccf6bb5374"
+  integrity sha512-t22i9b3UJW2ZJ7JPD7kSsrr2KxLsDUeV2UsOWbkrj9AiYm2oxIfzF1yzKUJBFcE4RCKDYuKt7nMatXD9aO4+yw==
   dependencies:
     "@mysten/bcs" "0.7.1"
     "@noble/curves" "^1.0.0"
