@@ -2,6 +2,8 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import debounce from 'lodash/debounce'
 
+import mesonPresets from '@mesonfi/presets'
+
 import AppContainer from 'components/AppContainer'
 import Header from 'components/common/Header'
 
@@ -13,8 +15,21 @@ import * as api from 'lib/api'
 export default function PageTo ({ to }) {
   const router = useRouter()
   // const rewardModalRef = React.useRef()
+  const [loading, setLoading] = React.useState(true)
   const [extsAddress, setExtsAddress] = React.useState({})
   const addr = to?.addr
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+    if (!mesonPresets.getNetwork(to.networkId)) {
+      const isTestnet = !!mesonPresets.getNetwork('goerli')
+      mesonPresets.useTestnet(!isTestnet)
+    }
+    setLoading(false)
+  }, [to.networkId])
+
   React.useEffect(() => {
     if (!to) {
       router.replace(`/`)
@@ -45,6 +60,10 @@ export default function PageTo ({ to }) {
     () => Object.entries(extsAddress).find(entry => entry[1] === to.addr)?.[0],
     [extsAddress, to.addr]
   )
+
+  if (loading) {
+    return null
+  }
 
   return (
     <AppContainer>

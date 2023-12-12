@@ -16,13 +16,14 @@ import opt from './networks/opt.png'
 import polygon from './networks/polygon.png'
 import sui from './networks/sui.png'
 import tron from './networks/tron.png'
+import viction from './networks/viction.png'
 import zksync from './networks/zksync.png'
 import zkevm from './networks/zkevm.png'
 
-const ICONS = { aptos, arb, aurora, avax, bnb, cfx, cronos, eth, ftm, movr, beam, opt, polygon, sui, tron, zksync, zkevm }
+const ICONS = { aptos, arb, aurora, avax, bnb, cfx, cronos, eth, ftm, goerli: eth, movr, beam, opt, polygon, sui, tron, viction, zksync, zkevm }
 
 export default function NetworkIcon ({ id, size = 16 }) { // 'md'
   return (
-    <Image alt={id} width={size} height={size} src={ICONS[id]} />
+    <Image alt={id} width={size} height={size} src={ICONS[id?.split('-')[0]]} />
   )
 }

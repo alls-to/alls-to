@@ -80,9 +80,11 @@ export default function CardBodyTransfer({ to }) {
   const title = to.name || (to.key ? to.handle : to.addr)
   const validatorModalRef = React.useRef(null)
   const network = mesonPresets.getNetwork(to.networkId)
-  const token = network.tokens.find(t => t.symbol.toLowerCase().includes(to.tokens[0]))
+  const token = network?.tokens.find(t => t.symbol.toLowerCase().includes(to.tokens[0]))
   const didLink = DIDs.find(item => item.id === to.did)?.link
   const didProfileUrl = didLink ? `${didLink}/${to.handle}` : ''
+
+  const isTestnet = !!mesonPresets.getNetwork('goerli')
 
   const onSwapAttempted = async () =>  {
     if (to.key.endsWith('.bit')) {
@@ -115,14 +117,14 @@ export default function CardBodyTransfer({ to }) {
           <div className='ml-1 font-bold'>{token?.symbol}</div>
           <div className='ml-1'>on</div>
           <div className='ml-1 h-4'><NetworkIcon id={to.networkId} /></div>
-          <div className='ml-1 font-bold'>{network.name}</div>.
+          <div className='ml-1 font-bold'>{network?.name}</div>.
         </div>
         <div className='ml-1'>You can transfer from any network you like.</div>
       </div>
 
       <div className='mt-4 -mx-2 -mb-4'>
         <MesonToEmbedded
-          host='https://allsto.meson.to'
+          host={isTestnet ? 'https://testnet-allsto.meson.to' : 'https://allsto.meson.to'}
           appId='alls-to'
           onSwapAttempted={onSwapAttempted}
           to={{ addr: to.addr, chain: to.networkId, tokens: to.tokens }}
