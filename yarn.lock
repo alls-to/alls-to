@@ -2770,10 +2770,10 @@
     tweetnacl "1.0.3"
     zksync-web3 "0.13.4"
 
-"@mesonfi/to@^0.3.4":
-  version "0.3.4"
-  resolved "https://npm.pkg.github.com/download/@mesonfi/to/0.3.4/99f0fdf429cfe377a388e0cab4fd5dd746351bd0#99f0fdf429cfe377a388e0cab4fd5dd746351bd0"
-  integrity sha512-LCYppe9OBtMeURyzyCY3tgnx8FHAT+bkRXhd9StH4lRFQW+PutW4ZBhDY0k7aljV1IAbT6Zb/2UDj4zQyB98mA==
+"@mesonfi/to@^0.3.5":
+  version "0.3.5"
+  resolved "https://npm.pkg.github.com/download/@mesonfi/to/0.3.5/d72b7fb68f9814db600b5b74d2ea6d5705a1aac9#d72b7fb68f9814db600b5b74d2ea6d5705a1aac9"
+  integrity sha512-lZo23FRF2P6/1XOVgYd2yPSgViTitrNosPT3O8pTGvsC+yGjP1TB8Jl538Q7YC5f80l5dts1nOd28bZL5RMLuw==
   dependencies:
     "@mysten/sui.js" "^0.34.1"
     "@wallet-standard/core" "^1.0.3"
