@@ -124,7 +124,7 @@ export default function CardBodyTransfer({ to }) {
 
       <div className='mt-4 -mx-2 -mb-4'>
         <MesonToEmbedded
-          host={isTestnet ? 'https://testnet-allsto.meson.to' : 'https://allsto.meson.to'}
+          host={isTestnet ? 'https://testnet-allsto.meson.to' : 'https://t.alls.to'}
           appId='alls-to'
           onSwapAttempted={onSwapAttempted}
           to={{ addr: to.addr, chain: to.networkId, tokens: to.tokens }}
